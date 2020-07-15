@@ -1,0 +1,117 @@
+{
+    "Capsule": {
+        "north": "NONE",
+        "east": "Cargo",
+        "south": "Control",
+        "west": "NONE"
+    },
+    "Control": {
+        "north": "Capsule",
+        "east": "Room5",
+        "south": "Library",
+        "west": "NONE"
+    },
+    "Library": {
+        "north": "Control",
+        "east": "Kitchen",
+        "south": "NONE",
+        "west": "NONE",
+        "item": "Alien Flight For Dummies"
+    },
+    "Kitchen": {
+        "north": "NONE",
+        "east": "Cafeteria",
+        "south": "NONE",
+        "west": "Library",
+        "item": "snickers"
+    },
+    "Room5": {
+        "north": "NONE",
+        "east": "BLOCKED",
+        "south": "NONE",
+        "west": "Control"
+    },
+    "Cargo": {
+        "north": "NONE",
+        "east": "Room4",
+        "south": "NONE",
+        "west": "Capsule"
+    },
+    "Room4": {
+        "north": "NONE",
+        "east": "Brad",
+        "south": "BLOCKED",
+        "west": "Cargo"
+    },
+    "HiddenRoom": {
+        "north": "BLOCKED",
+        "east": "Room3",
+        "south": "BLOCKED",
+        "west": "BLOCKED",
+        "item": "Ultimate Weapon"
+    },
+    "Cafeteria": {
+        "north": "BLOCKED",
+        "east": "BLOCKED",
+        "south": "NONE",
+        "west": "Kitchen"
+    },
+    "Garbage": {
+        "north": "Room3",
+        "east": "Gym",
+        "south": "Trap Door",
+        "west": "BLOCKED"
+    },
+    "Room3": {
+        "north": "NONE",
+        "east": "Cargo2",
+        "south": "Garbage",
+        "west": "HiddenRoom"
+    },
+    "Brad": {
+        "north": "NONE",
+        "east": "BLOCKED",
+        "south": "NONE",
+        "west": "Room4"
+    },
+    "Terrell": {
+        "north": "NONE",
+        "east": "Bathroom",
+        "south": "Cargo2",
+        "west": "BLOCKED"
+    },
+    "Cargo2": {
+        "north": "Terrell",
+        "east": "BLOCKED",
+        "south": "Gym",
+        "west": "Room3"
+    },
+    "Gym": {
+        "north": "Cargo2",
+        "east": "EscapeRoom",
+        "south": "NONE",
+        "west": "Garbage",
+        "item": "Weapon Locker"
+    },
+    "EscapeRoom": {
+        "north": "Dhruti",
+        "east": "NONE",
+        "south": "NONE",
+        "west": "Gym",
+        "alien": "Ultimate Alien"
+    },
+    "Dhruti": {
+        "north": "Bathroom",
+        "east": "NONE",
+        "south": "EscapeRoom",
+        "west": "BLOCKED",
+        "item": "clue"
+    },
+    "Bathroom": {
+        "north": "NONE",
+        "east": "NONE",
+        "south": "Dhruti",
+        "west": "Terrell",
+        "item": "toolbox"
+    }
+}
