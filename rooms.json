@@ -3,115 +3,229 @@
         "north": "NONE",
         "east": "Cargo",
         "south": "Control",
-        "west": "NONE"
+        "west": "NONE",
+        "weapon": "taser"
     },
+
     "Control": {
         "north": "Capsule",
-        "east": "Room5",
+        "east": "Oxygen",
         "south": "Library",
-        "west": "NONE"
+        "west": "NONE",
+        "alien": {
+            "Type3": {
+                "item": "eyeball"
+            }
+        },
+        "furniture": {
+            "Broken Control Panel": "Looks like it's missing a few parts...",
+            "Pilots Seat": "I cant leave without fixing this ship",
+            "item": "oxygen tank"
+        }
     },
+
     "Library": {
         "north": "Control",
         "east": "Kitchen",
         "south": "NONE",
         "west": "NONE",
-        "item": "Alien Flight For Dummies"
+        "alien": "Type2",
+        "furniture": {
+            "Book shelf" : [
+                "Book1", "Book2", "Book3", "Pilots Manual", "Book4", "Book5"
+            ],
+            "item": "handles"
+        }
     },
+
     "Kitchen": {
         "north": "NONE",
         "east": "Cafeteria",
         "south": "NONE",
         "west": "Library",
-        "item": "snickers"
+        "furniture": {
+            "refrigerator": {
+                "item": "water bottle"
+            },
+            "cabinets": {
+                "item": "canned pickles"
+            },
+            "stove": "Nothing to see here..."
+        }
     },
-    "Room5": {
+
+    "Oxygen": {
         "north": "NONE",
         "east": "BLOCKED",
         "south": "NONE",
-        "west": "Control"
+        "west": "Control",
+        "furniture": {
+            "spaceSuit": "Where is the person that was in the suit...",
+            "empty containers": "Better hurry before all the tanks are as empty as these.",
+            "5 oxygen containers": "Oxygen Is getting low... Better find more."}
     },
+
     "Cargo": {
         "north": "NONE",
         "east": "Room4",
         "south": "NONE",
-        "west": "Capsule"
+        "west": "Capsule",
+        "furniture": {
+            "suitcase": "Full of cloths",
+            "foodbox": "Empty...",
+            "keypad": "Please press OK...",
+            "binoculors": "For bird watching in space"
+        }
     },
+
     "Room4": {
         "north": "NONE",
         "east": "Brad",
         "south": "BLOCKED",
-        "west": "Cargo"
+        "west": "Cargo",
+        "furniture": {
+            "item": "oxygen tank",
+            "computer": "Please enter a code..."}
     },
+
     "HiddenRoom": {
         "north": "BLOCKED",
         "east": "Room3",
         "south": "BLOCKED",
         "west": "BLOCKED",
-        "item": "Ultimate Weapon"
+        "weapon": "Ultimate Weapon"
     },
+
     "Cafeteria": {
         "north": "BLOCKED",
         "east": "BLOCKED",
         "south": "NONE",
-        "west": "Kitchen"
+        "west": "Kitchen",
+        "furniture": {
+            "tables": "what a mess",
+            "picture": [
+                "The picture is crooked", {"weapon": "squirt gun"}
+                ]
+        }
     },
+
     "Garbage": {
         "north": "Room3",
         "east": "Gym",
-        "south": "Trap Door",
-        "west": "BLOCKED"
+        "south": "outside",
+        "west": "BLOCKED",
+        "furniture": {
+            "trash can": "Just a bunch of trash",
+            "recycling bin": "Nothing you can use in here",
+            "compost bin": [
+                "You see something shine under an old banana peel", {"item": "cp chip"}
+            ],
+            "garbage bags": "Just a box of bags",
+            "broken cupboard": "Nothing I can use in here"
+        }
     },
+
     "Room3": {
         "north": "NONE",
         "east": "Cargo2",
         "south": "Garbage",
-        "west": "HiddenRoom"
+        "west": "HiddenRoom",
+        "furniture": {
+            "bed": "Nothing to see here",
+            "retinal scanner": "Clearance Denied..",
+            "dresser": "Nothing I can use",
+            "mirror": {
+                "item": "OK key"
+            }
+            }
     },
+
     "Brad": {
         "north": "NONE",
         "east": "BLOCKED",
         "south": "NONE",
-        "west": "Room4"
+        "west": "Room4",
+        "furniture": {
+            "item": "Snickers",
+            "bed": "Why are there beds if we sleep in pods anyway...",
+            "xbox": "No time for games...",
+            "poster": "Look Beyond Yourself... I wonder what that means"}
     },
+
     "Terrell": {
         "north": "NONE",
         "east": "Bathroom",
         "south": "Cargo2",
-        "west": "BLOCKED"
+        "west": "BLOCKED",
+        "furniture": {
+            "loose floorboard": {
+                "weapon": "laser gun"
+            },
+            "cabinets":{
+                "item": "canned beans"
+            }
+        }
     },
+
     "Cargo2": {
         "north": "Terrell",
         "east": "BLOCKED",
         "south": "Gym",
-        "west": "Room3"
+        "west": "Room3",
+        "furniture": {
+            "shelf": {
+                "item": "prybar"
+            },
+            "item": "oxygen tank",
+            "basketball": ""}
     },
+
     "Gym": {
         "north": "Cargo2",
-        "east": "EscapeRoom",
+        "east": "DeathRoom",
         "south": "NONE",
         "west": "Garbage",
-        "item": "Weapon Locker"
+        "furniture": {
+            "weapon locker": {
+                "item": "plasma torch"
+            },
+            "tredmill": "",
+            "cable weight macine": ["missing its handles...", { "item": "keycard"}
+            ]
+            }
     },
-    "EscapeRoom": {
+
+    "DeathRoom": {
         "north": "Dhruti",
         "east": "NONE",
         "south": "NONE",
         "west": "Gym",
-        "alien": "Ultimate Alien"
+        "alien": {
+            "Ultimate Alien": ["Nametag says Edward", {"item": "skeleton key"}
+            ]
+                }
     },
+
     "Dhruti": {
         "north": "Bathroom",
         "east": "NONE",
-        "south": "EscapeRoom",
+        "south": "DeathRoom",
         "west": "BLOCKED",
-        "item": "clue"
+        "furniture": {
+            "item": "chips",
+            "bed": "It looks like someone was just here..",
+            "TV": "'Edward has the key' displays on the screen"
+        }
     },
+
     "Bathroom": {
         "north": "NONE",
         "east": "NONE",
         "south": "Dhruti",
         "west": "Terrell",
-        "item": "toolbox"
+        "furniture": {
+            "toolbox": {"item": "ignition switch"},
+            "cabinets": "Nothing in here."
+            }
     }
 }
