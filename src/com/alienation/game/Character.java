@@ -6,8 +6,18 @@ package com.alienation.game;
 public class Character {
     public static final int MAX_HEALTH = 100;
     public static final int MIN_HEALTH  = 0;
-    private int health = 100;
-    private String currentWeapon;
+    private static int health = 100;
+    private static String currentWeapon;
+    private static String currentRoom = "Room1"; // as initial defalut
+
+    public String getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(String currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
 
     public int getHealth() {
         return health;
@@ -16,12 +26,5 @@ public class Character {
     public void setHealth(int health) {
         this.health = health;
     }
-
-
-
-
-
-
-
 
 }

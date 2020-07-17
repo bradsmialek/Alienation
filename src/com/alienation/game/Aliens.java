@@ -1,7 +1,7 @@
 package com.alienation.game;
 
 /**
- * Alien Types
+ * 3 Alien Types  ??
  */
 public class Aliens {
     // TODO: Write Code Here
