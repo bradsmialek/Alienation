@@ -1,18 +1,27 @@
 package com.alienation.game;
 
 /**
- * Created by bradsmialek on Fri - 7/17/20 @ 7:31 AM
  * Menu For Console
  */
 public class Menu {
 
-//    private static String actionQuestion = "What would you like to do?\n" + ">";
-
-//    System.out.println("You can: Investigate, Open, Eat, Store, Attack, Read");
-//    System.out.println("You can move: N, S, E, W");
-//
-//
-//    private static String answer;
+    /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
+    private static String actionQuestion = "What would you like to do?\n" + ">";
+    private static String actions = "You can: Investigate, Open, Eat, Store, Attack, Read";
+    private static String directions = "You can move: N, S, E, W";
+    private static String answer;
 
 
+    /*************** GETTER - SETTER METHODS  ******************/
+    public static String getActionQuestion() {
+        return actionQuestion;
+    }
+
+    public static String getActions() {
+        return actions;
+    }
+
+    public static String getDirections() {
+        return directions;
+    }
 }
