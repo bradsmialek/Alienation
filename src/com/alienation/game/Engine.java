@@ -1,5 +1,8 @@
 package com.alienation.game;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -17,6 +20,7 @@ public class Engine {
                 "██║░░██║███████╗██║███████╗██║░╚███║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║\n" +
                 "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n");
 
+
 //        while (Character.gethealth() > 0 && Oxygen.getLevels() > 0) {
 //
 //            System.out.println("Guess any letter in the word");
@@ -25,9 +29,8 @@ public class Engine {
 //            Hangman.guessWords(guess);
 //        }
 
-        Room1.Environment();
 
+        CapsuleRoom.loadEnvironment();
 
     }
-
 }
