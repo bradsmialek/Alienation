@@ -17,9 +17,8 @@ public class Menu {
         //        System.out.println(Character.getHealth() + Oxygen.getOxygen() + Character.getCurrentWeapon());
         System.out.println("Health: 100" + "  " + "Oxygen: 50" + "  " + "Weapon: Tazer");
         System.out.println("What would you like to do?\n");
-        System.out.println("You can: Investigate, Open, Eat, Store, Attack, Read");
+        System.out.println("You can: Investigate, Open, Eat, Grab, Attack, Read, Swap");
         System.out.println("You can move: N, S, E, W");
-//        answer = in.nextLine();
 
 
         while (repeat) {
