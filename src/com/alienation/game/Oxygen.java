@@ -4,5 +4,5 @@ package com.alienation.game;
  * Oxygen Class
  */
 public class Oxygen {
-    // TODO: Write Code Here
+    int maxOxygen = 50;
 }

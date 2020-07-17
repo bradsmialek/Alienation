@@ -3,8 +3,4 @@ package com.alienation.game;
 /**
  * Edibles Enum
  */
-public enum Edibles {
-    TODO:
-    List of
-    Things
-}
+public enum Edibles{SNICKERS, CHIPS};
