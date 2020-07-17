@@ -2,6 +2,7 @@ package com.alienation.game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Capsule Room - This is the room where the character wakes up
@@ -46,6 +47,12 @@ public class CapsuleRoom {
 
     public static Map<String,Boolean> getAvailableItems(){
         availableItems.put("tazer",true);
+
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println("You see:");
+            System.out.println(key);
+        }
         return availableItems;
     }
 

@@ -35,7 +35,7 @@ public class Menu {
 //    INVESTIGATE, OPEN, EAT, GRAB, ATTACK, READ, SWAP
         switch (action) {
             case INVESTIGATE:
-                Room1.Environment();
+                CapsuleRoom.getAvailableItems();
                 break;
             case OPEN:
                 System.out.println("do Something with open");
