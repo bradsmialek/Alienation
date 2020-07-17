@@ -26,6 +26,7 @@ public class Menu {
                 String answer = in.nextLine(); //grabs input
                 action = Actions.valueOf(answer.toUpperCase()); // input to upper then checks input against ENUMs - implicit
                 repeat = false;
+                System.out.println(action);
             } catch (IllegalArgumentException e) {
                 System.out.println("You must enter one of the following actions: " +
                         java.util.Arrays.asList(Actions.values()));

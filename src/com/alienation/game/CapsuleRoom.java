@@ -16,15 +16,14 @@ public class CapsuleRoom {
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
             "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
             "You notice a Tazer on the floor.\n\n";
-    private static String updatedStory = "As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
-            "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
-            "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-            "You notice a Tazer on the floor.\n\n";
+    private static String updatedStory = "Updated\n\n";
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,String> availableDirections = new HashMap<String, String>();
+    private static int count = 0;
 
     /*************** PUBLIC METHODS  ******************/
     public static void loadEnvironment(){
+        count++;
         System.out.println(getInitialStory());
         Menu.ShowMenu();
     }
@@ -32,13 +31,8 @@ public class CapsuleRoom {
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static String getInitialStory() {
-        if(getAvailableItems().get("tazer") != null){
-            if(getAvailableItems().get("tazer")){
-                return initialStory;
-            }
-            else{
-                return updatedStory;
-            }
+        if(count > 2){
+            return updatedStory;
         }
         else{
             return initialStory;
@@ -49,10 +43,12 @@ public class CapsuleRoom {
         availableItems.put("tazer",true);
 
         Set<String> keys = availableItems.keySet();
+        System.out.println("You see:");
         for (String key : keys) {
-            System.out.println("You see:");
             System.out.println(key);
         }
+        System.out.println("\n");
+        Menu.ShowMenu();
         return availableItems;
     }
 
