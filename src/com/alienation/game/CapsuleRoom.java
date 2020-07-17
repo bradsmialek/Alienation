@@ -39,6 +39,19 @@ public class CapsuleRoom {
         }
     }
 
+//    public static String getStory() {
+//        if (!getAvailableItems().containsKey("tazer")) {
+//            return initialStory;
+//        } else {
+//            if(getAvailableItems().get("tazer")){
+//                return initialStory;
+//            }
+//            else{
+//                return updatedStory;
+//            }
+//        }
+//    }
+
     public static Map<String,Boolean> getAvailableItems(){
         availableItems.put("tazer",true);
 
@@ -58,5 +71,14 @@ public class CapsuleRoom {
         availableDirections.put("E","AlienRoom");
         availableDirections.put("W","");
         return availableDirections;
+    }
+
+    public static void grab(){
+        System.out.println("Grab what?");
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println("\n");
     }
 }
