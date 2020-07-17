@@ -17,25 +17,29 @@ public class ComputerRoom {
     private static String initialStory = "As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
             "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-            "You notice a Tazer on the floor.\n\n" + Menu.getActionQuestion() + "              " + "Health: 100" + "  " + "Oxygen: 50" + "  " + "Weapon: " + "Tazer" + "\n";
+            "You notice a Tazer on the floor.\n";
     private static String updatedStory = "As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
             "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-            "You notice a Tazer on the floor.\n\n" + Menu.getActionQuestion() + "              " + "Health: 100" + "  " + "Oxygen: 50" + "  " + "Weapon: " + "Tazer" + "\n";
+            "You notice a Tazer on the floor.\n";
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
-    private static Map<String,String> availableDirections = new HashMap<String, String>();
+    private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
 
 
     /*************** PUBLIC METHODS  ******************/
+    // This method used to load Environment to user
     public static void loadEnvironment(){
-        System.out.println(getInitialStory());
-        System.out.println(Menu.getActions());
-        System.out.println(Menu.getDirections());
+        System.out.println("ComputerRoom");
+        System.out.println(getStory());
+        Menu.displayMenu();
     }
 
     /*************** GETTER - SETTER METHODS  ******************/
-    public static String getInitialStory() {
-        if(getAvailableItems().get("ignitionswitch") != null){
+    // Get Story line while page loads
+    public static String getStory() {
+        if (!getAvailableItems().containsKey("ignitionswitch")) {
+            return initialStory;
+        } else {
             if(getAvailableItems().get("ignitionswitch")){
                 return initialStory;
             }
@@ -43,21 +47,25 @@ public class ComputerRoom {
                 return updatedStory;
             }
         }
-        else{
-            return initialStory;
-        }
     }
 
+    // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         availableItems.put("ignitionswitch",true);
         return availableItems;
     }
 
-    public static Map<String,String> getAvailableDirections(){
-        availableDirections.put("N","");
-        availableDirections.put("S","CapsuleRoom");
-        availableDirections.put("E","Kitchen");
-        availableDirections.put("W","");
+    // set available items to false by key if item moved to Inventory
+    public static void setAvailableItems(String key) {
+        availableItems.replace(key,false);
+    }
+
+    // Get available directions from a room
+    public static Map<String,Rooms> getAvailableDirections(){
+        availableDirections.put("N",null);
+        availableDirections.put("S",Rooms.CapsuleRoom);
+        availableDirections.put("E",Rooms.Kitchen);
+        availableDirections.put("W",null);
         return availableDirections;
     }
 }

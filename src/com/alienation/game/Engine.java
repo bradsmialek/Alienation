@@ -1,18 +1,14 @@
 package com.alienation.game;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
  * Game Engine
+ * This class is used to start the Engine of the game
  */
 public class Engine {
 
-    private static String answer;
-
-    public static void Start(){
+    /*************** PUBLIC METHODS  ******************/
+    public static void start(){
         Scanner in = new Scanner(System.in);
         System.out.println("\n" +
                 "░█████╗░██╗░░░░░██╗███████╗███╗░░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗\n" +
@@ -23,8 +19,5 @@ public class Engine {
                 "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n");
 
         CapsuleRoom.loadEnvironment();
-
-
-        in.close(); // CLOSES SCANNER
     }
 }
