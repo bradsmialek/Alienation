@@ -9,9 +9,9 @@ public class Character {
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     public static final int MAX_HEALTH = 100;
     public static final int MIN_HEALTH = 0;
-    private static int health = 100;
-    private static String currentWeapon = "";
-    private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial defalut
+    private static int health = 50;
+    private static String currentWeapon = null;
+    private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
 
 
     /*************** GETTER - SETTER METHODS  ******************/
@@ -19,7 +19,7 @@ public class Character {
         return health;
     }
 
-    public void setHealth(int newHealth) {
+    public static void setHealth(int newHealth) {
         if ((health + newHealth) > MAX_HEALTH) {
             health = MAX_HEALTH;
         } else if((Character.health + newHealth) < MIN_HEALTH) {

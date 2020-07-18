@@ -1,7 +1,8 @@
 package com.alienation.game;
-import java.lang.reflect.Method;
-import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Menu For Console
@@ -40,76 +41,179 @@ public class Menu {
         }
 
         Rooms currentRoom = Character.getCurrentRoom();
+        //System.out.println(currentRoom);
         Rooms nextRoom = null;
 
         // INVESTIGATE, OPEN, EAT, GRAB, ATTACK, READ, SWAP, N, E, S, W
         switch (action) {
             case INVESTIGATE:
-                CapsuleRoom.loadEnvironment();
+                investigate(currentRoom);
                 break;
             case OPEN:
                 System.out.println("do Something with open");
                 break;
             case EAT:
-                System.out.println("do Something with eat");
+                eat(currentRoom);
                 break;
             case GRAB:
-                System.out.println("do Something with grab");
+                grab(currentRoom);
                 break;
             case ATTACK:
                 System.out.println("do Something with attack");
                 break;
             case READ:
-                System.out.println("do Something with read");
+                System.out.println("Nothing to Read!!");
                 break;
             case SWAP:
-                System.out.println("do Something with swap");
+                System.out.println("Nothing to Swap!!");
                 break;
             case N:
-                nextRoom = getRoom("N", currentRoom);
-                if(nextRoom != null){
-                    loadRoom(nextRoom);
-                }
-                else{
-                    System.out.println("You cannot go to that side.");
-                    displayMenu();
-                }
+                moveRoom("N", currentRoom);
                 break;
             case E:
-                nextRoom = getRoom("E", currentRoom);
-                if(nextRoom != null){
-                    loadRoom(nextRoom);
-                }
-                else{
-                    System.out.println("You cannot go to that side.");
-                    displayMenu();
-                }
+                moveRoom("E", currentRoom);
                 break;
             case S:
-                nextRoom = getRoom("S", currentRoom);
-                if(nextRoom != null){
-                    loadRoom(nextRoom);
-                }
-                else{
-                    System.out.println("You cannot go to that side.");
-                    displayMenu();
-                }
+                moveRoom("S", currentRoom);
                 break;
             case W:
-                nextRoom = getRoom("W", currentRoom);
-                if(nextRoom != null){
-                    loadRoom(nextRoom);
-                }
-                else{
-                    System.out.println("You cannot go to that side.");
-                    displayMenu();
-                }
+                moveRoom("W", currentRoom);
                 break;
         }
 
         in.close();
     }
 
+    // Investigate the room
+    public static void investigate(Rooms currentRoom){
+        Map<String,Boolean> availableItems = new HashMap<>();
+        switch (currentRoom){
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = ComputerRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        System.out.println("You see:");
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println("\n");
+        Menu.displayMenu();
+    }
+
+    // Grab the item from the room
+    public static void grab(Rooms currentRoom){
+        Map<String,Boolean> availableItems = new HashMap<>();
+        switch (currentRoom){
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = ComputerRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        System.out.println("Grab what?");
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println("\n");
+    }
+
+    // Eat the item from the room
+    public static void eat(Rooms currentRoom){
+        Map<String,Boolean> availableItems = new HashMap<>();
+        switch (currentRoom){
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = ComputerRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        int edibleItems = 0;
+        Set<String> items = availableItems.keySet();
+        for(Edibles edible : Edibles.values()){
+            if(items.contains(edible.getName())){
+                edibleItems++;
+                int healthPoints = ((Edibles)edible).getHealthPoints();
+                //Increase health points
+                Character.setHealth(healthPoints);
+                //Remove from available items of room
+                availableItems.remove(edible.getName());
+            }
+        }
+        if(edibleItems == 0){
+            System.out.println("There is nothing to eat!!");
+        }
+        updateItems(currentRoom, availableItems);
+        Menu.displayMenu();
+    }
+
+    // Update available items in room's HashMap
+    public static void updateItems(Rooms currentRoom,Map<String,Boolean> availableItems) {
+        switch (currentRoom) {
+            case CapsuleRoom:
+                CapsuleRoom.setAvailableItems(availableItems);
+                break;
+            case AlienRoom:
+                AlienRoom.setAvailableItems(availableItems);
+                break;
+            case Kitchen:
+                Kitchen.setAvailableItems(availableItems);
+                break;
+            case ComputerRoom:
+                ComputerRoom.setAvailableItems(availableItems);
+                break;
+            case ControlRoom:
+                ControlRoom.setAvailableItems(availableItems);
+                break;
+        }
+    }
+
+    // Move Room from one to another
+    public static void moveRoom(String direction, Rooms currentRoom){
+        Rooms nextRoom = getRoom(direction, currentRoom);
+        if(nextRoom != null){
+            loadRoom(nextRoom);
+        }
+        else{
+            System.out.println("You cannot go to that side.\n");
+            displayMenu();
+        }
+    }
+
+    // Get the next room
     public static Rooms getRoom(String direction, Rooms currentRoom){
         Rooms nextRoom = null;
         switch (currentRoom){
@@ -132,6 +236,7 @@ public class Menu {
         return nextRoom;
     }
 
+    // Load the next room
     public static void loadRoom(Rooms newRoom){
         Character.setCurrentRoom(newRoom);
         switch (newRoom){
