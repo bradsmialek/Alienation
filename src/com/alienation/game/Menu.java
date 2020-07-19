@@ -1,4 +1,6 @@
 package com.alienation.game;
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,22 +13,25 @@ import java.util.Set;
 public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String actionQuestion = "What would you like to do?\n" + ">";
-    private static String actions = "You can: Investigate, Open, Eat, Grab, Attack, Read, Swap";
-    private static String directions = "You can move: N, S, E, W";
+    private static String actionQuestion = "What would you like to do? (o for options)";
+    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap >";
+    private static String directions = "You can move < N, S, E, W >";
+    private static String inv = "Check Inventory < i >";
     private static Actions action;
-
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
     public static void displayMenu() throws IllegalArgumentException {
+        final String green = Engine.ANSI_GREEN;
+        final String end = Engine.ANSI_RESET;
+        final String oxygen = "O\u2082"; // O₂
+        final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
+        final String space = "                                      ";
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end  + "   Wpn: " + Character.getCurrentWeapon() + "]");
+        System.out.println(lines);
+
         boolean repeat = true;
         Scanner in = new Scanner(System.in);
-
-        System.out.println("Health: " + Character.getHealth() + ", Oxygen: " + Oxygen.getOxygen()  + ", Weapon: " + Character.getCurrentWeapon());
-        System.out.println("\n" + getActions());
-        System.out.println(getDirections());
-        System.out.println("\n" + getActionQuestion());
 
         while (repeat) {
             try {
@@ -79,6 +84,11 @@ public class Menu {
             case W:
                 moveRoom("W", currentRoom);
                 break;
+            case O:
+                System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + Engine.ANSI_RESET);
+                Menu.displayMenu();
+            case I:
+                CheckInventory();
         }
 
         in.close();
@@ -86,6 +96,7 @@ public class Menu {
 
     // Investigate the room
     public static void investigate(Rooms currentRoom){
+        final String space = "\n";
         Map<String,Boolean> availableItems = new HashMap<>();
         switch (currentRoom){
             case CapsuleRoom:
@@ -104,17 +115,21 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        System.out.println("You see:");
+        final String lines = "************";
+        System.out.println(space + Engine.ANSI_YELLOW + "You see:");
+        System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
             System.out.println(key);
         }
-        System.out.println("\n");
+        System.out.println(lines + Engine.ANSI_RESET);
+//        System.out.println("\n");
         Menu.displayMenu();
     }
 
     // Grab the item from the room
     public static void grab(Rooms currentRoom){
+        final String space = "\n";
         Map<String,Boolean> availableItems = new HashMap<>();
         switch (currentRoom){
             case CapsuleRoom:
@@ -133,12 +148,28 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        System.out.println("Grab what?");
+        final String lines = "************";
+        System.out.println(space + Engine.ANSI_YELLOW + "Grab what?");
+        System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
             System.out.println(key);
         }
-        System.out.println("\n");
+        System.out.println(lines + Engine.ANSI_RESET);
+        Scanner in = new Scanner(System.in);
+        String answer = in.nextLine();
+
+        //TODO: check verb
+//        if edible, weapon, item, else
+
+
+        Map<String,String> items = new HashMap<>();
+        items.put(answer, "true");
+        Character.setInventory(items);
+
+
+
+        Menu.displayMenu();
     }
 
     // Eat the item from the room
@@ -177,6 +208,7 @@ public class Menu {
             System.out.println("There is nothing to eat!!");
         }
         updateItems(currentRoom, availableItems);
+        System.out.println("You ate ");
         Menu.displayMenu();
     }
 
@@ -208,7 +240,7 @@ public class Menu {
             loadRoom(nextRoom);
         }
         else{
-            System.out.println("You cannot go to that side.\n");
+            System.out.println("There doesn't seem to be a door this way.\n");
             displayMenu();
         }
     }
@@ -258,6 +290,28 @@ public class Menu {
         }
     }
 
+    // Get available items of a room
+    public static void CheckInventory(){
+        final String space = "\n";
+        Map<String,String> inventory = new HashMap<>();
+        inventory = Character.getInventory();
+
+        final String lines = "************";
+        System.out.println(space + Engine.ANSI_YELLOW + "You have:");
+        System.out.println(lines);
+        Set<String> keys = inventory.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println(lines + Engine.ANSI_RESET);
+        Menu.displayMenu();
+    }
+
+    // Checks item for appropriate action verb
+    public static String checkAction(String toCheck){
+        return "";
+    }
+
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static String getActionQuestion() {
@@ -270,6 +324,10 @@ public class Menu {
 
     public static String getDirections() {
         return directions;
+    }
+
+    public static String getInv(){
+        return inv;
     }
 }
 

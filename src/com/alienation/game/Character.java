@@ -1,5 +1,8 @@
 package com.alienation.game;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Character Class
  * This class used for maintaining characteristics for character like health points, current weapon.
@@ -10,8 +13,9 @@ public class Character {
     public static final int MAX_HEALTH = 100;
     public static final int MIN_HEALTH = 0;
     private static int health = 50;
-    private static String currentWeapon = null;
+    private static String currentWeapon = "5 fingers to the face";
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
+    private static Map<String,String> inventory = new HashMap<String, String>();
 
 
     /*************** GETTER - SETTER METHODS  ******************/
@@ -43,5 +47,15 @@ public class Character {
 
     public static void setCurrentRoom(Rooms newCurrentRoom) {
         currentRoom = newCurrentRoom;
+    }
+
+    // Get available items in inventory
+    public static Map<String,String> getInventory(){
+        return inventory;
+    }
+
+    // set available items updated items if item moved to Inventory or Eat an item
+    public static void setInventory(Map<String,String> newInventory) {
+        inventory = newInventory;
     }
 }
