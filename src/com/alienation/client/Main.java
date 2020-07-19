@@ -7,6 +7,6 @@ import com.alienation.game.Engine;
  */
 public class Main {
     public static void main(String[] args) {
-        Engine.Start();
+        Engine.start();
     }
 }
