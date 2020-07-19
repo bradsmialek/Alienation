@@ -43,25 +43,20 @@ public class CapsuleRoom {
 //        if (!getAvailableItems().containsKey("tazer")) {
 //            return initialStory;
 //        } else {
-//            if(getAvailableItems().get("tazer")){
-//                return initialStory;
-//            }
-//            else{
-//                return updatedStory;
-//            }
+//            return updatedStory;
 //        }
 //    }
 
     public static Map<String,Boolean> getAvailableItems(){
         availableItems.put("tazer",true);
 
-        Set<String> keys = availableItems.keySet();
-        System.out.println("You see:");
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println("\n");
-        Menu.ShowMenu();
+//        Set<String> keys = availableItems.keySet();
+//        System.out.println("You see:");
+//        for (String key : keys) {
+//            System.out.println(key);
+//        }
+//        System.out.println("\n");
+//        Menu.ShowMenu();
         return availableItems;
     }
 
@@ -80,5 +75,6 @@ public class CapsuleRoom {
             System.out.println(key);
         }
         System.out.println("\n");
+
     }
 }

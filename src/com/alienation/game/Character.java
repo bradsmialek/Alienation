@@ -8,9 +8,9 @@ public class Character {
     public static final int MIN_HEALTH  = 0;
     private static int health = 100;
     private static String currentWeapon;
-    private static String currentRoom = "Room1"; // as initial defalut
+    private static String currentRoom = "CapsuleRoom"; // as initial defalut
 
-    public String getCurrentRoom() {
+    public static String getCurrentRoom() {
         return currentRoom;
     }
 
