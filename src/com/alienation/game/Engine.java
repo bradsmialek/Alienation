@@ -6,38 +6,27 @@ import java.util.Scanner;
  * This class is used to start the Engine of the game
  */
 public class Engine {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
-<<<<<<< HEAD
-    public static void Start(){
-
-=======
     /*************** PUBLIC METHODS  ******************/
     public static void start(){
         Scanner in = new Scanner(System.in);
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434
-        System.out.println("\n" +
+        System.out.println("\n" + ANSI_GREEN +
                 "░█████╗░██╗░░░░░██╗███████╗███╗░░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗\n" +
                 "██╔══██╗██║░░░░░██║██╔════╝████╗░██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║\n" +
                 "███████║██║░░░░░██║█████╗░░██╔██╗██║███████║░░░██║░░░██║██║░░██║██╔██╗██║\n" +
                 "██╔══██║██║░░░░░██║██╔══╝░░██║╚████║██╔══██║░░░██║░░░██║██║░░██║██║╚████║\n" +
                 "██║░░██║███████╗██║███████╗██║░╚███║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║\n" +
-                "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n");
-
-<<<<<<< HEAD
-
-//        while (Character.gethealth() > 0 && Oxygen.getLevels() > 0) {
-//
-//            System.out.println("Guess any letter in the word");
-//            System.out.println(Hangman.emptyString);
-//            String guess = sc.next();
-//            Hangman.guessWords(guess);
-//        }
-
+                "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n" + ANSI_RESET);
 
         CapsuleRoom.loadEnvironment();
-
-=======
-        CapsuleRoom.loadEnvironment();
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434
     }
 }

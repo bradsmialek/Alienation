@@ -1,5 +1,8 @@
 package com.alienation.game;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Character Class
  * This class used for maintaining characteristics for character like health points, current weapon.
@@ -8,25 +11,11 @@ public class Character {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     public static final int MAX_HEALTH = 100;
-<<<<<<< HEAD
-    public static final int MIN_HEALTH  = 0;
-    private static int health = 100;
-    private static String currentWeapon;
-    private static String currentRoom = "CapsuleRoom"; // as initial defalut
-
-    public static String getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(String currentRoom) {
-        this.currentRoom = currentRoom;
-    }
-=======
     public static final int MIN_HEALTH = 0;
     private static int health = 50;
-    private static String currentWeapon = null;
+    private static String currentWeapon = "5 fingers to the face";
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434
+    private static Map<String,String> inventory = new HashMap<String, String>();
 
 
     /*************** GETTER - SETTER METHODS  ******************/
@@ -44,9 +33,6 @@ public class Character {
         }
     }
 
-<<<<<<< HEAD
-}
-=======
     public static String getCurrentWeapon() {
         return currentWeapon;
     }
@@ -62,5 +48,14 @@ public class Character {
     public static void setCurrentRoom(Rooms newCurrentRoom) {
         currentRoom = newCurrentRoom;
     }
+
+    // Get available items in inventory
+    public static Map<String,String> getInventory(){
+        return inventory;
+    }
+
+    // set available items updated items if item moved to Inventory or Eat an item
+    public static void setInventory(Map<String,String> newInventory) {
+        inventory = newInventory;
+    }
 }
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434

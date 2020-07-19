@@ -13,19 +13,8 @@ public class AlienRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-<<<<<<< HEAD
-    private static String initialStory = "As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
-            "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
-            "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-            "You notice a Tazer on the floor.\n\n";
-    private static String updatedStory = "As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
-            "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
-            "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-            "You notice a Tazer on the floor.\n\n";
-=======
     private static String initialStory = "This is Alien Room.\n";
     private static String updatedStory = "This is Alien Room - Updated.\n";
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
 
@@ -33,13 +22,8 @@ public class AlienRoom {
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
-<<<<<<< HEAD
-        System.out.println(getInitialStory());
-        Menu.ShowMenu();
-=======
         System.out.println(getStory());
         Menu.displayMenu();
->>>>>>> 9a21e2f43bed4251c360886f6907a1c6edd2a434
     }
 
 
