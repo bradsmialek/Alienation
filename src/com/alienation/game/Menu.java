@@ -21,6 +21,7 @@ public class Menu {
     private static String inv = "Check Inventory < i >";
     private static Actions action;
     private static Edibles edible;
+    private static Xitems xItem;
     private static String answer;
 
     /*************** PUBLIC METHODS  ******************/
@@ -31,7 +32,7 @@ public class Menu {
         final String oxygen = "O\u2082"; // O₂
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
-        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end  + "   Wpn: " + Character.getCurrentWeapon() + "]");
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
 
         boolean repeat = true;
@@ -120,7 +121,7 @@ public class Menu {
                 break;
         }
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "You see:");
+        System.out.println(space + Engine.ANSI_YELLOW + "You see:\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -165,16 +166,36 @@ public class Menu {
         Set<String> items = availableItems.keySet();
 
 
-        //TODO: still have to restrict some items from being stored
-        //String reply = checkAction(answer);
-        // if edible just store
-        // if item NO store
-        // if clue.. dont know yet
-        // if weapon immediatly add to character current weapon and place current weapon into storage
-
-
         //Check if user response is in the room? We can't store anything ya know!
+        //Also restrict certain items and do something with oxygen
         if(items.contains(newAnswer)){
+            try {
+                xItem = Xitems.valueOf(newAnswer.toUpperCase());
+                String upperAnswer = newAnswer.toUpperCase();
+                if (xItem.toString().equals(upperAnswer)){
+                    System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
+                    Menu.displayMenu();
+                }else{
+                    System.out.println("false");
+                }
+            }
+            catch(IllegalArgumentException e){
+                System.out.println();
+            }
+
+            if(newAnswer.equals("Oxygen Tank")){
+                Oxygen.incOxygen(100);
+                System.out.println(Engine.ANSI_YELLOW + "\nOxygen levels are full." + Engine.ANSI_RESET);
+                availableItems.remove(newAnswer);
+                Menu.displayMenu();
+            }
+
+            //TODO: HARDCODED WEAPON CHECK
+            if(newAnswer.equals("Taser Gun")){ // CHECK ENUMS
+                Character.setCurrentWeapon(newAnswer);
+                System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
+            }
+
             System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
             Map<String,String> newItems = new HashMap<>();
             newItems = Character.getInventory();
@@ -183,7 +204,7 @@ public class Menu {
             // delete item from room
             availableItems.remove(newAnswer);
         }else{
-            System.out.println(Engine.ANSI_RED + "You can't grab that!" + Engine.ANSI_RESET);
+            System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
         }
 
         Menu.displayMenu();
@@ -340,46 +361,14 @@ public class Menu {
         inventory = Character.getInventory();
 
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Inventory");
+        System.out.println(space + Engine.ANSI_YELLOW + "Inventory\n");
         System.out.println(lines);
         Set<String> keys = inventory.keySet();
         for (String key : keys) {
             System.out.println(key);
         }
         System.out.println(lines + Engine.ANSI_RESET);
-
-//        System.out.println("Do something with an item? y or n");
-//        Scanner in = new Scanner(System.in);
-//        if (yes){
-//            System.out.println("What would you like to do ");
-//        }else{
-//            System.out.println("Leaving inventory.");
-//        }
         Menu.displayMenu();
-    }
-
-    // Checks item for appropriate action verb
-    public static String checkAction(String str){
-        String word = "po";
-        String s = str;
-        Map<String,Boolean> inventoryItems = new HashMap<>();
-
-//        switch (type) {
-//            case edible:
-//                check if str is in inventory items
-//                    do something
-//                break;
-//            case item:
-//                word = randomWord(foodWords);
-//                break;
-//            case weapon:
-//                word = randomWord(animalWords);
-//                break;
-//            default:
-//                System.out.println("default");
-//                break;
-//        }
-        return word;
     }
 
     public static String capitalizeAll(String str) {

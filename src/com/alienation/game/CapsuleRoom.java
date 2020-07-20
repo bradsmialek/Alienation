@@ -17,7 +17,7 @@ public class CapsuleRoom {
             "missing and their sleeping capsule is shattered with blood splattered across the front. The ship seems to be drifting in\n" +
             "space and the lights are dim, most likely on some sort of backup system. You notice a Taser on the floor.\n";
     private static String updatedStory = "\n\nYou are back in the Capsule Room. Another crew member is missing. There is a blood trail....\n";
-    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
+    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed. There are crew members missing and blood everywhere.";
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
@@ -28,7 +28,7 @@ public class CapsuleRoom {
     // This method used to load Environment to user
     public static void loadEnvironment(){
         count++;
-        Oxygen.setOxygen(minusOxy);
+        Oxygen.minOxygen(minusOxy);
         System.out.println(getStory());
         Menu.displayMenu();
     }

@@ -30,7 +30,7 @@ public class ComputerRoom {
     // This method used to load Environment to user
     public static void loadEnvironment(){
         count++;
-        Oxygen.setOxygen(minusOxy);
+        Oxygen.minOxygen(minusOxy);
         if(Oxygen.getOxygen() == 0){
             System.out.println("You're Dead! There is no more Oxygen left."); // Better Death
             Death.death();
@@ -55,7 +55,7 @@ public class ComputerRoom {
             }
         }
     }
-
+    //TODO: WORKING ON THIS.  NEED TO FIGURE OUT STORYLINE
 //    public static String getStory() {
 //        if(count == 1){
 //            return initialStory;
