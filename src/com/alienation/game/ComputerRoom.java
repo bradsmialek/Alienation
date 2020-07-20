@@ -47,7 +47,7 @@ public class ComputerRoom {
             return updatedStory;
         } else {
             if(getAvailableItems().get("Ignition Switch")){  // true
-                System.out.println(getAvailableItems().get("Ignition Switch"));
+//                System.out.println(getAvailableItems().get("Ignition Switch"));
                 return initialStory;
             }
             else{

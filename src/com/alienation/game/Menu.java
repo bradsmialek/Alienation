@@ -92,8 +92,10 @@ public class Menu {
             case O:
                 System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + Engine.ANSI_RESET);
                 Menu.displayMenu();
+                break;
             case I:
                 CheckInventory();
+                break;
         }
 
         in.close();
@@ -236,7 +238,7 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        System.out.println(space + Engine.ANSI_YELLOW + "Eat what?");
+        System.out.println(space + Engine.ANSI_YELLOW + "Eat what?\n");
 
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
@@ -271,7 +273,7 @@ public class Menu {
             }
             updateItems(currentRoom, availableItems);
         } catch (IllegalArgumentException e) {
-            System.out.println(Engine.ANSI_RED + "You can't eat that." + Engine.ANSI_RESET);
+            System.out.println(Engine.ANSI_RED + "\nYou can't eat that." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
