@@ -37,7 +37,7 @@ public class Character {
         return currentWeapon;
     }
 
-    public void setCurrentWeapon(String newCurrentWeapon) {
+    public static void  setCurrentWeapon(String newCurrentWeapon) {
         currentWeapon = newCurrentWeapon;
     }
 

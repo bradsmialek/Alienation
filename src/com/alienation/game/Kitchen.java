@@ -26,7 +26,7 @@ public class Kitchen {
     // This method used to load Environment to user
     public static void loadEnvironment(){
         count++;
-        Oxygen.setOxygen(minusOxy);
+        Oxygen.minOxygen(minusOxy);
         System.out.println(getStory());
         Menu.displayMenu();
     }

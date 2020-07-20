@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Created by bradsmialek on Sun - 7/19/20 @ 8:46 PM
  */
 public class Death {
-
+    //TODO: FIX DEBUG LOG THING
     public static void death(){
 
         System.out.println(
