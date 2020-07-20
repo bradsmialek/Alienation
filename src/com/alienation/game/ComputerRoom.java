@@ -14,15 +14,28 @@ public class ComputerRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "This is Computer Room.\n";
-    private static String updatedStory = "This is Computer Room - Updated.\n";
+    private static String initialStory = "\n\nYou've entered a dim room, except the blinking of tiny lights everywhere. The annoying beeping noises of computers fill the\n" +
+            "air and it's hard to concentrate. This must be where the system's operating servers and backup drives are accessed. Something is\n" +
+            "dripping onto your shoulder... some sort of slimey viscous substance. It looks like one computer still works, but you need an\n" +
+            "access code.\n";
+    private static String updatedStory = "\n\nYou're back in the server room and you have found an ignition switch.  This thing must do something, but what!?\n";
+    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
+    private static int count = 0;
+    private static int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
+        count++;
+        Oxygen.setOxygen(minusOxy);
+        if(Oxygen.getOxygen() == 0){
+            System.out.println("You're Dead! There is no more Oxygen left."); // Better Death
+            Death.death();
+            System.exit(0);
+        }
         System.out.println(getStory());
         Menu.displayMenu();
     }
@@ -30,17 +43,30 @@ public class ComputerRoom {
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads
     public static String getStory() {
-        if (!getAvailableItems().containsKey("Ignition Switch")) {
-            return initialStory;
+        if (!getAvailableItems().containsKey("Ignition Switch")) { //if room does not contain ignition
+            return updatedStory;
         } else {
-            if(getAvailableItems().get("Ignition Switch")){
+            if(getAvailableItems().get("Ignition Switch")){  // true
+                System.out.println(getAvailableItems().get("Ignition Switch"));
                 return initialStory;
             }
             else{
-                return updatedStory;
+                return "blah";
             }
         }
     }
+
+//    public static String getStory() {
+//        if(count == 1){
+//            return initialStory;
+//        }
+//        else if(count == 2){
+//            return updatedStory;
+//        }
+//        else{
+//            return lastStory;
+//        }
+//    }
 
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){

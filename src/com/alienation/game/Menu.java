@@ -1,10 +1,12 @@
 package com.alienation.game;
 import org.w3c.dom.ls.LSOutput;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Menu For Console
@@ -18,6 +20,8 @@ public class Menu {
     private static String directions = "You can move < N, S, E, W >";
     private static String inv = "Check Inventory < i >";
     private static Actions action;
+    private static Edibles edible;
+    private static String answer;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
@@ -123,7 +127,6 @@ public class Menu {
             System.out.println(key);
         }
         System.out.println(lines + Engine.ANSI_RESET);
-//        System.out.println("\n");
         Menu.displayMenu();
     }
 
@@ -149,7 +152,7 @@ public class Menu {
                 break;
         }
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Grab what?");
+        System.out.println(space + Engine.ANSI_YELLOW + "Grab what?\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -158,22 +161,42 @@ public class Menu {
         System.out.println(lines + Engine.ANSI_RESET);
         Scanner in = new Scanner(System.in);
         String answer = in.nextLine();
-
-        //TODO: check verb
-//        if edible, weapon, item, else
-
-
-        Map<String,String> items = new HashMap<>();
-        items.put(answer, "true");
-        Character.setInventory(items);
+        String newAnswer = capitalizeAll(answer);
+        Set<String> items = availableItems.keySet();
 
 
+        //TODO: still have to restrict some items from being stored
+        //String reply = checkAction(answer);
+        // if edible just store
+        // if item NO store
+        // if clue.. dont know yet
+        // if weapon immediatly add to character current weapon and place current weapon into storage
+
+
+        //Check if user response is in the room? We can't store anything ya know!
+        if(items.contains(newAnswer)){
+            System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
+            Map<String,String> newItems = new HashMap<>();
+            newItems = Character.getInventory();
+            newItems.put(newAnswer, "reply");
+
+            // delete item from room
+            availableItems.remove(newAnswer);
+        }else{
+            System.out.println(Engine.ANSI_RED + "You can't grab that!" + Engine.ANSI_RESET);
+        }
 
         Menu.displayMenu();
     }
 
+    //TODO: Find a way to add more than 1 of same item maybe?
+
     // Eat the item from the room
     public static void eat(Rooms currentRoom){
+        final String space = "\n";
+        final String lines = "************";
+        boolean repeat = true;
+
         Map<String,Boolean> availableItems = new HashMap<>();
         switch (currentRoom){
             case CapsuleRoom:
@@ -192,23 +215,43 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        int edibleItems = 0;
-        Set<String> items = availableItems.keySet();
-        for(Edibles edible : Edibles.values()){
-            if(items.contains(edible.getName())){
-                edibleItems++;
-                int healthPoints = ((Edibles)edible).getHealthPoints();
-                //Increase health points
-                Character.setHealth(healthPoints);
-                //Remove from available items of room
-                availableItems.remove(edible.getName());
+        System.out.println(space + Engine.ANSI_YELLOW + "Eat what?");
+
+        System.out.println(lines);
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println(lines + Engine.ANSI_RESET);
+        Scanner in = new Scanner(System.in);
+
+        //TODO: OPTIONS FOR INVENTORY OR ROOM
+        try {
+            answer = in.nextLine(); //grabs input
+            edible = Edibles.valueOf(answer.toUpperCase()); // input to upper then checks input against ENUMs - implicit
+
+            int edibleItems = 0;
+            Set<String> items = availableItems.keySet();
+
+            for(Edibles edible : Edibles.values()){
+                if(items.contains(edible.getName())){
+                    edibleItems++;
+                    System.out.println(Engine.ANSI_YELLOW + "\nYou ate " + answer + ".  HP ++" + Engine.ANSI_RESET);
+                    int healthPoints = ((Edibles)edible).getHealthPoints();
+                    //Increase health points
+                    Character.setHealth(healthPoints);
+                    //Remove from available items of room
+                    availableItems.remove(edible.getName());
+
+                }
             }
+            if(edibleItems == 0){
+                System.out.println(Engine.ANSI_RED + "There is nothing to eat!!" + Engine.ANSI_RESET);
+            }
+            updateItems(currentRoom, availableItems);
+        } catch (IllegalArgumentException e) {
+            System.out.println(Engine.ANSI_RED + "You can't eat that." + Engine.ANSI_RESET);
         }
-        if(edibleItems == 0){
-            System.out.println("There is nothing to eat!!");
-        }
-        updateItems(currentRoom, availableItems);
-        System.out.println("You ate ");
         Menu.displayMenu();
     }
 
@@ -297,21 +340,57 @@ public class Menu {
         inventory = Character.getInventory();
 
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "You have:");
+        System.out.println(space + Engine.ANSI_YELLOW + "Inventory");
         System.out.println(lines);
         Set<String> keys = inventory.keySet();
         for (String key : keys) {
             System.out.println(key);
         }
         System.out.println(lines + Engine.ANSI_RESET);
+
+//        System.out.println("Do something with an item? y or n");
+//        Scanner in = new Scanner(System.in);
+//        if (yes){
+//            System.out.println("What would you like to do ");
+//        }else{
+//            System.out.println("Leaving inventory.");
+//        }
         Menu.displayMenu();
     }
 
     // Checks item for appropriate action verb
-    public static String checkAction(String toCheck){
-        return "";
+    public static String checkAction(String str){
+        String word = "po";
+        String s = str;
+        Map<String,Boolean> inventoryItems = new HashMap<>();
+
+//        switch (type) {
+//            case edible:
+//                check if str is in inventory items
+//                    do something
+//                break;
+//            case item:
+//                word = randomWord(foodWords);
+//                break;
+//            case weapon:
+//                word = randomWord(animalWords);
+//                break;
+//            default:
+//                System.out.println("default");
+//                break;
+//        }
+        return word;
     }
 
+    public static String capitalizeAll(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        return Pattern.compile("\\b(.)(.*?)\\b")
+                .matcher(str)
+                .replaceAll(match -> match.group(1).toUpperCase() + match.group(2));
+    }
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static String getActionQuestion() {

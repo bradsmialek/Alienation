@@ -13,15 +13,20 @@ public class AlienRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "This is Alien Room.\n";
-    private static String updatedStory = "This is Alien Room - Updated.\n";
+    private static String initialStory = "\n\nThis is Alien Room.\n";
+    private static String updatedStory = "\n\nThis is Alien Room - Updated.\n";
+    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
+    private static int count = 0;
+    private static int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
+        count++;
+        Oxygen.setOxygen(minusOxy);
         System.out.println(getStory());
         Menu.displayMenu();
     }
@@ -41,6 +46,17 @@ public class AlienRoom {
             }
         }
     }
+    //    public static String getStory() {
+//        if(count == 1){
+//            return initialStory;
+//        }
+//        else if(count == 2){
+//            return updatedStory;
+//        }
+//        else{
+//            return lastStory;
+//        }
+//    }
 
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
