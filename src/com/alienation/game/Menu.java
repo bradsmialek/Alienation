@@ -121,7 +121,7 @@ public class Menu {
                 break;
         }
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "You see:");
+        System.out.println(space + Engine.ANSI_YELLOW + "You see:\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
