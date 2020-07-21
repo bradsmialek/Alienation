@@ -95,11 +95,48 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
-                System.out.println(Engine.ANSI_RED + "\nYou can only run if you're being attacked scaredy pants!" + Engine.ANSI_RESET);
+                System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
+//                run(currentRoom);
+                Menu.displayMenu(); // TODO: remove after run is complete
                 break;
         }
 
         in.close();
+    }
+
+    public static void run(Rooms currentRoom) {
+        final String space = "\n";
+        Map<String, Boolean> availableItems = new HashMap<>();
+        switch (currentRoom) {
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = SupplyRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        for (String key : keys) {
+            if(Alien.getAliens().containsKey(key)){
+                System.out.println("Build out attack functionality");
+
+                //TODO: create run logic
+
+
+            }
+        }
+        Menu.displayMenu();
+
+
+
     }
 
     // Investigate the room
@@ -137,9 +174,9 @@ public class Menu {
 
                 //TODO: create attack logic
 
-                //attack or run    **run is created here
+                //attack or run
                 //if attack?    type of weapon dealing damage?  Look at Weapon Enums
-                //if run? go back to previous room and show menu
+                //if run?  call run () should go back to previous room and show menu
                 //set alien health after attack
                 //alien retaliates .. get type and damage dealt
                 //set character hp
@@ -243,16 +280,20 @@ public class Menu {
             //check if item can be opened against enums
             try {
                 itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase());
+                System.out.println(itemToOpen);
                 String upperAnswer = newAnswer.toUpperCase();
                 if (itemToOpen.toString().equals(upperAnswer)) {
                     System.out.println("pass... still working on it");
-//                    if(don't have code'){
-//                        can't open'
-//                    }else{
-//                        open  object add part to char inventory
-//                        delete code from inventory
-//                    }
-
+                    if(!Character.getInventory().containsKey(newAnswer)){
+                        System.out.println("It's locked");
+                    }else{
+                        System.out.println("New item added to inventory.");
+                        Map<String,String> newItems = new HashMap<>();
+                        newItems = Character.getInventory();
+                        newItems.put(newAnswer, "reply");
+                        // delete item from room
+                        availableItems.remove(newAnswer);
+                    }
                 } else {
                     System.out.println("here");
                     Menu.displayMenu();
@@ -325,8 +366,8 @@ public class Menu {
                 Menu.displayMenu();
             }
 
-            //TODO: HARDCODED WEAPON CHECK
-            if(newAnswer.equals("Taser Gun")){ // CHECK ENUMS
+            //TODO: check against enums... hard coded for now
+            if(newAnswer.equals("Taser Gun")){
                 Character.setCurrentWeapon(newAnswer);
                 System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
             }
