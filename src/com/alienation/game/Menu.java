@@ -1,7 +1,5 @@
 package com.alienation.game;
-import org.w3c.dom.ls.LSOutput;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,12 +14,13 @@ public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String actionQuestion = "What would you like to do? (o for options)";
-    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap >";
+    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap, Run >";
     private static String directions = "You can move < N, S, E, W >";
     private static String inv = "Check Inventory < i >";
     private static Actions action;
     private static Edibles edible;
     private static Xitems xItem;
+    private static CanOpen itemToOpen;
     private static String answer;
     private static final String oxygen = "O\u2082"; // O₂
 
@@ -59,7 +58,7 @@ public class Menu {
                 investigate(currentRoom);
                 break;
             case OPEN:
-                System.out.println("do Something with open");
+                open(currentRoom);
                 break;
             case EAT:
                 eat(currentRoom);
@@ -71,10 +70,10 @@ public class Menu {
                 System.out.println("do Something with attack");
                 break;
             case READ:
-                System.out.println("Nothing to Read!!");
+                System.out.println("Can't Read yet!!");
                 break;
             case SWAP:
-                System.out.println("Nothing to Swap!!");
+                System.out.println("Can't Swap yet!!");
                 break;
             case N:
                 moveRoom("N", currentRoom);
@@ -119,7 +118,7 @@ public class Menu {
                 availableItems = Kitchen.getAvailableItems();
                 break;
             case ComputerRoom:
-                availableItems = ComputerRoom.getAvailableItems();
+                availableItems = SupplyRoom.getAvailableItems();
                 break;
             case ControlRoom:
                 availableItems = ControlRoom.getAvailableItems();
@@ -134,28 +133,76 @@ public class Menu {
         }
         System.out.println(lines + Engine.ANSI_RESET);
         for (String key : keys) {
-            if(key.equals("Alien")){
-                System.out.println(Engine.ANSI_BLUE + "\nYou have encountered Your crew member is dismembered and there is a large bloody hole in their chest.\n"+
+            if(Alien.getAliens().containsKey(key)){
+                System.out.println(Engine.ANSI_BLUE + "\nIt looks like you found your crew mate, they look dismembered and there is a large bloody hole in their chest.\n"+
                         "You can see their insides squirming around, their eyes are black with bloody tears leaking from the corners. They notice you and it let's\n"+
                         "out a horrific bellowing growl. This is not your crew mate anymore ... it's coming to get you!!\n"+ Engine.ANSI_RESET);
-                battleScenes();
-        }
-
+                Attack.attack();
+            }
         }
         Menu.displayMenu();
     }
 
-    public static void battleScenes(){
-        System.out.println("This is where you can attack and run");
-        System.out.println("This is programming dead end guys!!");
-        //TODO: create attack logic
-        //type of weapon dealing damage?
-        //attack or run
-        //if attack?
-        //if run?
-        //set alien health after attack
-        //delete alien on death
-        //Other stuff for sure!!
+    //Open something
+    public static void open(Rooms currentRoom) {
+        final String space = "\n";
+        Map<String, Boolean> availableItems = new HashMap<>();
+        switch (currentRoom) {
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = SupplyRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        final String lines = "************";
+        System.out.println(space + Engine.ANSI_YELLOW + "Open what?\n");
+        System.out.println(lines);
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println(lines + Engine.ANSI_RESET);
+
+        Scanner in = new Scanner(System.in);
+        String answer = in.nextLine();
+        String newAnswer = capitalizeAll(answer);
+        Set<String> items = availableItems.keySet();
+
+        //Check if user response is in the room?
+        if(items.contains(newAnswer)) {
+            //check if item can be opened against enums
+            try {
+                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase());
+                String upperAnswer = newAnswer.toUpperCase();
+                if (itemToOpen.toString().equals(upperAnswer)) {
+                    System.out.println("pass... still working on it");
+//                    if(don't have code'){
+//                        can't open'
+//                    }else{
+//                        open
+//                    }
+
+                } else {
+                    System.out.println("here");
+                    Menu.displayMenu();
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(Engine.ANSI_RED + "\nYou can't open that!" + Engine.ANSI_RESET);
+            }
+        }else{
+            System.out.println("That's not in this room.");
+        }
+        Menu.displayMenu();
     }
 
     // Grab the item from the room
@@ -173,7 +220,7 @@ public class Menu {
                 availableItems = Kitchen.getAvailableItems();
                 break;
             case ComputerRoom:
-                availableItems = ComputerRoom.getAvailableItems();
+                availableItems = SupplyRoom.getAvailableItems();
                 break;
             case ControlRoom:
                 availableItems = ControlRoom.getAvailableItems();
@@ -187,11 +234,11 @@ public class Menu {
             System.out.println(key);
         }
         System.out.println(lines + Engine.ANSI_RESET);
+
         Scanner in = new Scanner(System.in);
         String answer = in.nextLine();
         String newAnswer = capitalizeAll(answer);
         Set<String> items = availableItems.keySet();
-
 
         //Check if user response is in the room? We can't store anything ya know!
         //TODO: fix check against Enums with underscore words...  pilot seat   PILOT_SEAT ...  still adds these??
@@ -257,7 +304,7 @@ public class Menu {
                 availableItems = Kitchen.getAvailableItems();
                 break;
             case ComputerRoom:
-                availableItems = ComputerRoom.getAvailableItems();
+                availableItems = SupplyRoom.getAvailableItems();
                 break;
             case ControlRoom:
                 availableItems = ControlRoom.getAvailableItems();
@@ -316,7 +363,7 @@ public class Menu {
                 Kitchen.setAvailableItems(availableItems);
                 break;
             case ComputerRoom:
-                ComputerRoom.setAvailableItems(availableItems);
+                SupplyRoom.setAvailableItems(availableItems);
                 break;
             case ControlRoom:
                 ControlRoom.setAvailableItems(availableItems);
@@ -350,7 +397,7 @@ public class Menu {
                 nextRoom = Kitchen.getAvailableDirections().get(direction);
                 break;
             case ComputerRoom:
-                nextRoom = ComputerRoom.getAvailableDirections().get(direction);
+                nextRoom = SupplyRoom.getAvailableDirections().get(direction);
                 break;
             case ControlRoom:
                 nextRoom = ControlRoom.getAvailableDirections().get(direction);
@@ -373,7 +420,7 @@ public class Menu {
                 Kitchen.loadEnvironment();
                 break;
             case ComputerRoom:
-                ComputerRoom.loadEnvironment();
+                SupplyRoom.loadEnvironment();
                 break;
             case ControlRoom:
                 ControlRoom.loadEnvironment();
