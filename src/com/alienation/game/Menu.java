@@ -48,7 +48,6 @@ public class Menu {
                 repeat = true;
             }
         }
-
         Rooms currentRoom = Character.getCurrentRoom();
         Rooms nextRoom = null;
 
@@ -70,10 +69,10 @@ public class Menu {
                 attack(currentRoom);
                 break;
             case READ:
-                System.out.println("Can't Read yet!!");
+                read();
                 break;
             case SWAP:
-                System.out.println("Can't Swap yet!!");
+                swap();
                 break;
             case N:
                 moveRoom("N", currentRoom);
@@ -95,11 +94,65 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
-                System.out.println(Engine.ANSI_RED + "\nYou can only run if you're being attacked scaredy pants!" + Engine.ANSI_RESET);
+                run(currentRoom);
                 break;
         }
 
         in.close();
+    }
+
+    //swaps weapons
+    public static void swap(){
+        System.out.println("Can't swap yet....");
+        //TODO: swap
+        //
+    }
+
+    //read clues
+    public static void read(){
+        System.out.println("Can't Read yet!!");
+        //TODO: Read
+        //
+    }
+
+    public static void run(Rooms currentRoom) {
+        Map<String, Boolean> availableItems = new HashMap<>();
+        Map<String, Boolean> availableAliens = new HashMap<>();
+        switch (currentRoom) {
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = SupplyRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        availableAliens = Alien.getAliens();
+        Set<String> aliens = availableAliens.keySet();
+        Set<String> keysInRoom = availableItems.keySet();
+        boolean reply = false;
+        for (String key : keysInRoom) {
+            for(String alien : aliens){
+                if(key.equals(alien)){
+                    System.out.println(Engine.ANSI_RED + "\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
+                    loadRoom(Character.getPreviousRoom());
+                }else{
+                    reply = true;
+                }
+            }
+        }
+        if(reply){
+            System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
+        }
+        Menu.displayMenu();
     }
 
     // Investigate the room
@@ -137,9 +190,9 @@ public class Menu {
 
                 //TODO: create attack logic
 
-                //attack or run    **run is created here
+                //attack or run
                 //if attack?    type of weapon dealing damage?  Look at Weapon Enums
-                //if run? go back to previous room and show menu
+                //if run?  call run () should go back to previous room and show menu
                 //set alien health after attack
                 //alien retaliates .. get type and damage dealt
                 //set character hp
@@ -243,16 +296,20 @@ public class Menu {
             //check if item can be opened against enums
             try {
                 itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase());
+                System.out.println(itemToOpen);
                 String upperAnswer = newAnswer.toUpperCase();
                 if (itemToOpen.toString().equals(upperAnswer)) {
                     System.out.println("pass... still working on it");
-//                    if(don't have code'){
-//                        can't open'
-//                    }else{
-//                        open  object add part to char inventory
-//                        delete code from inventory
-//                    }
-
+                    if(!Character.getInventory().containsKey(newAnswer)){
+                        System.out.println("It's locked");
+                    }else{
+                        System.out.println("New item added to inventory.");
+                        Map<String,String> newItems = new HashMap<>();
+                        newItems = Character.getInventory();
+                        newItems.put(newAnswer, "reply");
+                        // delete item from room
+                        availableItems.remove(newAnswer);
+                    }
                 } else {
                     System.out.println("here");
                     Menu.displayMenu();
@@ -325,26 +382,18 @@ public class Menu {
                 Menu.displayMenu();
             }
 
-            //TODO: HARDCODED WEAPON CHECK
-            if(newAnswer.equals("Taser Gun")){ // CHECK ENUMS
+            //TODO: check against enums... hard coded for now
+            if(newAnswer.equals("Taser Gun")){
                 Character.setCurrentWeapon(newAnswer);
                 System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
             }
-
-            System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
-            Map<String,String> newItems = new HashMap<>();
-            newItems = Character.getInventory();
-            newItems.put(newAnswer, "reply");
-
             // delete item from room
             availableItems.remove(newAnswer);
         }else{
             System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
         }
-
         Menu.displayMenu();
     }
-
     //TODO: Find a way to add more than 1 of same item maybe?
 
     // Eat the item from the room
@@ -435,7 +484,10 @@ public class Menu {
     // Move Room from one to another
     public static void moveRoom(String direction, Rooms currentRoom){
         Rooms nextRoom = getRoom(direction, currentRoom);
+
         if(nextRoom != null){
+            Character.setPreviousRoom(currentRoom);
+            Character.setTempRoom(currentRoom);
             loadRoom(nextRoom);
         }
         else{
