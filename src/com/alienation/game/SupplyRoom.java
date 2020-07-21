@@ -4,22 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ComputerRoom - This is the room where user can go and investigate
- * Room has desk and computer available.
- * Desk drawer need code to open and it has "Ignition switch" that can be useful to fly back home
+ * Supply room
+ * Room has a cage that keeps expensive and rare parts locked up.
+ * Cage needs a code to open and it has "Ignition switch" that can be useful to fly back home
  * Use the code you got from Alien Room by killing Alien.
  */
 
-public class ComputerRoom {
+public class SupplyRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a dim room, except the blinking of tiny lights everywhere. The annoying beeping noises of computers fill the\n" +
-            "air and it's hard to concentrate. This must be where the system's operating servers and backup drives are accessed. Something is\n" +
-            "dripping onto your shoulder... some sort of slimey viscous substance. It looks like one computer still works, but you need an\n" +
-            "access code.\n" + Engine.ANSI_RESET;
+    private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a dim room with racks of common supplies. This must be the supply room.  There's a big metal\n" +
+            "cage where all the rare and expensive parts are kept, but it's locked. The only way to open it is at the computer terminal with\n" +
+            "an access code. Something is dripping onto your shoulder... some sort of slimey viscous substance. It looks like one computer still\n" +
+            "works, but you need an access code.\n" + Engine.ANSI_RESET;
     private static final String updatedStory = Engine.ANSI_BLUE + "\n\nYou're back in the Server room and you have found an ignition switch. This thing must do something, but what!?\n"+ Engine.ANSI_RESET;
-    private static final String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the Server Room. You have found an access code... where can I use it?"+ Engine.ANSI_RESET;
+    private static final String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the Server Room. You have the access code to open the cage. You enter the code into the terminal and\n" +
+            "you hear metal grinding on metal and then a loud click."+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
@@ -53,13 +54,14 @@ public class ComputerRoom {
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
-            availableItems.put("Ignition Switch", true); //TODO: take out after testing... only available if char has code.. how.. don't know yet?
+            availableItems.put("Ignition Switch", true); //TODO: take out after testing... only available if char has code
+            availableItems.put("Code", true);  //TODO: take out after testing... alien will drop this upon death
             availableItems.put("Computer", true);
             availableItems.put("Desk", true);
             availableItems.put("Sofa", true);
-            availableItems.put("Bookshelf", true);
-            availableItems.put("Lamp", true);
-            availableItems.put("Code", true);  //TODO: take out after testing... alien will drop this upon death
+            availableItems.put("Racks", true);
+            availableItems.put("Supplies", true);
+            availableItems.put("Cage", true);
         }
         return availableItems;
     }
