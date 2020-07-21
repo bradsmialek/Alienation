@@ -69,10 +69,10 @@ public class Menu {
                 attack(currentRoom);
                 break;
             case READ:
-                System.out.println("Can't Read yet!!");
+                read();
                 break;
             case SWAP:
-                System.out.println("Can't Swap yet!!");
+                swap();
                 break;
             case N:
                 moveRoom("N", currentRoom);
@@ -99,6 +99,20 @@ public class Menu {
         }
 
         in.close();
+    }
+
+    //swaps weapons
+    public static void swap(){
+        System.out.println("Can't swap yet....");
+        //TODO: swap
+        //
+    }
+
+    //read clues
+    public static void read(){
+        System.out.println("Can't Read yet!!");
+        //TODO: Read
+        //
     }
 
     public static void run(Rooms currentRoom) {
@@ -373,21 +387,13 @@ public class Menu {
                 Character.setCurrentWeapon(newAnswer);
                 System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
             }
-
-            System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
-            Map<String,String> newItems = new HashMap<>();
-            newItems = Character.getInventory();
-            newItems.put(newAnswer, "reply");
-
             // delete item from room
             availableItems.remove(newAnswer);
         }else{
             System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
         }
-
         Menu.displayMenu();
     }
-
     //TODO: Find a way to add more than 1 of same item maybe?
 
     // Eat the item from the room
