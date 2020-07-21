@@ -33,6 +33,8 @@ public class Menu {
         final String space = "                                      ";
         System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
+        System.out.println(Character.getCurrentRoom());
+        System.out.println(Character.getPreviousRoom());
 
         boolean repeat = true;
         Scanner in = new Scanner(System.in);
@@ -48,7 +50,6 @@ public class Menu {
                 repeat = true;
             }
         }
-
         Rooms currentRoom = Character.getCurrentRoom();
         Rooms nextRoom = null;
 
@@ -95,9 +96,9 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
-                System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
-//                run(currentRoom);
-                Menu.displayMenu(); // TODO: remove after run is complete
+//                System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
+                run(currentRoom);
+//                Menu.displayMenu(); // TODO: remove after run is complete
                 break;
         }
 
@@ -105,8 +106,8 @@ public class Menu {
     }
 
     public static void run(Rooms currentRoom) {
-        final String space = "\n";
         Map<String, Boolean> availableItems = new HashMap<>();
+        Map<String, Boolean> availableAliens = new HashMap<>();
         switch (currentRoom) {
             case CapsuleRoom:
                 availableItems = CapsuleRoom.getAvailableItems();
@@ -124,19 +125,24 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        for (String key : keys) {
-            if(Alien.getAliens().containsKey(key)){
-                System.out.println("Build out attack functionality");
-
-                //TODO: create run logic
-
-
+        availableAliens = Alien.getAliens();
+        Set<String> aliens = availableAliens.keySet();
+        Set<String> keysInRoom = availableItems.keySet();
+        boolean reply = false;
+        for (String key : keysInRoom) {
+            for(String alien : aliens){
+                if(key.equals(alien)){
+                    System.out.println(Engine.ANSI_RED + "\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
+                    loadRoom(Character.getPreviousRoom());
+                }else{
+                    reply = true;
+                }
             }
         }
+        if(reply){
+            System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
+        }
         Menu.displayMenu();
-
-
-
     }
 
     // Investigate the room
@@ -476,7 +482,10 @@ public class Menu {
     // Move Room from one to another
     public static void moveRoom(String direction, Rooms currentRoom){
         Rooms nextRoom = getRoom(direction, currentRoom);
+
         if(nextRoom != null){
+            Character.setPreviousRoom(currentRoom);
+            Character.setTempRoom(currentRoom);
             loadRoom(nextRoom);
         }
         else{
