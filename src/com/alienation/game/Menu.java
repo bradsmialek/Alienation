@@ -95,8 +95,7 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
-                System.out.println("You are running Forest");
-                //run();//TODO: create run
+                System.out.println(Engine.ANSI_RED + "\nYou can only run if you're being attacked scaredy pants!" + Engine.ANSI_RESET);
                 break;
         }
 
@@ -138,14 +137,13 @@ public class Menu {
 
                 //TODO: create attack logic
 
-                //attack or run
+                //attack or run    **run is created here
                 //if attack?    type of weapon dealing damage?  Look at Weapon Enums
-                //if run? go back to previous room
+                //if run? go back to previous room and show menu
                 //set alien health after attack
-                //alien retaliates .. get type damage dealt
+                //alien retaliates .. get type and damage dealt
                 //set character hp
-                //delete alien on death
-                //add code to room items
+                //delete alien on death  & add code to room items
                 //Other stuff for sure!!
 
             }
@@ -251,7 +249,8 @@ public class Menu {
 //                    if(don't have code'){
 //                        can't open'
 //                    }else{
-//                        open
+//                        open  object add part to char inventory
+//                        delete code from inventory
 //                    }
 
                 } else {
