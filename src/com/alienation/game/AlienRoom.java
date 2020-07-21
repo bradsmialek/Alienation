@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Alien Room - This is the room where user can go and investigate
  * User will find out there is one Alien in this room
  * User has to kill Alien to get the code
  */
@@ -13,13 +12,15 @@ public class AlienRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "\n\nThis is Alien Room.\n";
-    private static String updatedStory = "\n\nThis is Alien Room - Updated.\n";
-    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
+    private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a nasty smelling room. It smells like rotting flesh and the floor is covered in the same slimey substance that\n " +
+            "was on your shoulder.  Wait... you see something in the corner slumped over and moving back and forth.\n"+ Engine.ANSI_RESET;
+    private static final String updatedStory = Engine.ANSI_BLUE + "\n\nUpdate route\n"+ Engine.ANSI_RESET;
+    private static final String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the room where you killed your crew member.... I mean alien. Nothing has changed except the pools of your friends blood.\n" +
+            "OOPS... did it again."+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
-    private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
+    private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
-    private static int minusOxy = 10;
+    private static final int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
@@ -27,18 +28,18 @@ public class AlienRoom {
     public static void loadEnvironment(){
         count++;
         Oxygen.minOxygen(minusOxy);
+        Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
     }
 
-
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads
     public static String getStory() {
-        if (!getAvailableItems().containsKey("Alien - Type 1")) {
-            return initialStory;
+        if (!getAvailableItems().containsKey("Alien")) {
+            return lastStory;
         } else {
-            if(getAvailableItems().get("Alien - Type 1")){
+            if(getAvailableItems().get("Alien")){
                 return initialStory;
             }
             else{
@@ -46,6 +47,7 @@ public class AlienRoom {
             }
         }
     }
+    //TODO: WORKING ON THIS.  Testing STORYLINE// Might need to use later
     //    public static String getStory() {
 //        if(count == 1){
 //            return initialStory;
@@ -61,7 +63,7 @@ public class AlienRoom {
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
-            availableItems.put("Alien - Type 1", true);
+            availableItems.put("Alien", true);
             availableItems.put("Bed", true);
             availableItems.put("Mirror", true);
             availableItems.put("Old Box", true);
