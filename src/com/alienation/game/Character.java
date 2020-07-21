@@ -15,6 +15,8 @@ public class Character {
     private static int health = 50;
     private static String currentWeapon = "5 fingers to the face";
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
+    private static Rooms previousRoom;
+    private static Rooms tempRoom;
     private static Map<String,String> inventory = new HashMap<String, String>();
 
     //TODO : Alien has code, added to char inventory on death
@@ -58,5 +60,21 @@ public class Character {
     // set available items updated items if item moved to Inventory or Eat an item
     public static void setInventory(Map<String,String> newInventory) {
         inventory = newInventory;
+    }
+
+    public static Rooms getPreviousRoom() {
+        return previousRoom;
+    }
+
+    public static void setPreviousRoom(Rooms tempRoom) {
+        previousRoom = tempRoom;
+    }
+
+    public static Rooms getTempRoom() {
+        return tempRoom;
+    }
+
+    public static void setTempRoom(Rooms currentRoom) {
+        tempRoom = currentRoom;
     }
 }
