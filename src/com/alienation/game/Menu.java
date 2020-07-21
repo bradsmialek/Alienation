@@ -33,8 +33,6 @@ public class Menu {
         final String space = "                                      ";
         System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
-        System.out.println(Character.getCurrentRoom());
-        System.out.println(Character.getPreviousRoom());
 
         boolean repeat = true;
         Scanner in = new Scanner(System.in);
@@ -96,9 +94,7 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
-//                System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
                 run(currentRoom);
-//                Menu.displayMenu(); // TODO: remove after run is complete
                 break;
         }
 
