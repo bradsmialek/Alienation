@@ -27,10 +27,10 @@ public class Oxygen {
     // checks oxygen levels
     public static void checkOxy(){
         if(Oxygen.getOxygen() == 0){
-            System.out.println("Oxygen depleted..."); // Better Death
+            System.out.println(Engine.ANSI_RED + "\n\nOxygen depleted..." + Engine.ANSI_RESET); // Better Death
             death();
             System.exit(0);
-            //TODO: make start screen to redirect to instead of exiting
+            //TODO: make start screen to redirect to game start scene instead of exiting
         }
     }
 

@@ -38,7 +38,7 @@ public class ComputerRoom {
 
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads
-    //TODO:  Check for access code also and do something
+    //check for items
     public static String getStory() {
         if (!Character.getInventory().containsKey("Code")) { //if inv does not contain code
             return initialStory;
@@ -49,18 +49,6 @@ public class ComputerRoom {
             return updatedStory;
         }
     }
-    //TODO: WORKING ON THIS.  Testing STORYLINE// Might need to use later
-    //    public static String getStory() {
-//        if(count == 1){
-//            return initialStory;
-//        }
-//        else if(count == 2){
-//            return updatedStory;
-//        }
-//        else{
-//            return lastStory;
-//        }
-//    }
 
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){

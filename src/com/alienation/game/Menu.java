@@ -23,13 +23,13 @@ public class Menu {
     private static Edibles edible;
     private static Xitems xItem;
     private static String answer;
+    private static final String oxygen = "O\u2082"; // O₂
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
     public static void displayMenu() throws IllegalArgumentException {
         final String green = Engine.ANSI_GREEN;
         final String end = Engine.ANSI_RESET;
-        final String oxygen = "O\u2082"; // O₂
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
         System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
@@ -95,6 +95,10 @@ public class Menu {
             case I:
                 CheckInventory();
                 break;
+            case RUN:
+                System.out.println("You are running Forest");
+                //run();//TODO: create run
+                break;
         }
 
         in.close();
@@ -129,7 +133,29 @@ public class Menu {
             System.out.println(key);
         }
         System.out.println(lines + Engine.ANSI_RESET);
+        for (String key : keys) {
+            if(key.equals("Alien")){
+                System.out.println(Engine.ANSI_BLUE + "\nYou have encountered Your crew member is dismembered and there is a large bloody hole in their chest.\n"+
+                        "You can see their insides squirming around, their eyes are black with bloody tears leaking from the corners. They notice you and it let's\n"+
+                        "out a horrific bellowing growl. This is not your crew mate anymore ... it's coming to get you!!\n"+ Engine.ANSI_RESET);
+                battleScenes();
+        }
+
+        }
         Menu.displayMenu();
+    }
+
+    public static void battleScenes(){
+        System.out.println("This is where you can attack and run");
+        System.out.println("This is programming dead end guys!!");
+        //TODO: create attack logic
+        //type of weapon dealing damage?
+        //attack or run
+        //if attack?
+        //if run?
+        //set alien health after attack
+        //delete alien on death
+        //Other stuff for sure!!
     }
 
     // Grab the item from the room
@@ -168,7 +194,7 @@ public class Menu {
 
 
         //Check if user response is in the room? We can't store anything ya know!
-        //Also restrict certain items and do something with oxygen
+        //TODO: fix check against Enums with underscore words...  pilot seat   PILOT_SEAT ...  still adds these??
         if(items.contains(newAnswer)){
             try {
                 xItem = Xitems.valueOf(newAnswer.toUpperCase());
@@ -186,7 +212,7 @@ public class Menu {
 
             if(newAnswer.equals("Oxygen Tank")){
                 Oxygen.incOxygen(100);
-                System.out.println(Engine.ANSI_YELLOW + "\nOxygen levels are full." + Engine.ANSI_RESET);
+                System.out.println(Engine.ANSI_YELLOW + "\nOxygen levels are now full.  " + oxygen + " ++" + Engine.ANSI_RESET);
                 availableItems.remove(newAnswer);
                 Menu.displayMenu();
             }
@@ -305,7 +331,7 @@ public class Menu {
             loadRoom(nextRoom);
         }
         else{
-            System.out.println("There doesn't seem to be a door this way.\n");
+            System.out.println(Engine.ANSI_RED + "\nThere doesn't seem to be a door this way.\n" + Engine.ANSI_RESET);
             displayMenu();
         }
     }
