@@ -1,42 +1,32 @@
 package com.alienation.game;
-
 import java.util.Scanner;
 
 /**
  * Game Engine
+ * This class is used to start the Engine of the game
  */
 public class Engine {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
-    private static String actionQuestion = "What would you like to do?";
-    private static String answer;
-
-    public static void Start(){
+    /*************** PUBLIC METHODS  ******************/
+    public static void start(){
         Scanner in = new Scanner(System.in);
-        System.out.println("\n" +
+        System.out.println("\n" + ANSI_GREEN +
                 "░█████╗░██╗░░░░░██╗███████╗███╗░░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗\n" +
                 "██╔══██╗██║░░░░░██║██╔════╝████╗░██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║\n" +
                 "███████║██║░░░░░██║█████╗░░██╔██╗██║███████║░░░██║░░░██║██║░░██║██╔██╗██║\n" +
                 "██╔══██║██║░░░░░██║██╔══╝░░██║╚████║██╔══██║░░░██║░░░██║██║░░██║██║╚████║\n" +
                 "██║░░██║███████╗██║███████╗██║░╚███║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║\n" +
-                "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n");
+                "╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝\n\n" + ANSI_RESET);
 
-        System.out.println("As you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
-                "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member missing and\n" +
-                "their sleeping capsule is shattered. The ship seems to be drifting in space and the lights are dim, most likely on some sort of backup system.\n" +
-                "You notice a taser on the floor.\n\n" +
-                actionQuestion + "              " + "Health: 100" + "  " + "Oxygen: 50" + "  " + "Weapon: " + "\n");
-
-        System.out.println("You can: Investigate, Open, Eat, Pick up, Attack, Read, Swap");
-        System.out.println("You can move: N, S, E, W");
-        actionQuestion = in.nextLine();
-        System.out.println(actionQuestion);
-
-
-
-
-
-        in.close(); // CLOSES SCANNER
+        CapsuleRoom.loadEnvironment();
     }
-
-
 }
