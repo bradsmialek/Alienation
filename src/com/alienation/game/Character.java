@@ -17,6 +17,7 @@ public class Character {
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
     private static Map<String,String> inventory = new HashMap<String, String>();
 
+    //TODO : Alien has code, added to char inventory on death
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static int getHealth() {

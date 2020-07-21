@@ -12,12 +12,12 @@ public class CapsuleRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "\n\nAs you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
+    private static String initialStory = Engine.ANSI_BLUE + "\n\nAs you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member\n" +
             "missing and their sleeping capsule is shattered with blood splattered across the front. The ship seems to be drifting in\n" +
-            "space and the lights are dim, most likely on some sort of backup system. You notice a Taser on the floor.\n";
-    private static String updatedStory = "\n\nYou are back in the Capsule Room. Another crew member is missing. There is a blood trail....\n";
-    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed. There are crew members missing and blood everywhere.";
+            "space and the lights are dim, most likely on some sort of backup system. You notice a Taser on the floor.\n"+ Engine.ANSI_RESET;
+    private static String updatedStory = Engine.ANSI_BLUE + "\n\nYou are back in the Capsule Room. Another crew member is missing. There is a blood trail....\n"+ Engine.ANSI_RESET;
+    private static String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the Capsule Room. Nothing has changed. There are crew members missing and blood everywhere."+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
@@ -29,10 +29,10 @@ public class CapsuleRoom {
     public static void loadEnvironment(){
         count++;
         Oxygen.minOxygen(minusOxy);
+        Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
     }
-
 
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads

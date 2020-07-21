@@ -51,10 +51,9 @@ public class Menu {
         }
 
         Rooms currentRoom = Character.getCurrentRoom();
-        //System.out.println(currentRoom);
         Rooms nextRoom = null;
 
-        // INVESTIGATE, OPEN, EAT, GRAB, ATTACK, READ, SWAP, N, E, S, W
+        // INVESTIGATE, OPEN, EAT, GRAB, ATTACK, READ, SWAP, N, E, S, W, O, I
         switch (action) {
             case INVESTIGATE:
                 investigate(currentRoom);
@@ -373,6 +372,7 @@ public class Menu {
         Menu.displayMenu();
     }
 
+    // utility function to capitalize first letter of each word
     public static String capitalizeAll(String str) {
         if (str == null || str.isEmpty()) {
             return str;

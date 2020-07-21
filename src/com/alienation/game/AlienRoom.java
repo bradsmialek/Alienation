@@ -13,9 +13,9 @@ public class AlienRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "\n\nThis is Alien Room.\n";
-    private static String updatedStory = "\n\nThis is Alien Room - Updated.\n";
-    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
+    private static String initialStory = Engine.ANSI_BLUE + "\n\nThis is Alien Room.\n"+ Engine.ANSI_RESET;
+    private static String updatedStory = Engine.ANSI_BLUE + "\n\nThis is Alien Room - Updated.\n"+ Engine.ANSI_RESET;
+    private static String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the Capsule Room. Nothing has changed."+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
@@ -27,6 +27,7 @@ public class AlienRoom {
     public static void loadEnvironment(){
         count++;
         Oxygen.minOxygen(minusOxy);
+        Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
     }
@@ -46,6 +47,7 @@ public class AlienRoom {
             }
         }
     }
+    //TODO: WORKING ON THIS.  Testing STORYLINE// Might need to use later
     //    public static String getStory() {
 //        if(count == 1){
 //            return initialStory;

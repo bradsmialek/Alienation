@@ -11,11 +11,18 @@ public class ControlRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static String initialStory = "\n\nThis is Control Room.\n";
-    private static String updatedStory = "\n\nThis is Control Room - Updated.\n";
-    private static String lastStory = "\n\nYou are back in the Capsule Room. Nothing has changed.";
+    private static String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a large room with navigation stations and controls to pilot the ship. The view of the vast dark space around you\n " +
+            "is mesmerizing! You're immediate thought is to send a message for help, but all contact between Earth and you has been disabled.\n " +
+            "Maybe you can pilot the ship back home?  You climb into the pilot ship and you notice the starter panel looks fried. You know\n " +
+            "enough to know that you have to find an ignition switch and pray that works.\n"+ Engine.ANSI_RESET;
+    private static String updatedStory = Engine.ANSI_BLUE + "\n\nYou are back in the Control Room. Nothing has changed. You need an ignition switch!"+ Engine.ANSI_RESET;
+    private static String lastStory = Engine.ANSI_BLUE + "\n\nYou're back in the Control room and you have finally found an ignition switch! You replace the old one and hit the switch, and what\n " +
+            "you hear next is the sweetest sound you've ever heard!  The engines fire up and you enter Earth's coordinates on auto pilot.\n " +
+            "You're finally headed home, the aliens are dead, and the rest of the crew begin to wake up. What will you tell them?\n"+ Engine.ANSI_RESET;
+    //TODO : add timeout END GAME and ps.  You feel movement in your belly...
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
+    private static Map<String,String > charInventory = new HashMap<String, String>();
     private static int count = 0;
     private static int minusOxy = 10;
 
@@ -25,6 +32,7 @@ public class ControlRoom {
     public static void loadEnvironment(){
         count++;
         Oxygen.minOxygen(minusOxy);
+        Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
     }
@@ -32,9 +40,17 @@ public class ControlRoom {
 
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads
+    // check inventory for part
     public static String getStory() {
-        return initialStory;
+        if (!Character.getInventory().containsKey("Ignition Switch")) { //if inventory does not contain ignition
+            System.out.println("no switch");
+            return initialStory;
+        } else{
+            return lastStory;
+            //TODO:  end game scene on timeout... then exit system... or go to start game scene??
+        }
     }
+    //TODO: WORKING ON THIS.  Testing STORYLINE// Might need to use later
     //    public static String getStory() {
 //        if(count == 1){
 //            return initialStory;
