@@ -67,7 +67,7 @@ public class Menu {
                 grab(currentRoom);
                 break;
             case ATTACK:
-                System.out.println("do Something with attack");
+                attack(currentRoom);
                 break;
             case READ:
                 System.out.println("Can't Read yet!!");
@@ -104,6 +104,56 @@ public class Menu {
     }
 
     // Investigate the room
+    public static void attack(Rooms currentRoom){
+        final String space = "\n";
+        Map<String,Boolean> availableItems = new HashMap<>();
+        switch (currentRoom){
+            case CapsuleRoom:
+                availableItems = CapsuleRoom.getAvailableItems();
+                break;
+            case AlienRoom:
+                availableItems = AlienRoom.getAvailableItems();
+                break;
+            case Kitchen:
+                availableItems = Kitchen.getAvailableItems();
+                break;
+            case ComputerRoom:
+                availableItems = SupplyRoom.getAvailableItems();
+                break;
+            case ControlRoom:
+                availableItems = ControlRoom.getAvailableItems();
+                break;
+        }
+        final String lines = "************";
+        System.out.println(space + Engine.ANSI_YELLOW + "Attack what?\n");
+        System.out.println(lines);
+        Set<String> keys = availableItems.keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println(lines + Engine.ANSI_RESET);
+        for (String key : keys) {
+            if(Alien.getAliens().containsKey(key)){
+                System.out.println("Build out attack functionality");
+
+                //TODO: create attack logic
+
+                //attack or run
+                //if attack?    type of weapon dealing damage?  Look at Weapon Enums
+                //if run? go back to previous room
+                //set alien health after attack
+                //alien retaliates .. get type damage dealt
+                //set character hp
+                //delete alien on death
+                //add code to room items
+                //Other stuff for sure!!
+
+            }
+        }
+        Menu.displayMenu();
+    }
+
+    // Investigate the room
     public static void investigate(Rooms currentRoom){
         final String space = "\n";
         Map<String,Boolean> availableItems = new HashMap<>();
@@ -134,10 +184,22 @@ public class Menu {
         System.out.println(lines + Engine.ANSI_RESET);
         for (String key : keys) {
             if(Alien.getAliens().containsKey(key)){
-                System.out.println(Engine.ANSI_BLUE + "\nIt looks like you found your crew mate, they look dismembered and there is a large bloody hole in their chest.\n"+
-                        "You can see their insides squirming around, their eyes are black with bloody tears leaking from the corners. They notice you and it let's\n"+
-                        "out a horrific bellowing growl. This is not your crew mate anymore ... it's coming to get you!!\n"+ Engine.ANSI_RESET);
-                Attack.attack();
+                switch (key){
+                    case "Human":
+                        System.out.println(Engine.ANSI_BLUE + "\nIt looks like you found your crew mate, they look dismembered and there is a large bloody hole in their chest.\n"+
+                                "You can see their insides squirming around, their eyes are black with bloody tears leaking from the corners. They notice you and it let's\n"+
+                                "out a horrific bellowing growl. This is not your crew mate anymore ... it's coming to get you!!\n"+ Engine.ANSI_RESET);
+                        break;
+                    case "Rat":
+                        System.out.println(Engine.ANSI_BLUE + "\nIt's a rat alien\n"+ Engine.ANSI_RESET);
+                        break;
+                    case "Dog":
+                        System.out.println(Engine.ANSI_BLUE + "\nIt's a dog alien\n"+ Engine.ANSI_RESET);
+                        break;
+                    case "Unidentifiable":
+                        System.out.println(Engine.ANSI_BLUE + "\nIt's an Ultimate alien\n"+ Engine.ANSI_RESET);
+                        break;
+                }
             }
         }
         Menu.displayMenu();
