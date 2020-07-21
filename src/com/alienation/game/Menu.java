@@ -115,6 +115,7 @@ public class Menu {
         //
     }
 
+    // Run from alien to previous room
     public static void run(Rooms currentRoom) {
         Map<String, Boolean> availableItems = new HashMap<>();
         Map<String, Boolean> availableAliens = new HashMap<>();
@@ -387,6 +388,12 @@ public class Menu {
                 Character.setCurrentWeapon(newAnswer);
                 System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
             }
+
+            System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
+            Map<String,String> newItems = new HashMap<>();
+            newItems = Character.getInventory();
+            newItems.put(newAnswer, "reply");
+
             // delete item from room
             availableItems.remove(newAnswer);
         }else{
