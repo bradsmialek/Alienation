@@ -36,6 +36,12 @@ public class Character {
         }
     }
 
+    public static void alienDeath(){
+        if (Alien.getT1Hp() >= 0){
+            
+        }
+    }
+
     public static String getCurrentWeapon() {
         return currentWeapon;
     }
