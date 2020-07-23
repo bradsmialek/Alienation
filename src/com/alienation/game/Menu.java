@@ -15,9 +15,9 @@ import java.util.regex.Pattern;
 public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String actionQuestion = "What would you like to do? (o for options)";
-    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap, Run >";
-    private static String directions = "You can move < N, S, E, W >";
+    private static String actionQuestion = "What will you do? (o for options)";
+    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
+    private static String directions = "N, S, E, W\n";
     private static String inv = "Check Inventory < i >";
     private static Actions action;
     private static Edibles edible;
@@ -33,7 +33,9 @@ public class Menu {
         final String end = Engine.ANSI_RESET;
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
-        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
+//        clear();
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen +
+                " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
 
         boolean repeat = true;
@@ -144,7 +146,6 @@ public class Menu {
                     System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
                     break;
             }
-
         } catch (IllegalArgumentException e) {
             System.out.println(Engine.ANSI_RED + "\nYou can'tt swap with that." + Engine.ANSI_RESET);
         }
@@ -424,13 +425,6 @@ public class Menu {
                 availableItems.remove(newAnswer);
                 Menu.displayMenu();
             }
-
-            //TODO: check against enums... hard coded for now
-            if(newAnswer.equals("Taser")){
-                Character.setCurrentWeapon(newAnswer);
-                System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
-            }
-
             System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
             Map<String,String> newItems = new HashMap<>();
             newItems = Character.getInventory();
@@ -633,6 +627,10 @@ public class Menu {
 
     public static String getInv(){
         return inv;
+    }
+
+    public static void clear() {
+        for (int i = 0; i < 50; ++i) System.out.println();
     }
 }
 
