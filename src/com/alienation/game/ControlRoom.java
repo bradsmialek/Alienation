@@ -10,7 +10,6 @@ import java.util.Map;
 public class ControlRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String answer;
     private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a large room with navigation stations and controls to pilot the ship. The view of the vast dark space around you\n " +
             "is mesmerizing! You're immediate thought is to send a message for help, but all contact between Earth and you has been disabled.\n " +
             "Maybe you can pilot the ship back home?  You climb into the pilot ship and you notice the starter panel looks fried. You know\n " +
@@ -23,14 +22,12 @@ public class ControlRoom {
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static final Map<String,String > charInventory = new HashMap<String, String>();
-    private static int count = 0;
     private static final int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
-        count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());

@@ -11,7 +11,6 @@ import java.util.Set;
 public class CapsuleRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String answer;
     private static String initialStory = Engine.ANSI_BLUE + "\n\nAs you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member\n" +
             "missing and their sleeping capsule is shattered with blood splattered across the front. The ship seems to be drifting in\n" +
@@ -52,7 +51,7 @@ public class CapsuleRoom {
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
             availableItems.put("Cabinet", true);
-            availableItems.put("Taser", true);
+            availableItems.put("Laser", true);
             availableItems.put("Chips", true);
             availableItems.put("Oxygen Tank", true);
             availableItems.put("Flamethrower", true);
