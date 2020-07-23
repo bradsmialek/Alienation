@@ -103,20 +103,6 @@ public class Menu {
         in.close();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // TODO: When swapping to squirt_gun or taser_gun you need underscores. Im stuck here, otherwise swap works for everything else
     //swaps weapons
     public static void swap(Rooms currentRoom){
@@ -164,21 +150,6 @@ public class Menu {
         }
         Menu.displayMenu();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //read clues
     public static void read(){
@@ -360,7 +331,7 @@ public class Menu {
         System.out.println(lines + Engine.ANSI_RESET);
 
         Scanner in = new Scanner(System.in);
-        String answer = in.nextLine();
+        String answer = in.nextLine(); // cage
         String newAnswer = capitalizeAll(answer);
         Set<String> items = availableItems.keySet();
 
@@ -368,20 +339,19 @@ public class Menu {
         if(items.contains(newAnswer)) {
             //check if item can be opened against enums
             try {
-                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase());
-                System.out.println(itemToOpen);
+                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase()); // cage
                 String upperAnswer = newAnswer.toUpperCase();
-                if (itemToOpen.toString().equals(upperAnswer)) {
-                    System.out.println("pass... still working on it");
-                    if(!Character.getInventory().containsKey(newAnswer)){
-                        System.out.println("It's locked");
+                if (itemToOpen.toString().equals(upperAnswer)) { // new answer it cage
+                    if(!Character.getInventory().containsKey("Code")){ // make the key code not cage
+                        System.out.println(Engine.ANSI_RED + "\nIt's locked" + Engine.ANSI_RESET);
                     }else{
-                        System.out.println("New item added to inventory.");
+                        System.out.println(Engine.ANSI_YELLOW + "\nNew item added to inventory."+ Engine.ANSI_RESET);
                         Map<String,String> newItems = new HashMap<>();
                         newItems = Character.getInventory();
-                        newItems.put(newAnswer, "reply");
-                        // delete item from room
-                        availableItems.remove(newAnswer);
+                        newItems.put("Ignition Switch", "reply");
+                        // delete item from room and code from inventory
+                        availableItems.remove("Ignition Switch");
+                        newItems.remove("Code");
                     }
                 } else {
                     System.out.println("here");
