@@ -11,7 +11,6 @@ import java.util.Map;
 public class AlienRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String answer;
     private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered a nasty smelling room. It smells like rotting flesh and the floor is covered with blood and a slimey substance.\n" +
             "Wait... you see something in the corner slumped over, moving back and forth.\n"+ Engine.ANSI_RESET;
     private static final String updatedStory = Engine.ANSI_BLUE + "\n\nUpdate route\n"+ Engine.ANSI_RESET;
@@ -19,14 +18,12 @@ public class AlienRoom {
             "OOPS... did it again."+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
-    private static int count = 0;
     private static final int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
-        count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
@@ -36,10 +33,10 @@ public class AlienRoom {
     /*************** GETTER - SETTER METHODS  ******************/
     // Get Story line while page loads
     public static String getStory() {
-        if (!getAvailableItems().containsKey("Human")) {
+        if (!getAvailableItems().containsKey("Humanoid")) {
             return lastStory;
         } else {
-            if(getAvailableItems().get("Human")){
+            if(getAvailableItems().get("Humanoid")){
                 return initialStory;
             }
             else{
@@ -51,7 +48,7 @@ public class AlienRoom {
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
-            availableItems.put("Human", true);
+            availableItems.put("Humanoid", true);
             availableItems.put("Bed", true);
             availableItems.put("Mirror", true);
             availableItems.put("Old Box", true);

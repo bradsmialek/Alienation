@@ -1,18 +1,20 @@
 package com.alienation.game;
 
+import java.util.Arrays;
+
 /**
  * Weapons Enum
  */
 public enum Weapons{
-    TASER("Taser", 1),
+    TASER_GUN("Taser Gun", 1),
     LASER("Laser", 3),
-    SQUIRTGUN("Squirt Gun", 4),
+    SQUIRT_GUN("Squirt Gun", 4),
     FLAMETHROWER("Flamethrower", 8);
 
-    private final String name;
-    private final int damagePoints;
+    private String name;
+    private int damagePoints;
 
-    Weapons(final String name, final int damagePoints) {
+    Weapons(String name, int damagePoints) {
         this.damagePoints = damagePoints;
         this.name = name;
     }
@@ -20,8 +22,13 @@ public enum Weapons{
     public String getName() {
         return name;
     }
-
     public int getDamagePoints() {
         return damagePoints;
+    }
+
+    public static Weapons findWeaponsByName(String name) throws Exception {
+        return Arrays.stream(Weapons.values()).filter(v ->
+                v.getName().equals(name)).findFirst().orElseThrow(() ->
+                new Exception(String.format("Unknown Weapons.name: '%s'", name)));
     }
 }

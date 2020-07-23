@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public class Alien {
 
-    private static int t1Hp = 10; // type 1 health points
+    private static int t1Hp = 4; // type 1 health points
     private static int t2Hp = 6;
-    private static int t3Hp = 4;
+    private static int t3Hp = 10;
     private static int t4Hp = 50;
     private static final int t1Dmg = 1; // type 1 damage dealt
     private static final int t2Dmg = 3;
@@ -21,10 +21,10 @@ public class Alien {
     // Get the alien
     public static Map<String,Boolean> getAliens(){
         if(alienTypes.size() == 0) {
-            alienTypes.put("Human", true);
-            alienTypes.put("Rat", true);
-            alienTypes.put("Dog", true);
-            alienTypes.put("Unidentifiable", true); // Ultimate
+            alienTypes.put("Vermin", true);
+            alienTypes.put("Canine", true);
+            alienTypes.put("Humanoid", true);
+            alienTypes.put("Superhumanoid", true); // Ultimate
         }
         return alienTypes;
     }

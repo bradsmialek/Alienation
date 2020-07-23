@@ -18,17 +18,14 @@ public class Kitchen {
             "that you can eat laying around here somewhere?\n"+ Engine.ANSI_RESET;
     private static final String updatedStory = Engine.ANSI_BLUE + "\n\nYou are back in the kitchen where you found that delicious snack. It looks like something's been through here\n +" +
             "here again.\n"+ Engine.ANSI_RESET;
-//    private static final String lastStory = Engine.ANSI_BLUE + "\n\nyou"+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
-    private static int count = 0;
     private static final int minusOxy = 10;
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
-        count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());

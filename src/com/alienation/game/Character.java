@@ -19,7 +19,6 @@ public class Character {
     private static Rooms tempRoom;
     private static Map<String,String> inventory = new HashMap<String, String>();
 
-    //TODO : Alien has code, added to char inventory on death
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static int getHealth() {
@@ -36,11 +35,11 @@ public class Character {
         }
     }
 
-    public static void alienDeath(){
-        if (Alien.getT1Hp() >= 0){
-            
-        }
-    }
+//    public static void alienDeath(){
+//        if (Alien.getT1Hp() >= 0){
+//
+//        }
+//    }
 
     public static String getCurrentWeapon() {
         return currentWeapon;

@@ -7,10 +7,10 @@ public enum Edibles{
     SNICKERS("Snickers",2),
     CHIPS("Chips",3);
 
-    private final String name;
-    private final int healthPoints;
+    private String name;
+    private int healthPoints;
 
-    Edibles(final String name,final int healthPoints) {
+    Edibles(String name,int healthPoints) {
         this.name = name;
         this.healthPoints = healthPoints;
     }
