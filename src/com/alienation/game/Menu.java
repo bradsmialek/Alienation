@@ -1,5 +1,7 @@
 package com.alienation.game;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -72,7 +74,7 @@ public class Menu {
                 read();
                 break;
             case SWAP:
-                swap();
+                swap(currentRoom);
                 break;
             case N:
                 moveRoom("N", currentRoom);
@@ -101,12 +103,82 @@ public class Menu {
         in.close();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // TODO: When swapping to squirt_gun or taser_gun you need underscores. Im stuck here, otherwise swap works for everything else
     //swaps weapons
-    public static void swap(){
-        System.out.println("Can't swap yet....");
-        //TODO: swap
-        //
+    public static void swap(Rooms currentRoom){
+        final String space = "\n";
+        final String lines = "************";
+
+        System.out.println(space + Engine.ANSI_YELLOW + "Which weapon would you like to use?\n");
+        System.out.println(lines);
+
+        Set<String> keys = Character.getInventory().keySet();
+        for (String key : keys) {
+            System.out.println(key);
+        }
+        System.out.println(lines + Engine.ANSI_RESET);
+        Scanner in = new Scanner(System.in);
+
+        try {
+            answer = in.nextLine(); //grabs input
+            Weapons weapon = Weapons.valueOf(answer.toUpperCase()); // input to upper then checks input against ENUMs - implicit
+
+            switch (weapon){
+                case FLAMETHROWER:
+                    Character.setCurrentWeapon(Weapons.FLAMETHROWER.getName());
+                    System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                    break;
+                case LASER:
+                    Character.setCurrentWeapon(Weapons.LASER.getName());
+                    System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                    break;
+                case SQUIRTGUN:
+                    Character.setCurrentWeapon(Weapons.SQUIRTGUN.getName());
+                    System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                    break;
+                case TASER:
+                    Character.setCurrentWeapon(Weapons.TASER.getName());
+                    System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                    break;
+                default:
+                    System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
+                    break;
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(Engine.ANSI_RED + "\nYou can'tt swap with that." + Engine.ANSI_RESET);
+        }
+        Menu.displayMenu();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //read clues
     public static void read(){
@@ -384,7 +456,7 @@ public class Menu {
             }
 
             //TODO: check against enums... hard coded for now
-            if(newAnswer.equals("Taser Gun")){
+            if(newAnswer.equals("Taser")){
                 Character.setCurrentWeapon(newAnswer);
                 System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
             }
