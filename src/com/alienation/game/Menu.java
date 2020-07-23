@@ -2,6 +2,7 @@ package com.alienation.game;
 
 import org.w3c.dom.ls.LSOutput;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,11 +17,12 @@ import java.util.regex.Pattern;
 public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String actionQuestion = "What would you like to do? (o for options)";
-    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap, Run >";
-    private static String directions = "You can move < N, S, E, W >";
+    private static String actionQuestion = "What will you do? (o for options)";
+    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
+    private static String directions = "N, S, E, W\n";
     private static String inv = "Check Inventory < i >";
     private static Actions action;
+    private static String taction;
     private static Edibles edible;
     private static Xitems xItem;
     private static CanOpen itemToOpen;
@@ -34,7 +36,9 @@ public class Menu {
         final String end = Engine.ANSI_RESET;
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
-        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
+//        clear();
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen +
+                " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
 
         boolean repeat = true;
@@ -63,36 +67,46 @@ public class Menu {
                 open(currentRoom);
                 break;
             case EAT:
+            case DRINK:
                 eat(currentRoom);
                 break;
             case GRAB:
+            case TAKE:
                 grab(currentRoom);
                 break;
+            case FIGHT:
             case ATTACK:
                 attack(currentRoom);
                 break;
             case READ:
                 read();
                 break;
+            case HOLD:
             case SWAP:
                 swap(currentRoom);
                 break;
+            case NORTH:
             case N:
                 moveRoom("N", currentRoom);
                 break;
+            case EAST:
             case E:
                 moveRoom("E", currentRoom);
                 break;
+            case SOUTH:
             case S:
                 moveRoom("S", currentRoom);
                 break;
+            case WEST:
             case W:
                 moveRoom("W", currentRoom);
                 break;
+            case OPTIONS:
             case O:
                 System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + Engine.ANSI_RESET);
                 Menu.displayMenu();
                 break;
+            case INVENTORY:
             case I:
                 CheckInventory();
                 break;
@@ -194,7 +208,7 @@ public class Menu {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
 
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Attack what?\n");
+        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
         System.out.println(lines);
 
         Set<String> keys = availableItems.keySet();
@@ -461,7 +475,7 @@ public class Menu {
 
         final String space = "\n";
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Grab what?\n");
+        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -498,15 +512,6 @@ public class Menu {
                 Menu.displayMenu();
             }
 
-            //Check if there is weapon, add into inventory and set as current weapon
-            for(Weapons weapon : Weapons.values()){
-                if(weapon.getName().equals(newAnswer)){
-                    Character.setCurrentWeapon(newAnswer);
-                    System.out.println(Engine.ANSI_YELLOW + newAnswer + " equipped." + Engine.ANSI_RESET);
-                    break;
-                }
-            }
-
             System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
             Map<String,String> newItems = new HashMap<>();
             newItems = Character.getInventory();
@@ -529,7 +534,6 @@ public class Menu {
 
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
         System.out.println(space + Engine.ANSI_YELLOW + "Eat what?\n");
-
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -727,6 +731,10 @@ public class Menu {
 
     public static String getInv(){
         return inv;
+    }
+
+    public static void clear() {
+        for (int i = 0; i < 50; ++i) System.out.println();
     }
 }
 
