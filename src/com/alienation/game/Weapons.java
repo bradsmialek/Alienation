@@ -4,15 +4,21 @@ package com.alienation.game;
  * Weapons Enum
  */
 public enum Weapons{
-    TASER_GUN(1),
-    LASER(3),
-    SQUIRT_GUN(4),
-    FLAMETHROWER(8);
+    TASER("Taser", 1),
+    LASER("Laser", 3),
+    SQUIRTGUN("Squirt Gun", 4),
+    FLAMETHROWER("Flamethrower", 8);
 
+    private final String name;
     private final int damagePoints;
 
-    Weapons(final int damagePoints) {
+    Weapons(final String name, final int damagePoints) {
         this.damagePoints = damagePoints;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getDamagePoints() {

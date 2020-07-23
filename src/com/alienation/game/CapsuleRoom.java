@@ -52,9 +52,10 @@ public class CapsuleRoom {
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
             availableItems.put("Cabinet", true);
-            availableItems.put("Taser Gun", true);
+            availableItems.put("Taser", true);
             availableItems.put("Chips", true);
             availableItems.put("Oxygen Tank", true);
+            availableItems.put("Flamethrower", true);
         }
         return availableItems;
     }
