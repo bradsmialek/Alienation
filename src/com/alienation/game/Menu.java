@@ -160,7 +160,7 @@ public class Menu {
             }
 
         } catch (IllegalArgumentException e) {
-            System.out.println(Engine.ANSI_RED + "\nYou can'tt swap with that." + Engine.ANSI_RESET);
+            System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
