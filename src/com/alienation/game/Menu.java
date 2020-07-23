@@ -2,6 +2,7 @@ package com.alienation.game;
 
 import org.w3c.dom.ls.LSOutput;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,10 +17,11 @@ public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String actionQuestion = "What would you like to do? (o for options)";
-    private static String actions = "You can < Investigate, Open, Eat, Grab, Attack, Read, Swap, Run >";
-    private static String directions = "You can move < N, S, E, W >";
-    private static String inv = "Check Inventory < i >";
+    private static String actions = "You can < Investigate, Open, (Eat or Drink), (Grab or Take), (Attack or Fight), (Read), (Swap or Hold), (Run) >";
+    private static String directions = "You can move < (N or North), (S or South), (E or East), (W or West) >";
+    private static String inv = "Check Inventory < (i or Inventory)>";
     private static Actions action;
+    private static String taction;
     private static Edibles edible;
     private static Xitems xItem;
     private static CanOpen itemToOpen;
@@ -62,36 +64,46 @@ public class Menu {
                 open(currentRoom);
                 break;
             case EAT:
+            case DRINK:
                 eat(currentRoom);
                 break;
             case GRAB:
+            case TAKE:
                 grab(currentRoom);
                 break;
+            case FIGHT:
             case ATTACK:
                 attack(currentRoom);
                 break;
             case READ:
                 read();
                 break;
+            case HOLD:
             case SWAP:
                 swap(currentRoom);
                 break;
+            case NORTH:
             case N:
                 moveRoom("N", currentRoom);
                 break;
+            case EAST:
             case E:
                 moveRoom("E", currentRoom);
                 break;
+            case SOUTH:
             case S:
                 moveRoom("S", currentRoom);
                 break;
+            case WEST:
             case W:
                 moveRoom("W", currentRoom);
                 break;
+            case OPTIONS:
             case O:
                 System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + Engine.ANSI_RESET);
                 Menu.displayMenu();
                 break;
+            case INVENTORY:
             case I:
                 CheckInventory();
                 break;
@@ -102,18 +114,6 @@ public class Menu {
 
         in.close();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -168,18 +168,6 @@ public class Menu {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     //read clues
     public static void read(){
         System.out.println("Can't Read yet!!");
@@ -228,7 +216,7 @@ public class Menu {
         Menu.displayMenu();
     }
 
-    // Investigate the room
+    // Investigate the room //
     public static void attack(Rooms currentRoom){
         final String space = "\n";
         Map<String,Boolean> availableItems = new HashMap<>();
@@ -250,7 +238,7 @@ public class Menu {
                 break;
         }
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Attack what?\n");
+        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -418,7 +406,7 @@ public class Menu {
                 break;
         }
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Grab what?\n");
+        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
         for (String key : keys) {
@@ -499,7 +487,7 @@ public class Menu {
                 availableItems = ControlRoom.getAvailableItems();
                 break;
         }
-        System.out.println(space + Engine.ANSI_YELLOW + "Eat what?\n");
+        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
 
         System.out.println(lines);
         Set<String> keys = availableItems.keySet();
