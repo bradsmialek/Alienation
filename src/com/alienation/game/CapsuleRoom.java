@@ -21,12 +21,13 @@ public class CapsuleRoom {
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
-    private static int minusOxy = 10;
+    private static int minusOxy = 10; // TODO: Make random number??
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
+        System.out.println(Banner.getBanner());
         count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();

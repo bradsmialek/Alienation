@@ -13,9 +13,12 @@ public class Kitchen {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String answer;
-    private static final String initialStory = Engine.ANSI_BLUE + "\n\nThis is Kitchen.\n"+ Engine.ANSI_RESET;
-    private static final String updatedStory = Engine.ANSI_BLUE + "\n\nThis is Kitchen - Updated.\n"+ Engine.ANSI_RESET;
-    private static final String lastStory = Engine.ANSI_BLUE + "\n\nYou are back in the Capsule Room. Nothing has changed."+ Engine.ANSI_RESET;
+    private static final String initialStory = Engine.ANSI_BLUE + "\n\nYou've entered the kitchen and you can immediately tell that something has gotten into the food. There are all\n" +
+            "types of nasty smells filling the air, but you are so hungry that the smells can't bother you at this point. There must be something\n" +
+            "that you can eat laying around here somewhere?\n"+ Engine.ANSI_RESET;
+    private static final String updatedStory = Engine.ANSI_BLUE + "\n\nYou are back in the kitchen where you found that delicious snack. It looks like something's been through here\n +" +
+            "here again.\n"+ Engine.ANSI_RESET;
+//    private static final String lastStory = Engine.ANSI_BLUE + "\n\nyou"+ Engine.ANSI_RESET;
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
@@ -38,12 +41,7 @@ public class Kitchen {
         if (!getAvailableItems().containsKey("Snickers")) {
             return initialStory;
         } else {
-            if(getAvailableItems().get("Snickers")){
-                return initialStory;
-            }
-            else{
-                return updatedStory;
-            }
+            return updatedStory;
         }
     }
 

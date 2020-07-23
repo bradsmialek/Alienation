@@ -16,10 +16,10 @@ import java.util.regex.Pattern;
 public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String actionQuestion = "What would you like to do? (o for options)";
-    private static String actions = "You can < Investigate, Open, (Eat or Drink), (Grab or Take), (Attack or Fight), (Read), (Swap or Hold), (Run) >";
-    private static String directions = "You can move < (N or North), (S or South), (E or East), (W or West) >";
-    private static String inv = "Check Inventory < (i or Inventory)>";
+    private static String actionQuestion = "What will you do? (o for options)";
+    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
+    private static String directions = "N, S, E, W\n";
+    private static String inv = "Check Inventory < i >";
     private static Actions action;
     private static String taction;
     private static Edibles edible;
@@ -35,7 +35,9 @@ public class Menu {
         final String end = Engine.ANSI_RESET;
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
-        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
+//        clear();
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen +
+                " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
 
         boolean repeat = true;
@@ -115,8 +117,6 @@ public class Menu {
         in.close();
     }
 
-
-
     // TODO: When swapping to squirt_gun or taser_gun you need underscores. Im stuck here, otherwise swap works for everything else
     //swaps weapons
     public static void swap(Rooms currentRoom){
@@ -158,15 +158,11 @@ public class Menu {
                     System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
                     break;
             }
-
         } catch (IllegalArgumentException e) {
             System.out.println(Engine.ANSI_RED + "\nYou can'tt swap with that." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
-
-
-
 
     //read clues
     public static void read(){
@@ -348,7 +344,7 @@ public class Menu {
         System.out.println(lines + Engine.ANSI_RESET);
 
         Scanner in = new Scanner(System.in);
-        String answer = in.nextLine();
+        String answer = in.nextLine(); // cage
         String newAnswer = capitalizeAll(answer);
         Set<String> items = availableItems.keySet();
 
@@ -356,20 +352,19 @@ public class Menu {
         if(items.contains(newAnswer)) {
             //check if item can be opened against enums
             try {
-                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase());
-                System.out.println(itemToOpen);
+                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase()); // cage
                 String upperAnswer = newAnswer.toUpperCase();
-                if (itemToOpen.toString().equals(upperAnswer)) {
-                    System.out.println("pass... still working on it");
-                    if(!Character.getInventory().containsKey(newAnswer)){
-                        System.out.println("It's locked");
+                if (itemToOpen.toString().equals(upperAnswer)) { // new answer it cage
+                    if(!Character.getInventory().containsKey("Code")){ // make the key code not cage
+                        System.out.println(Engine.ANSI_RED + "\nIt's locked" + Engine.ANSI_RESET);
                     }else{
-                        System.out.println("New item added to inventory.");
+                        System.out.println(Engine.ANSI_YELLOW + "\nNew item added to inventory."+ Engine.ANSI_RESET);
                         Map<String,String> newItems = new HashMap<>();
                         newItems = Character.getInventory();
-                        newItems.put(newAnswer, "reply");
-                        // delete item from room
-                        availableItems.remove(newAnswer);
+                        newItems.put("Ignition Switch", "reply");
+                        // delete item from room and code from inventory
+                        availableItems.remove("Ignition Switch");
+                        newItems.remove("Code");
                     }
                 } else {
                     System.out.println("here");
@@ -442,13 +437,6 @@ public class Menu {
                 availableItems.remove(newAnswer);
                 Menu.displayMenu();
             }
-
-            //TODO: check against enums... hard coded for now
-            if(newAnswer.equals("Taser")){
-                Character.setCurrentWeapon(newAnswer);
-                System.out.println(Engine.ANSI_YELLOW + newAnswer  + " equipped." + Engine.ANSI_RESET);
-            }
-
             System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
             Map<String,String> newItems = new HashMap<>();
             newItems = Character.getInventory();
@@ -651,6 +639,10 @@ public class Menu {
 
     public static String getInv(){
         return inv;
+    }
+
+    public static void clear() {
+        for (int i = 0; i < 50; ++i) System.out.println();
     }
 }
 
