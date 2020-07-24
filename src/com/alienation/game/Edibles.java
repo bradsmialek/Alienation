@@ -4,8 +4,8 @@ package com.alienation.game;
  * Edibles Enum
  */
 public enum Edibles{
-    SNICKERS("Snickers",2),
-    CHIPS("Chips",3);
+    SNICKERS("Snickers",20),
+    CHIPS("Chips",20);
 
     private String name;
     private int healthPoints;

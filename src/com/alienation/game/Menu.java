@@ -58,9 +58,11 @@ public class Menu {
         Rooms currentRoom = Character.getCurrentRoom();
         Rooms nextRoom = null;
 
-        // INVESTIGATE, OPEN, EAT, GRAB, ATTACK, READ, SWAP, N, E, S, W, O, I
+        // Action verbs... things the character can do
         switch (action) {
             case INVESTIGATE:
+            case SEE:
+            case LOOK:
                 investigate(currentRoom);
                 break;
             case OPEN:
@@ -71,6 +73,7 @@ public class Menu {
                 eat(currentRoom);
                 break;
             case GRAB:
+            case GET:
             case TAKE:
                 grab(currentRoom);
                 break;
@@ -81,6 +84,7 @@ public class Menu {
             case READ:
                 read();
                 break;
+            case EQUIP:
             case HOLD:
             case SWAP:
                 swap(currentRoom);
@@ -111,6 +115,7 @@ public class Menu {
                 CheckInventory();
                 break;
             case RUN:
+            case FLEE:
                 run(currentRoom);
                 break;
         }
@@ -203,12 +208,12 @@ public class Menu {
 
     /* -- Attack the Alien in the room -- START */
     // Starting Attack the Alien process in the room
-    public static void attack(Rooms currentRoom) {
+    public static void attack(Rooms currentRoom) {   //////  if alien in room
         final String space = "\n";
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
-
         final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
+        String a = action.toString();
+        System.out.println(space + Engine.ANSI_YELLOW + capitalizeAll(a) + " what?\n");
         System.out.println(lines);
 
         Set<String> keys = availableItems.keySet();
@@ -251,7 +256,6 @@ public class Menu {
                                 break;
                         }
                         System.out.println();
-                        System.out.println(Engine.ANSI_BLUE + "\nOoohh!! Looks like Alien has Health of " + alienHealthPoints + " point(s) and can damage you " + alienDamagePoints + " point(s)." + Engine.ANSI_RESET);
 
                         boolean hasWeapon = false;
                         for(Weapons weapon : Weapons.values()){
@@ -263,11 +267,13 @@ public class Menu {
 
                         if(hasWeapon) {
                             int weaponDamagePoints =  Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
-                            System.out.println(Engine.ANSI_BLUE + "Well, You got the " + Character.getCurrentWeapon() + " and can give damage of " + weaponDamagePoints + " point(s) to Alien." + Engine.ANSI_RESET);
-                            alienAttackOrRun(currentRoom, newAnswer, alienHealthPoints, alienDamagePoints);
+//                            System.out.println(Engine.ANSI_GREEN + Character.getCurrentWeapon() + Engine.ANSI_BLUE + Engine.ANSI_BLUE + " Deals " + Engine.ANSI_RED + weaponDamagePoints + Engine.ANSI_BLUE +" damage." + Engine.ANSI_RESET);
+//                            System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienHealthPoints + Engine.ANSI_RESET);
+
+                            alienAttack(currentRoom, newAnswer, alienHealthPoints, alienDamagePoints);
                         }
                         else {
-                            System.out.println(Engine.ANSI_RED + "Looks like you don't have the weapon to fight with Alien so Explore the Rooms and grab weapon to fight!!!" + Engine.ANSI_RESET);
+                            System.out.println(Engine.ANSI_RED + "You don't have a weapon equipped to fight with. Bad breath won't do!" + Engine.ANSI_RESET);
                             Menu.displayMenu();
                         }
                     }
@@ -339,15 +345,17 @@ public class Menu {
                         Alien.setT4Hp(alienNewHealthPoints); //set Alien health after attack
                         break;
                 }
-                System.out.println(Engine.ANSI_BLUE + "\nYeaaahhh, You attacked the Alien and gave damage of " + weaponDamagePoints + " point(s) so Alien's health is " + alienNewHealthPoints + " point(s)" + Engine.ANSI_RESET);
-                TimeUnit.SECONDS.sleep(1);
+                System.out.println(Engine.ANSI_RED + "\n-" + weaponDamagePoints + " dmg");
+                System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienNewHealthPoints + Engine.ANSI_RESET);
+                TimeUnit.SECONDS.sleep(2);
 
                 if(alienNewHealthPoints != 0){
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(2);
                     System.out.println(Engine.ANSI_RED + "\nOops!! Alien attacked you back...");
-                    int characterFinalHealth = 0 - alienDamagePoints;
+                    int characterFinalHealth = -alienDamagePoints;
                     Character.setHealth(characterFinalHealth);
-                    System.out.println(Engine.ANSI_BLUE + "\nAlien gave you damage of " + alienDamagePoints + " point(s) so your health is " + Character.getHealth() + " point(s)");
+                    System.out.println("\n-" + alienDamagePoints + " dmg" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_BLUE + "\nYour HP: " + Engine.ANSI_GREEN +Character.getHealth() + Engine.ANSI_RESET);
 
                     if(Character.getHealth() == 0){
                         death();
@@ -363,11 +371,12 @@ public class Menu {
                     availableItems.remove(alienType);
                     updateItems(currentRoom, availableItems);
                     Map<String,String> inventory = Character.getInventory();
-                    inventory.put("Code", "reply");
+//                    inventory.put("Code", "reply");
                     Character.setInventory(inventory);
 
-                    System.out.println(Engine.ANSI_RED + "\nWoooohoooo!!! You killed Alien!" + Engine.ANSI_RESET);
-                    System.out.println(Engine.ANSI_BLUE + "\nExplore other rooms and solve mysteries that will help you to fly back home!!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\nWoooohoooo!!! You killed the alien!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_BLUE + "\nThe alien has dropped something." + Engine.ANSI_RESET);
+                    availableItems.put("Code", true);
                     Menu.displayMenu();
                 }
             }
@@ -507,7 +516,7 @@ public class Menu {
 
             if(newAnswer.equals("Oxygen Tank")){
                 Oxygen.incOxygen(100);
-                System.out.println(Engine.ANSI_YELLOW + "\nOxygen levels are now full.  " + oxygen + " ++" + Engine.ANSI_RESET);
+                System.out.println(Engine.ANSI_YELLOW + "\nYou just increased " + oxygen + " levels." + Engine.ANSI_RESET);
                 availableItems.remove(newAnswer);
                 Menu.displayMenu();
             }
