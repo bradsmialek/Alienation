@@ -28,6 +28,7 @@ public class CapsuleRoom {
     public static void loadEnvironment(){
 //        System.out.println(Banner.getBanner());
         count++;
+//        System.out.println(Banner.getBanner());
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());

@@ -25,6 +25,7 @@ public class AlienRoom {
     // This method used to load Environment to user
     public static void loadEnvironment(){
         count++;
+        System.out.println(Banner.getBanner());
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
