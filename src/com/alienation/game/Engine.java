@@ -18,6 +18,7 @@ public class Engine {
 
     /*************** PUBLIC METHODS  ******************/
     public static void start(){
+        System.out.println(Banner.getBanner());
         Scanner in = new Scanner(System.in);
         CapsuleRoom.loadEnvironment();
     }
