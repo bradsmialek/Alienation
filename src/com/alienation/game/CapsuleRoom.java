@@ -11,7 +11,6 @@ import java.util.Set;
 public class CapsuleRoom {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
-    private static String answer;
     private static String initialStory = Engine.ANSI_BLUE + "\n\nAs you open your eyes your vision is blurry and your body hurts. You gasp to take your first breath as you wake from cryo-sleep.\n" +
             "You can tell the oxygen levels are low as it seems harder to breathe.  As you look around you notice that there is one crew member\n" +
             "missing and their sleeping capsule is shattered with blood splattered across the front. The ship seems to be drifting in\n" +
@@ -21,12 +20,13 @@ public class CapsuleRoom {
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static int count = 0;
-    private static int minusOxy = 10;
+    private static int minusOxy = 10; // TODO: Make random number??
 
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
+//        System.out.println(Banner.getBanner());
         count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
@@ -51,11 +51,10 @@ public class CapsuleRoom {
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
-            availableItems.put("Cabinet", true);
-            availableItems.put("Taser", true);
-            availableItems.put("Chips", true);
+            availableItems.put("Pods", true);
             availableItems.put("Oxygen Tank", true);
-            availableItems.put("Flamethrower", true);
+            availableItems.put("Racks", true);
+            availableItems.put("Lockers", true);
         }
         return availableItems;
     }

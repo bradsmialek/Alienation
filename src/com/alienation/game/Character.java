@@ -12,14 +12,13 @@ public class Character {
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     public static final int MAX_HEALTH = 100;
     public static final int MIN_HEALTH = 0;
-    private static int health = 50;
-    private static String currentWeapon = "5 fingers to the face";
+    private static int health = 5;
+    private static String currentWeapon = "Bad breath";
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
     private static Rooms previousRoom;
     private static Rooms tempRoom;
     private static Map<String,String> inventory = new HashMap<String, String>();
 
-    //TODO : Alien has code, added to char inventory on death
 
     /*************** GETTER - SETTER METHODS  ******************/
     public static int getHealth() {
@@ -36,11 +35,11 @@ public class Character {
         }
     }
 
-    public static void alienDeath(){
-        if (Alien.getT1Hp() >= 0){
-            
-        }
-    }
+//    public static void alienDeath(){
+//        if (Alien.getT1Hp() >= 0){
+//
+//        }
+//    }
 
     public static String getCurrentWeapon() {
         return currentWeapon;

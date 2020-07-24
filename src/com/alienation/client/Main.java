@@ -7,6 +7,10 @@ import com.alienation.game.Engine;
  */
 public class Main {
     public static void main(String[] args) {
-        Engine.start();
+        try {
+            Engine.start();
+        } catch (Exception e) {
+            System.out.println("Something wrong with the Game!!!");
+        }
     }
 }
