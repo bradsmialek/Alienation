@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 public class Oxygen {
     public static int oxygen = 50;
+    private static final String oTwo = "O\u2082"; // O₂
 
     //TODO: MAKE MAX OXYGEN
     public static int getOxygen() {
@@ -16,7 +17,7 @@ public class Oxygen {
     //Decreases oxygen levels
     public static void minOxygen(int minusOxy) {
         Oxygen.oxygen = Oxygen.oxygen - minusOxy;
-        System.out.println(Engine.ANSI_RED + "\n\nOxygen level -10" + Engine.ANSI_RESET);
+        System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
     }
 
     //Increases oxygen levels

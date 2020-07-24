@@ -26,7 +26,7 @@ public class CapsuleRoom {
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment(){
-        System.out.println(Banner.getBanner());
+//        System.out.println(Banner.getBanner());
         count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
@@ -51,11 +51,10 @@ public class CapsuleRoom {
     // Get available items of a room
     public static Map<String,Boolean> getAvailableItems(){
         if (availableItems.size() == 0) {
-            availableItems.put("Cabinet", true);
-            availableItems.put("Laser", true);
-            availableItems.put("Chips", true);
+            availableItems.put("Pods", true);
             availableItems.put("Oxygen Tank", true);
-            availableItems.put("Flamethrower", true);
+            availableItems.put("Racks", true);
+            availableItems.put("Lockers", true);
         }
         return availableItems;
     }

@@ -12,8 +12,8 @@ public class Character {
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     public static final int MAX_HEALTH = 100;
     public static final int MIN_HEALTH = 0;
-    private static int health = 50;
-    private static String currentWeapon = "5 fingers to the face";
+    private static int health = 5;
+    private static String currentWeapon = "Bad breath";
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
     private static Rooms previousRoom;
     private static Rooms tempRoom;
