@@ -1,8 +1,19 @@
 package com.alienation.game;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -22,6 +33,7 @@ public class Menu {
     private static String directions = "N, S, E, W\n";
     private static String inv = "Check Inventory < i >";
     public static Actions action;
+    private static String saveGame = "Save the Game < save >";
     private static String taction;
     private static Edibles edible;
     private static Xitems xItem;
@@ -108,7 +120,7 @@ public class Menu {
                 break;
             case OPTIONS:
             case O:
-                System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + Engine.ANSI_RESET);
+                System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + "\n" + getSaveGame() + Engine.ANSI_RESET);
                 Menu.displayMenu();
                 break;
             case INVENTORY:
@@ -118,6 +130,9 @@ public class Menu {
             case RUN:
             case FLEE:
                 run(currentRoom);
+                break;
+            case SAVE:
+                saveGameDataToFile();
                 break;
         }
 
@@ -726,25 +741,99 @@ public class Menu {
                 "                                                                                                                                   ");
     }
 
+    /* -- Save the Game -- START */
+    // Save the Game
+    public static void saveGameDataToFile() {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder;
+        try {
+            dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
+            //add elements to Document
+            Element rootElement =
+                    doc.createElementNS("", "GameState");
+            //append root element to document
+            doc.appendChild(rootElement);
+
+            //append child elements to root element
+            rootElement.appendChild(getGameElements(doc,"CurrentHealth",String.valueOf(Character.getHealth())));
+            rootElement.appendChild(getGameElements(doc,"CurrentOxygen",String.valueOf(Oxygen.getOxygen())));
+            rootElement.appendChild(getGameElements(doc,"CurrentWeapon",String.valueOf(Character.getCurrentWeapon())));
+            rootElement.appendChild(getGameElements(doc,"CurrentRoom",String.valueOf(Character.getCurrentRoom())));
+            rootElement.appendChild(getGameElements(doc,"TempRoom",String.valueOf(Character.getTempRoom())));
+            rootElement.appendChild(getGameElements(doc,"PreviousRoom",String.valueOf(Character.getPreviousRoom())));
+
+            //append inventory list to root element
+            rootElement.appendChild(getGameData(doc,"Inventory",Character.getInventory().keySet()));
+
+            //append room available item list to root element
+            rootElement.appendChild(getGameData(doc,"CapsuleRoom",CapsuleRoom.getAvailableItems().keySet()));
+            rootElement.appendChild(getGameData(doc,"AlienRoom",AlienRoom.getAvailableItems().keySet()));
+            rootElement.appendChild(getGameData(doc,"Kitchen",Kitchen.getAvailableItems().keySet()));
+            rootElement.appendChild(getGameData(doc,"ComputerRoom",SupplyRoom.getAvailableItems().keySet()));
+            rootElement.appendChild(getGameData(doc,"ControlRoom",ControlRoom.getAvailableItems().keySet()));
+
+            //for output to file, console
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            //for pretty print
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+
+            //write to console or file
+            //StreamResult console = new StreamResult(System.out);
+            StreamResult file = new StreamResult(new File(System.getProperty("user.dir") + "\\SaveState.xml"));
+
+            //write data
+            //transformer.transform(source, console);
+            transformer.transform(source, file);
+            System.out.println("We saved the game status!!");
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Node getGameData(Document doc, String element, Set<String> items) {
+        Element data = doc.createElement(element);
+        for(String value : items){
+            data.appendChild(getGameElements(doc, "Item", value));
+        }
+        return data;
+    }
+
+    //utility method to create text node
+    private static Node getGameElements(Document doc, String name, String value) {
+        Element node = doc.createElement(name);
+        node.appendChild(doc.createTextNode(value));
+        return node;
+    }
+    /* -- Save the Game -- END */
+
+
     /*************** GETTER - SETTER METHODS  ******************/
-    public static String getActionQuestion() {
+    private static String getActionQuestion() {
         return actionQuestion;
     }
 
-    public static String getActions() {
+    private static String getActions() {
         return actions;
     }
 
-    public static String getDirections() {
+    private static String getDirections() {
         return directions;
     }
 
-    public static String getInv(){
+    private static String getInv(){
         return inv;
     }
 
-    public static void clear() {
+    private static void clear() {
         for (int i = 0; i < 50; ++i) System.out.println();
+    }
+
+    private static String getSaveGame(){
+        return saveGame;
     }
 }
 
