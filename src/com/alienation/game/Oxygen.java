@@ -17,6 +17,7 @@ public class Oxygen {
     //Decreases oxygen levels
     public static void minOxygen(int minusOxy) {
         Oxygen.oxygen = Oxygen.oxygen - minusOxy;
+        //TODO: wanna discuss with @Brad
         System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
     }
 
