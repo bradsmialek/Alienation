@@ -14,13 +14,14 @@ public class Oxygen {
         return oxygen;
     }
 
-    //Decreases oxygen levels
+    //Decreases oxygen levels  SETTERS
     public static void minOxygen(int minusOxy) {
         Oxygen.oxygen = Oxygen.oxygen - minusOxy;
+        //TODO: wanna discuss with @Brad
         System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
     }
 
-    //Increases oxygen levels
+    //Increases oxygen levels SETTERS
     public static void incOxygen(int incOxy) {
         Oxygen.oxygen = Oxygen.oxygen + incOxy;
         //TODO: IF OVER 100 SET IT TO MAX
@@ -35,7 +36,5 @@ public class Oxygen {
             //TODO: make start screen to redirect to game start scene instead of exiting
         }
     }
-
-
 
 }
