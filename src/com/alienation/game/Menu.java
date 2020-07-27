@@ -21,13 +21,14 @@ public class Menu {
     private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
     private static String directions = "N, S, E, W\n";
     private static String inv = "Check Inventory < i >";
-    private static Actions action;
+    public static Actions action;
     private static String taction;
     private static Edibles edible;
     private static Xitems xItem;
     private static CanOpen itemToOpen;
     private static String answer;
     private static final String oxygen = "O\u2082"; // O₂
+
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
