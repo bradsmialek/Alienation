@@ -3,8 +3,8 @@ package com.alienation.game;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.ls.LSOutput;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,7 +13,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -29,7 +32,7 @@ public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String actionQuestion = "What will you do? (o for options)";
-    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
+    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run, Map\n";
     private static String directions = "N, S, E, W\n";
     private static String inv = "Check Inventory < i >";
     public static Actions action;
@@ -134,10 +137,62 @@ public class Menu {
             case SAVE:
                 saveGameDataToFile();
                 break;
+            case MAP:
+                ImageViewer(currentRoom);
+                break;
         }
 
         in.close();
     }
+
+
+
+
+
+
+    public static void ImageViewer(Rooms currentRoom){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Ship Blueprints");
+                frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                BufferedImage img = null;
+                try {
+                    switch (currentRoom){
+                        case CapsuleRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Capsule.png"));
+                            break;
+                        case Kitchen:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Kitchen.png"));
+                            break;
+                        case ControlRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Control.png"));
+                            break;
+                        case AlienRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Alien.png"));
+                            break;
+                        case ComputerRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Computer.png"));
+                            break;
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+
+                ImageIcon imgIcon = new ImageIcon(img);
+                JLabel lbl = new JLabel();
+                lbl.setIcon(imgIcon);
+                frame.getContentPane().add(lbl, BorderLayout.CENTER);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+        displayMenu();
+    }
+
 
     //swaps weapons
     public static void swap(Rooms currentRoom){
