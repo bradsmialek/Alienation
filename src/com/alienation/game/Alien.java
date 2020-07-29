@@ -1,82 +1,82 @@
 package com.alienation.game;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Alien Class
  */
 public class Alien {
-
-    private static int t1Hp = 4; // type 1 health points
-    private static int t2Hp = 6;
-    private static int t3Hp = 10;
-    private static int t4Hp = 50;
-    private static final int t1Dmg = 1; // type 1 damage dealt
-    private static final int t2Dmg = 3;
-    private static final int t3Dmg = 5;
-    private static final int t4Dmg = 10;
-    private static Map<String,Boolean> alienTypes = new HashMap<String, Boolean>();
+    private static Map<String,Map<String,Integer>> alienTypes = new HashMap<String,Map<String,Integer>>();
 
     // Get the alien
-    public static Map<String,Boolean> getAliens(){
+    public static Map<String,Map<String,Integer>> getAliens(){
         if(alienTypes.size() == 0) {
-            alienTypes.put("Vermin", true);
-            alienTypes.put("Canine", true);
-            alienTypes.put("Humanoid", true);
-            alienTypes.put("Superhumanoid", true); // Ultimate
+            Map<String, Integer> pointsMap = new HashMap<>();
+            pointsMap.put("HP", 4);
+            pointsMap.put("DP", 1);
+            alienTypes.put("Vermin", pointsMap);
+
+            pointsMap = new HashMap<>();
+            pointsMap.put("HP", 6);
+            pointsMap.put("DP", 3);
+            alienTypes.put("Canine", pointsMap);
+
+            pointsMap = new HashMap<>();
+            pointsMap.put("HP", 10);
+            pointsMap.put("DP", 5);
+            alienTypes.put("Humanoid", pointsMap);
+
+            pointsMap = new HashMap<>();
+            pointsMap.put("HP", 50);
+            pointsMap.put("DP", 10);
+            alienTypes.put("Superhumanoid", pointsMap);
         }
         return alienTypes;
     }
 
-    // Getters and Setters for health and damage
-    public static int getT1Hp() {
-        return t1Hp;
+
+    /*************** GETTER - SETTER METHODS  ******************/
+    //Get HP/DP points
+    public static int getPoints(String alienType,String key){
+        return alienTypes.get(alienType).get(key);
     }
 
-    public static void setT1Hp(int t1Hp) {
-        Alien.t1Hp = t1Hp;
+    //Set HP/DP points
+    public static void setPoints(String alienType, String key, int points){
+        alienTypes.get(alienType).replace(key, points);
     }
-
-    public static int getT2Hp() {
-        return t2Hp;
-    }
-
-    public static void setT2Hp(int t2Hp) {
-        Alien.t2Hp = t2Hp;
-    }
-
-    public static int getT3Hp() {
-        return t3Hp;
-    }
-
-    public static void setT3Hp(int t3Hp) {
-        Alien.t3Hp = t3Hp;
-    }
-
-    public static int getT4Hp() {
-        return t4Hp;
-    }
-
-    public static void setT4Hp(int t4Hp) {
-        Alien.t4Hp = t4Hp;
-    }
-
-    public static int getT1Dmg() {
-        return t1Dmg;
-    }
-
-    public static int getT2Dmg() {
-        return t2Dmg;
-    }
-
-    public static int getT3Dmg() {
-        return t3Dmg;
-    }
-
-    public static int getT4Dmg() {
-        return t4Dmg;
-    }
-
+//<<<<<<< HEAD
+//
+//    public static void setT3Hp(int t3Hp) {
+//        Alien.t3Hp = t3Hp;
+//    }
+//
+//    public static int getT4Hp() {
+//        return t4Hp;
+//    }
+//
+//    public static void setT4Hp(int t4Hp) {
+//        Alien.t4Hp = t4Hp;
+//    }
+//
+//    public static int getT1Dmg() {
+//        return t1Dmg;
+//    }
+//
+//    public static int getT2Dmg() {
+//        return t2Dmg;
+//    }
+//
+//    public static int getT3Dmg() {
+//        return t3Dmg;
+//    }
+//
+//    public static int getT4Dmg() {
+//        return t4Dmg;
+//    }
+//
+//=======
+//    //TODO: build in weakness and immunity
+//>>>>>>> 1e088c83802101dcef03e237eaf09f2b3d9c626d
 }
 

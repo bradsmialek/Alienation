@@ -4,6 +4,6 @@ public enum Rooms {
     CapsuleRoom,
     AlienRoom,
     Kitchen,
-    ComputerRoom,
+    SupplyRoom,
     ControlRoom
 }

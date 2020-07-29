@@ -1,11 +1,10 @@
 package com.alienation.game;
 
 /**
- * Created by bradsmialek on Wed - 7/29/20 @ 1:45 AM
- * Death Scene
+ * Created by bradsmialek on Wed - 7/29/20 @ 8:03 AM
  */
-public class Death {
-    public static void death(){
+public class Win {
+    public static void win(){ //TODO: replace ASCII for "You Won"
         System.out.println("\n" + Engine.ANSI_RED +
                 "____    ____  ______    __    __          ___      .______       _______     _______   _______     ___       _______               \n" +
                 "\\   \\  /   / /  __  \\  |  |  |  |        /   \\     |   _  \\     |   ____|   |       \\ |   ____|   /   \\     |       \\              \n" +
@@ -13,7 +12,10 @@ public class Death {
                 "  \\_    _/  |  |  |  | |  |  |  |      /  /_\\  \\   |      /     |   __|     |  |  |  ||   __|   /  /_\\  \\   |  |  |  |             \n" +
                 "    |  |    |  `--'  | |  `--'  |     /  _____  \\  |  |\\  \\----.|  |____    |  '--'  ||  |____ /  _____  \\  |  '--'  | __ __ __ __ \n" +
                 "    |__|     \\______/   \\______/     /__/     \\__\\ | _| `._____||_______|   |_______/ |_______/__/     \\__\\ |_______/ (__|__|__|__)\n" +
-                "                                                                                                                                   ");
+                "                                                                                                                                   " + Engine.ANSI_RESET);
+
         Menu.StartNewOrQuitGame();
     }
+
+
 }
