@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Win {
     public static void win(){ //TODO: replace ASCII for "You Won"
-        System.out.println("\n" + Engine.ANSI_RED +
+        System.out.println("\n" + Engine.ANSI_GREEN +
                 "██╗░░░██╗░█████╗░██╗░░░██╗  ░██╗░░░░░░░██╗░█████╗░███╗░░██╗░░░\n" +
                 "╚██╗░██╔╝██╔══██╗██║░░░██║  ░██║░░██╗░░██║██╔══██╗████╗░██║░░░\n" +
                 "░╚████╔╝░██║░░██║██║░░░██║  ░╚██╗████╗██╔╝██║░░██║██╔██╗██║░░░\n" +
