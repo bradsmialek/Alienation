@@ -123,7 +123,7 @@ public class Menu {
             case O:
                 System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() +
                         "\n" + getSaveGame() + Engine.ANSI_RESET);
-                Menu.displayMenu();
+                displayMenu();
                 break;
             case INVENTORY:
             case I:
@@ -144,7 +144,6 @@ public class Menu {
     }
   
     public static void ImageViewer(Rooms currentRoom) throws Exception{
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -152,24 +151,8 @@ public class Menu {
                 frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 BufferedImage img = null;
                 try {
-                    switch (currentRoom){
-                        case CapsuleRoom:
-                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Capsule.png"));
-                            break;
-                        case Kitchen:
-                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Kitchen.png"));
-                            break;
-                        case ControlRoom:
-                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Control.png"));
-                            break;
-                        case AlienRoom:
-                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Alien.png"));
-                            break;
-                        case SupplyRoom:
-                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Computer.png"));
-                            break;
-                    }
-
+                    String imgPath = "/com/alienation/resources/" + currentRoom  + ".png";
+                    img = ImageIO.read(getClass().getResource(imgPath));
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(1);
@@ -184,7 +167,7 @@ public class Menu {
                 frame.setVisible(true);
             }
         });
-        Menu.displayMenu();
+        displayMenu();
     }
 
 
@@ -201,7 +184,7 @@ public class Menu {
         if(keys.size() == 0){
             System.out.println(Engine.ANSI_RED + "\nYou don't have any weapons in your inventory. " +
                     "Grab some weapons to swap!!" + Engine.ANSI_RESET);
-            Menu.displayMenu();
+            displayMenu();
         }else if(!Input.getItem1().equals("empty")){
             answer = capitalizeAll(Input.getItem1());
         }
@@ -228,7 +211,7 @@ public class Menu {
         } catch(Exception e){
             System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     //read clues
@@ -257,7 +240,7 @@ public class Menu {
         if(reply){
             System.out.println(Engine.ANSI_RED + "\nYou can only run from an alien scaredy pants!" + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     /* -- Attack the Alien in the room -- START */
@@ -291,13 +274,13 @@ public class Menu {
                         else {
                             System.out.println(Engine.ANSI_RED + "You don't have a weapon equipped to fight with. " +
                                     "Bad breath won't do!" + Engine.ANSI_RESET);
-                            Menu.displayMenu();
+                            displayMenu();
                         }
                     }
                 }
                 else {
                     System.out.println(Engine.ANSI_RED + "\nYou can't attack that!" + Engine.ANSI_RESET);
-                    Menu.displayMenu();
+                    displayMenu();
                 }
             } catch (Exception e) {
                 System.out.println();
@@ -309,7 +292,7 @@ public class Menu {
         else {
         System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     // Attack or Run from Alien in the room to previous room
@@ -400,7 +383,7 @@ public class Menu {
                     inventory.add("Code");
                     Character.setInventory(inventory);
                     Engine.setAvailableItemsMap(currentRoom, availableItems);
-                    Menu.displayMenu();
+                    displayMenu();
                 }
             }
             else {
@@ -445,7 +428,7 @@ public class Menu {
                 }
             }
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     //Open something
@@ -475,7 +458,7 @@ public class Menu {
                     }
                 } else {
                     System.out.println("here");
-                    Menu.displayMenu();
+                    displayMenu();
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println(Engine.ANSI_RED + "\nYou can't open that!" + Engine.ANSI_RESET);
@@ -489,7 +472,7 @@ public class Menu {
         else {
             System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     // Grab the item from the room
@@ -503,7 +486,7 @@ public class Menu {
             try {
                 if (getXItems().contains(item1)){
                     System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
-                    Menu.displayMenu();
+                    displayMenu();
                 }
             }
             catch(IllegalArgumentException e){
@@ -518,7 +501,7 @@ public class Menu {
                         Engine.ANSI_RESET);
                 items.remove(item2);
                 Engine.setAvailableItemsMap(currentRoom, items);
-                Menu.displayMenu();
+                displayMenu();
             }
 
             System.out.println(Engine.ANSI_YELLOW + "\n" + item1 + " added to Inventory." + Engine.ANSI_RESET);
@@ -537,7 +520,7 @@ public class Menu {
         else {
             System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     //Get items which user can't grab
@@ -594,7 +577,7 @@ public class Menu {
         else {
             System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room or your inventory." + Engine.ANSI_RESET);
         }
-        Menu.displayMenu();
+        displayMenu();
     }
 
     // Move Room from one to another
@@ -644,7 +627,7 @@ public class Menu {
             System.out.println(item);
         }
         System.out.println(lines + Engine.ANSI_RESET);
-        Menu.displayMenu();
+        displayMenu();
     }
 
     // utility function to capitalize first letter of each word
