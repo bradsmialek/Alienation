@@ -13,11 +13,18 @@ import static org.junit.Assert.*;
  * Created by bradsmialek on Fri - 7/24/20 @ 12:26 PM
  */
 public class MenuTest {
+    String currentDirectory = null;
     String item;
+
 
     @Before
     public void init(){
-        Scanner in = new Scanner(System.in);
+        // Get current directory where a text file is
+        currentDirectory = System.getProperty("user.dir");
+        //System.out.println(currentDirectory);
+        currentDirectory = currentDirectory + "/test/";
+
+        Menu menu = new Menu();
     }
 
     @Test
@@ -76,24 +83,24 @@ public class MenuTest {
         Menu menu = new Menu();
         Character character = new Character();
         Rooms currentRoom = character.getCurrentRoom();
-        String line = null;
-        File text = new File("/Users/bradsmialek/tlg/java/projects/Alienation/tests/grabOxygen.txt");
-        Scanner scnr = new Scanner(text);
-        int lineNumber = 1;
-        while(scnr.hasNextLine()){
-            line  = scnr.nextLine();
-            System.out.println("line " + lineNumber + " :" + line);
-            lineNumber++;
-            System.out.println(line.getClass());
-            System.out.println();
+//        String line = null;
+//        File text = new File("/Users/bradsmialek/tlg/java/projects/Alienation/tests/grabOxygen.txt");
+//        Scanner scnr = new Scanner(text);
+//        int lineNumber = 1;
+//        while(scnr.hasNextLine()){
+//            line  = scnr.nextLine();
+//            System.out.println("line " + lineNumber + " :" + line);
+//            lineNumber++;
+//            System.out.println(line.getClass());
+//            System.out.println();
 
-//            send input to method
-//            instance of oxygen
-        }
-        menu.action = Actions.GRAB;
-        menu.grab(currentRoom);
 
-        //getOxygen()
+//        }
+//        Scanner sc = setUpScanner(currentDirectory, "grabOxygen.txt");
+//        menu.action = Actions.GRAB;
+//        menu.grab(currentRoom);
+
+
     }
 //    @Test
     //fail oxy
@@ -135,4 +142,24 @@ public class MenuTest {
     @Test
     public void checkInventory() {
     }
+
+//    private Scanner setUpScanner(String fileDirectory, String filename) {
+//        Scanner sc = null;
+//        try{
+//            sc = new Scanner(new File(fileDirectory + filename));
+//        }
+//        catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return sc;
+//    }
+//
+//    private void execute(Scanner sc){
+//        try {
+//            Menu.grab(sc);
+//        }
+//        catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//    }
 }

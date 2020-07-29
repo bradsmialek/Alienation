@@ -33,6 +33,7 @@ public class ControlRoom {
         Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
+
     }
 
 
@@ -40,6 +41,7 @@ public class ControlRoom {
     // Get Story line while page loads
     // check inventory for part
     public static String getStory() {
+
         if (!Character.getInventory().containsKey("Ignition Switch")) { //if inventory does not contain ignition
             return initialStory;
         } else{
