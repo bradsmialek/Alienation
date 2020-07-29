@@ -39,7 +39,7 @@ public class Menu {
     private static String item1;
     private static String item2;
     private static final String oxygen = "O\u2082"; // O₂
-
+    public static int attackCount = 0;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
@@ -212,7 +212,7 @@ public class Menu {
         for (String key : keysInRoom) {
             for(String alien : aliens){
                 if(key.equals(alien)){
-                    System.out.println(Engine.ANSI_RED + "\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\n\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
                     loadRoom(Character.getPreviousRoom());
                 }else{
                     reply = true;
@@ -303,28 +303,42 @@ public class Menu {
 
     // Attack or Run from Alien in the room to previous room
     public static void alienAttackOrRun(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints) {
-        final String space = "\n";
-        System.out.println(Engine.ANSI_YELLOW + "\nDo you want to ATTACK or RUN????" + Engine.ANSI_RESET);
-        Scanner input = new Scanner(System.in);
+        System.out.println(Engine.ANSI_YELLOW + "\nWhat do you want to do?" + Engine.ANSI_RESET);
+
         boolean repeat = true;
         while (repeat) {
             try {
-                String answerInput = input.nextLine();
-                action = Actions.valueOf(answerInput.toUpperCase());
-                if(action == Actions.ATTACK){
-                    repeat = false;
-                    alienAttack(currentRoom, alienType, alienHealthPoints, alienDamagePoints);
-                }
-                else if(action == Actions.RUN){
-                    repeat = false;
-                    run(currentRoom);
-                }
-                else{
-                    System.out.println("You must enter one of the following actions: ATTACK, RUN");
-                    repeat = true;
+                Input.getInput();
+                String input = Input.getActionInput();
+                action = Actions.valueOf(input.toUpperCase());
+
+                switch (action){
+                    case FIGHT:
+                    case ATTACK:
+                        repeat = false;
+                        alienAttack(currentRoom, alienType, alienHealthPoints, alienDamagePoints);
+                        break;
+                    case RUN:
+                    case FLEE:
+                        repeat = false;
+                        run(currentRoom);
+                        break;
+                    case EAT:
+                        repeat = false;
+                        eat(currentRoom);
+                    case SWAP:
+                    case EQUIP:
+                        repeat = false;
+                        swap(currentRoom);
+                        break;
+                    default:
+                        System.out.println("You must enter one of the following actions: ATTACK, RUN");
+                        repeat = true;
+                        break;
+
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("You must enter one of the following actions: ATTACK, RUN");
+                System.out.println(Engine.ANSI_RED + "\nCan't do that!" + Engine.ANSI_RESET);
                 repeat = true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -335,6 +349,7 @@ public class Menu {
     //Attacking the Alien and Alien will attack back to you
     public static void alienAttack(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints){
         System.out.println(Engine.ANSI_RED + "\nAttacking Alien..." + Engine.ANSI_RESET);
+        attackCount ++;
         try {
             if(Character.getHealth() != 0) {
                 int weaponDamagePoints = Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
@@ -538,7 +553,7 @@ public class Menu {
 
         Set<String> items = availableItems.keySet();
 
-        if(items.contains(item2) || items.contains(item1)){
+        if(items.contains(item2) || items.contains(item1) || Character.getInventory().containsKey(item1)){
             try {
                 edible = Edibles.valueOf(item1.toUpperCase());
                 int edibleItems = 0;
@@ -552,6 +567,15 @@ public class Menu {
                         Character.setHealth(healthPoints);
                         //Remove from available items of room
                         availableItems.remove(edible.getName());
+                    }else if(Character.getInventory().containsKey(item1)){
+                        edibleItems++;
+                        System.out.println(Engine.ANSI_YELLOW + "\nYou ate " + item1 + ".  HP ++" + Engine.ANSI_RESET);
+                        int healthPoints = edible.getHealthPoints();
+                        //Increase health points
+                        Character.setHealth(healthPoints);
+                        Map<String,String> newItems;
+                        newItems = Character.getInventory();
+                        newItems.remove(item1);
                     }
                 }
                 if(edibleItems == 0){
@@ -566,7 +590,7 @@ public class Menu {
                     " what?" + Engine.ANSI_RESET);
         }
         else {
-            System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
+            System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room or your inventory." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
