@@ -151,7 +151,7 @@ public class Menu {
 
 
 
-    public static void ImageViewer(Rooms currentRoom){
+    public static void ImageViewer(Rooms currentRoom) throws Exception {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -191,7 +191,7 @@ public class Menu {
                 frame.setVisible(true);
             }
         });
-        displayMenu();
+        Menu.displayMenu();
     }
 
 
