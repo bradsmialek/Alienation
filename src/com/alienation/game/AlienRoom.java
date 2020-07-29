@@ -38,14 +38,11 @@ public class AlienRoom {
         if (!getAvailableItems().containsKey("Humanoid")) {
             return lastStory;
         }else{
-            if(count >1 && getAvailableItems().get("Humanoid")){
-                return updatedStory;
-            }else if(getAvailableItems().get("Humanoid")){
+
                 return initialStory;
-            }
+
         }
 
-        return null;
     }
 
     // Get available items of a room
