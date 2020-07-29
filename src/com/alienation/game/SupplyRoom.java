@@ -27,12 +27,14 @@ public class SupplyRoom {
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
-    public static void loadEnvironment(){
-        System.out.println(Banner.getBanner());
+    public static void loadEnvironment() throws Exception {
+        Character.checkHealth();
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
+        System.out.println(RoomsMap.supplyRoom());
         Menu.displayMenu();
+
     }
 
     /*************** GETTER - SETTER METHODS  ******************/

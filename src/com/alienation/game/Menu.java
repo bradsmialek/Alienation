@@ -3,8 +3,7 @@ package com.alienation.game;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.ls.LSOutput;
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,11 +12,15 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -29,8 +32,8 @@ public class Menu {
 
     /*************** PRIVATE VARIABLE DECLARATIONS  ******************/
     private static String actionQuestion = "What will you do? (o for options)";
-    private static String actions = "Investigate, Open, Eat, Grab, Attack, Read, Swap, Run\n";
-    private static String directions = "N, S, E, W\n";
+    private static String actions = "Try : look, open item , eat item, grab item, attack, read, swap, run, Map\n";
+    private static String directions = "Try : N, north, S, South, e, W, west to move around\n";
     private static String inv = "Check Inventory < i >";
     public static Actions action;
     private static String saveGame = "Save the Game < save >";
@@ -39,32 +42,33 @@ public class Menu {
     private static Xitems xItem;
     private static CanOpen itemToOpen;
     private static String answer;
+    private static String item1;
+    private static String item2;
     private static final String oxygen = "O\u2082"; // O₂
-
+    public static int attackCount = 0;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
-    public static void displayMenu() throws IllegalArgumentException {
+    public static void displayMenu() throws Exception {
         final String green = Engine.ANSI_GREEN;
         final String end = Engine.ANSI_RESET;
         final String lines = "---------------------------------------------------------------------------------------------------------------------------------";
         final String space = "                                      ";
-//        clear();
-        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end + "   " + oxygen +
-                " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE + Character.getCurrentWeapon() + end  + "]");
+
+        System.out.println("\n" + getActionQuestion() + "   " + space + "[HP " + green + Character.getHealth() + end +
+                "   " + oxygen + " " + green  + Oxygen.getOxygen() + end + "   Wpn: " + Engine.ANSI_BLUE +
+                Character.getCurrentWeapon() + end  + "]");
         System.out.println(lines);
 
         boolean repeat = true;
-        Scanner in = new Scanner(System.in);
 
         while (repeat) {
             try {
-                String answer = in.nextLine(); //grabs input
-                action = Actions.valueOf(answer.toUpperCase()); // input to upper then checks input against ENUMs - implicit
+                Input.getInput();
+                action = Actions.valueOf(Input.getActionInput().toUpperCase());
                 repeat = false;
             } catch (IllegalArgumentException e) {
-                System.out.println("You must enter one of the following actions: " +
-                        java.util.Arrays.asList(Actions.values()));
+                System.out.println(Engine.ANSI_RED + "Enter something." + Engine.ANSI_RESET);
                 repeat = true;
             }
         }
@@ -120,7 +124,8 @@ public class Menu {
                 break;
             case OPTIONS:
             case O:
-                System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() + "\n" + getSaveGame() + Engine.ANSI_RESET);
+                System.out.println("\n" + Engine.ANSI_BLUE + getActions() + "\n" + getDirections() + "\n" + getInv() +
+                        "\n" + getSaveGame() + Engine.ANSI_RESET);
                 Menu.displayMenu();
                 break;
             case INVENTORY:
@@ -134,19 +139,77 @@ public class Menu {
             case SAVE:
                 saveGameDataToFile();
                 break;
+            case MAP:
+                ImageViewer(currentRoom);
+                break;
         }
 
-        in.close();
     }
 
+
+
+
+
+
+    public static void ImageViewer(Rooms currentRoom){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Ship Blueprints");
+                frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                BufferedImage img = null;
+                try {
+                    switch (currentRoom){
+                        case CapsuleRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Capsule.png"));
+                            break;
+                        case Kitchen:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Kitchen.png"));
+                            break;
+                        case ControlRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Control.png"));
+                            break;
+                        case AlienRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Alien.png"));
+                            break;
+                        case ComputerRoom:
+                            img = ImageIO.read(getClass().getResource("/com/alienation/resources/Computer.png"));
+                            break;
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+
+                ImageIcon imgIcon = new ImageIcon(img);
+                JLabel lbl = new JLabel();
+                lbl.setIcon(imgIcon);
+                frame.getContentPane().add(lbl, BorderLayout.CENTER);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+        displayMenu();
+    }
+
+
     //swaps weapons
-    public static void swap(Rooms currentRoom){
+    public static void swap(Rooms currentRoom) throws Exception {
         final String space = "\n";
         final String lines = "************";
 
+        item1 = capitalizeAll(Input.getItem1());; // Chips
+        item2 = capitalizeAll(Input.getItem2()); // Oxygen Tank
+
         Set<String> keys = Character.getInventory().keySet();
         if(keys.size() == 0){
-            System.out.println(Engine.ANSI_RED + "\nYou don't have any weapons in your inventory. Grab some weapons to swap!!" + Engine.ANSI_RESET);
+            System.out.println(Engine.ANSI_RED + "\nYou don't have any weapons in your inventory. " +
+                    "Grab some weapons to swap!!" + Engine.ANSI_RESET);
+            Menu.displayMenu();
+        }else if(!Input.getItem1().equals("empty")){
+            answer = capitalizeAll(Input.getItem1());
         }
         else {
             System.out.println(space + Engine.ANSI_YELLOW + "Which weapon would you like to hold?\n");
@@ -155,37 +218,35 @@ public class Menu {
                 System.out.println(key);
             }
             System.out.println(lines + Engine.ANSI_RESET);
-            Scanner in = new Scanner(System.in);
+            Input.getInput();
 
             try {
-                answer = in.nextLine(); //grabs input
-                String newAnswer = capitalizeAll(answer);
-                Weapons weapon = Weapons.findWeaponsByName(newAnswer); // input to upper then checks input against ENUMs - implicit
-
-                switch (weapon){
-                    case FLAMETHROWER:
-                        Character.setCurrentWeapon(Weapons.FLAMETHROWER.getName());
-                        System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + newAnswer + "." + Engine.ANSI_RESET);
-                        break;
-                    case LASER:
-                        Character.setCurrentWeapon(Weapons.LASER.getName());
-                        System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + newAnswer + "." + Engine.ANSI_RESET);
-                        break;
-                    case SQUIRT_GUN:
-                        Character.setCurrentWeapon(Weapons.SQUIRT_GUN.getName());
-                        System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + newAnswer + "." + Engine.ANSI_RESET);
-                        break;
-                    case TASER_GUN:
-                        Character.setCurrentWeapon(Weapons.TASER_GUN.getName());
-                        System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + newAnswer + "." + Engine.ANSI_RESET);
-                        break;
-                    default:
-                        System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
-                        break;
-                }
+                answer = capitalizeAll(Input.getActionInput());
             } catch (Exception e) {
                 System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
             }
+        }
+        Weapons weapon = Weapons.findWeaponsByName(answer);
+        switch (weapon){
+            case FLAMETHROWER:
+                Character.setCurrentWeapon(Weapons.FLAMETHROWER.getName());
+                System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                break;
+            case LASER:
+                Character.setCurrentWeapon(Weapons.LASER.getName());
+                System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                break;
+            case SQUIRT_GUN:
+                Character.setCurrentWeapon(Weapons.SQUIRT_GUN.getName());
+                System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                break;
+            case TASER_GUN:
+                Character.setCurrentWeapon(Weapons.TASER_GUN.getName());
+                System.out.println(Engine.ANSI_YELLOW + "\nYou are now holding a " + answer + "." + Engine.ANSI_RESET);
+                break;
+            default:
+                System.out.println(Engine.ANSI_RED + "\nYou can't swap with that." + Engine.ANSI_RESET);
+                break;
         }
         Menu.displayMenu();
     }
@@ -198,7 +259,7 @@ public class Menu {
     }
 
     // Run from alien to previous room
-    public static void run(Rooms currentRoom) {
+    public static void run(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
         Map<String, Boolean> availableAliens = Alien.getAliens();
 
@@ -209,7 +270,7 @@ public class Menu {
         for (String key : keysInRoom) {
             for(String alien : aliens){
                 if(key.equals(alien)){
-                    System.out.println(Engine.ANSI_RED + "\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\n\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
                     loadRoom(Character.getPreviousRoom());
                 }else{
                     reply = true;
@@ -224,36 +285,26 @@ public class Menu {
 
     /* -- Attack the Alien in the room -- START */
     // Starting Attack the Alien process in the room
-    public static void attack(Rooms currentRoom) {   //////  if alien in room
-        final String space = "\n";
+    public static void attack(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
-        final String lines = "************";
-        String a = action.toString();
-        System.out.println(space + Engine.ANSI_YELLOW + capitalizeAll(a) + " what?\n");
-        System.out.println(lines);
 
-        Set<String> keys = availableItems.keySet();
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println(lines + Engine.ANSI_RESET);
+        item1 = capitalizeAll(Input.getItem1());
+        item2 = capitalizeAll(Input.getItem2());
 
-        Scanner in = new Scanner(System.in);
-        String answer = in.nextLine();
-        String newAnswer = capitalizeAll(answer);
+        Set<String> items = availableItems.keySet();
+        Set<String> aliens = Alien.getAliens().keySet();
 
-        if(keys.contains(newAnswer)) {
+        if(items.contains(item2) || items.contains(item1)) {
             try {
-                Set<String> aliens = Alien.getAliens().keySet();
-                if(aliens.contains(newAnswer)){
+                if(aliens.contains(item1)){
                     if(Character.getHealth() == 0 || Oxygen.getOxygen() == 0) {
-                        death();
+                        System.out.println(Death.death());
                         System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
                     }
                     else {
                         int alienHealthPoints = 0;
                         int alienDamagePoints = 0;
-                        switch (newAnswer){
+                        switch (item1){
                             case "Vermin":
                                 alienHealthPoints = Alien.getT1Hp();
                                 alienDamagePoints = Alien.getT1Dmg();
@@ -282,14 +333,11 @@ public class Menu {
                         }
 
                         if(hasWeapon) {
-                            int weaponDamagePoints =  Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
-//                            System.out.println(Engine.ANSI_GREEN + Character.getCurrentWeapon() + Engine.ANSI_BLUE + Engine.ANSI_BLUE + " Deals " + Engine.ANSI_RED + weaponDamagePoints + Engine.ANSI_BLUE +" damage." + Engine.ANSI_RESET);
-//                            System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienHealthPoints + Engine.ANSI_RESET);
-
-                            alienAttack(currentRoom, newAnswer, alienHealthPoints, alienDamagePoints);
+                            alienAttack(currentRoom, item1, alienHealthPoints, alienDamagePoints);
                         }
                         else {
-                            System.out.println(Engine.ANSI_RED + "You don't have a weapon equipped to fight with. Bad breath won't do!" + Engine.ANSI_RESET);
+                            System.out.println(Engine.ANSI_RED + "You don't have a weapon equipped to fight with. " +
+                                    "Bad breath won't do!" + Engine.ANSI_RESET);
                             Menu.displayMenu();
                         }
                     }
@@ -301,40 +349,57 @@ public class Menu {
             } catch (Exception e) {
                 System.out.println();
             }
+        }else if(Input.getItem1().equals("empty")){
+            System.out.println(Engine.ANSI_RED + "\n" + Menu.capitalizeAll(action.toString().toLowerCase()) +
+                    " what?" + Engine.ANSI_RESET);
         }
         else {
-            System.out.println(Engine.ANSI_RED + "\nYou can't attack that!" + Engine.ANSI_RESET);
-            Menu.displayMenu();
+        System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
-        // What about if user wants to swap weapon in between of fight???
-        //Other stuff for sure!!
+        Menu.displayMenu();
     }
 
     // Attack or Run from Alien in the room to previous room
     public static void alienAttackOrRun(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints) {
-        final String space = "\n";
-        System.out.println(Engine.ANSI_YELLOW + "\nDo you want to ATTACK or RUN????" + Engine.ANSI_RESET);
-        Scanner input = new Scanner(System.in);
+        System.out.println(Engine.ANSI_YELLOW + "\nWhat do you want to do?" + Engine.ANSI_RESET);
+
         boolean repeat = true;
         while (repeat) {
             try {
-                String answerInput = input.nextLine(); //grabs input
-                action = Actions.valueOf(answerInput.toUpperCase()); // input to upper then checks input against ENUMs - implicit
-                if(action == Actions.ATTACK){
-                    repeat = false;
-                    alienAttack(currentRoom, alienType, alienHealthPoints, alienDamagePoints);
-                }
-                else if(action == Actions.RUN){
-                    repeat = false;
-                    run(currentRoom);
-                }
-                else{
-                    System.out.println("You must enter one of the following actions: ATTACK, RUN");
-                    repeat = true;
+                Input.getInput();
+                String input = Input.getActionInput();
+                action = Actions.valueOf(input.toUpperCase());
+
+                switch (action){
+                    case FIGHT:
+                    case ATTACK:
+                        repeat = false;
+                        alienAttack(currentRoom, alienType, alienHealthPoints, alienDamagePoints);
+                        break;
+                    case RUN:
+                    case FLEE:
+                        repeat = false;
+                        run(currentRoom);
+                        break;
+                    case EAT:
+                        repeat = false;
+                        eat(currentRoom);
+                    case SWAP:
+                    case EQUIP:
+                        repeat = false;
+                        swap(currentRoom);
+                        break;
+                    default:
+                        System.out.println("You must enter one of the following actions: ATTACK, RUN");
+                        repeat = true;
+                        break;
+
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("You must enter one of the following actions: ATTACK, RUN");
+                System.out.println(Engine.ANSI_RED + "\nCan't do that!" + Engine.ANSI_RESET);
                 repeat = true;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -342,7 +407,7 @@ public class Menu {
     //Attacking the Alien and Alien will attack back to you
     public static void alienAttack(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints){
         System.out.println(Engine.ANSI_RED + "\nAttacking Alien..." + Engine.ANSI_RESET);
-
+        attackCount ++;
         try {
             if(Character.getHealth() != 0) {
                 int weaponDamagePoints = Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
@@ -362,7 +427,8 @@ public class Menu {
                         break;
                 }
                 System.out.println(Engine.ANSI_RED + "\n-" + weaponDamagePoints + " dmg");
-                System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienNewHealthPoints + Engine.ANSI_RESET);
+                System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienNewHealthPoints +
+                        Engine.ANSI_RESET);
                 TimeUnit.SECONDS.sleep(2);
 
                 if(alienNewHealthPoints != 0){
@@ -371,11 +437,12 @@ public class Menu {
                     int characterFinalHealth = -alienDamagePoints;
                     Character.setHealth(characterFinalHealth);
                     System.out.println("\n-" + alienDamagePoints + " dmg" + Engine.ANSI_RESET);
-                    System.out.println(Engine.ANSI_BLUE + "\nYour HP: " + Engine.ANSI_GREEN +Character.getHealth() + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_BLUE + "\nYour HP: " + Engine.ANSI_GREEN +Character.getHealth() +
+                            Engine.ANSI_RESET);
 
                     if(Character.getHealth() == 0){
-                        death();
-                        System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
+                        System.out.println(Death.death());
+                        System.exit(0);
                     }
                     else {
                         alienAttackOrRun(currentRoom, alienType, alienNewHealthPoints, alienDamagePoints);
@@ -387,18 +454,17 @@ public class Menu {
                     availableItems.remove(alienType);
                     updateItems(currentRoom, availableItems);
                     Map<String,String> inventory = Character.getInventory();
-//                    inventory.put("Code", "reply");
                     Character.setInventory(inventory);
-
-                    System.out.println(Engine.ANSI_RED + "\nWoooohoooo!!! You killed the alien!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\nThe alien is fatally wounded and falls to it's death " +
+                            "in a pool of blood." + Engine.ANSI_RESET);
                     System.out.println(Engine.ANSI_BLUE + "\nThe alien has dropped something." + Engine.ANSI_RESET);
                     availableItems.put("Code", true);
                     Menu.displayMenu();
                 }
             }
             else {
-                death();
-                System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
+                System.out.println(Death.death());
+                System.exit(0);
             }
         } catch (InterruptedException e) {
             System.err.format("IOException: %s%n", e);
@@ -406,10 +472,9 @@ public class Menu {
             e.printStackTrace();
         }
     }
-    /* -- Attack the Alien in the room -- END */
 
     // Investigate the room
-    public static void investigate(Rooms currentRoom){
+    public static void investigate(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
 
         final String space = "\n";
@@ -445,30 +510,18 @@ public class Menu {
     }
 
     //Open something
-    public static void open(Rooms currentRoom) {
+    public static void open(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
 
-        final String space = "\n";
-        final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + "Open what?\n");
-        System.out.println(lines);
-        Set<String> keys = availableItems.keySet();
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println(lines + Engine.ANSI_RESET);
+        item1 = capitalizeAll(Input.getItem1());; // Chips
+        item2 = capitalizeAll(Input.getItem2()); // Oxygen Tank
 
-        Scanner in = new Scanner(System.in);
-        String answer = in.nextLine(); // cage
-        String newAnswer = capitalizeAll(answer);
         Set<String> items = availableItems.keySet();
 
-        //Check if user response is in the room?
-        if(items.contains(newAnswer)) {
-            //check if item can be opened against enums
+        if(items.contains(item2) || items.contains(item1)) {
             try {
-                itemToOpen = CanOpen.valueOf(newAnswer.toUpperCase()); // cage
-                String upperAnswer = newAnswer.toUpperCase();
+                itemToOpen = CanOpen.valueOf(item1.toUpperCase()); // cage
+                String upperAnswer = item1.toUpperCase();
                 if (itemToOpen.toString().equals(upperAnswer)) { // new answer it cage
                     if(!Character.getInventory().containsKey("Code")){ // make the key code not cage
                         System.out.println(Engine.ANSI_RED + "\nIt's locked" + Engine.ANSI_RESET);
@@ -487,112 +540,115 @@ public class Menu {
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println(Engine.ANSI_RED + "\nYou can't open that!" + Engine.ANSI_RESET);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }else{
-            System.out.println("That's not in this room.");
+        }else if(Input.getItem1().equals("empty")){
+            System.out.println(Engine.ANSI_RED + "\n" + Menu.capitalizeAll(action.toString().toLowerCase()) +
+                    " what?" + Engine.ANSI_RESET);
+        }
+        else {
+            System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
 
     // Grab the item from the room
-    public static void grab(Rooms currentRoom){
+    public static void grab(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
 
-        final String space = "\n";
-        final String lines = "************";
-        System.out.println(space + Engine.ANSI_YELLOW + action + " what?\n");
-        System.out.println(lines);
-        Set<String> keys = availableItems.keySet();
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println(lines + Engine.ANSI_RESET);
-
-        Scanner in = new Scanner(System.in);
-        String answer = in.nextLine();
-        String newAnswer = capitalizeAll(answer);
+        item1 = capitalizeAll(Input.getItem1());
+        item2 = capitalizeAll(Input.getItem2());
         Set<String> items = availableItems.keySet();
 
-        //Check if user response is in the room? We can't store anything ya know!
-        //TODO: fix check against Enums with underscore words...  pilot seat   PILOT_SEAT ...  still adds these??
-        if(items.contains(newAnswer)){
+        if(items.contains(item2) || items.contains(item1)){
             try {
-                xItem = Xitems.valueOf(newAnswer.toUpperCase());
-                String upperAnswer = newAnswer.toUpperCase();
-                if (xItem.toString().equals(upperAnswer)){
+                xItem = Xitems.valueOf(item1.toUpperCase()); // Enum
+                String item1Upper = item1.toUpperCase();
+                if (xItem.toString().equals(item1Upper)){  // if Enum to string == item1 uppercase
                     System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
                     Menu.displayMenu();
-                }else{
-                    System.out.println("false");
                 }
             }
             catch(IllegalArgumentException e){
                 System.out.println();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            if(newAnswer.equals("Oxygen Tank")){
+            if(item2.equals("Oxygen Tank")){
                 Oxygen.incOxygen(100);
-                System.out.println(Engine.ANSI_YELLOW + "\nYou just increased " + oxygen + " levels." + Engine.ANSI_RESET);
-                availableItems.remove(newAnswer);
+                System.out.println(Engine.ANSI_YELLOW + "\nYou just increased " + oxygen + " levels." +
+                        Engine.ANSI_RESET);
+                availableItems.remove(item2);
                 Menu.displayMenu();
             }
 
-            System.out.println(Engine.ANSI_YELLOW + "\n" + newAnswer + " added to Inventory." + Engine.ANSI_RESET);
-            Map<String,String> newItems = new HashMap<>();
+            System.out.println(Engine.ANSI_YELLOW + "\n" + item1 + " added to Inventory." + Engine.ANSI_RESET);
+            Map<String,String> newItems;
             newItems = Character.getInventory();
-            newItems.put(newAnswer, "reply");
+            newItems.put(item1, "reply");
 
             // delete item from room
-            availableItems.remove(newAnswer);
-        }else{
-            System.out.println(Engine.ANSI_RED + "\nYou can't grab that!" + Engine.ANSI_RESET);
+            availableItems.remove(item1);
+
+        }else if(Input.getItem1().equals("empty")){
+            System.out.println(Engine.ANSI_RED + "\n" + Menu.capitalizeAll(action.toString().toLowerCase()) +
+                    " what?" + Engine.ANSI_RESET);
+        }
+        else {
+            System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
-    //TODO: Find a way to add more than 1 of same item maybe?
 
     // Eat the item from the room
-    public static void eat(Rooms currentRoom){
-        final String space = "\n";
-        final String lines = "************";
-        boolean repeat = true;
-
+    public static void eat(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
-        System.out.println(space + Engine.ANSI_YELLOW + "Eat what?\n");
-        System.out.println(lines);
-        Set<String> keys = availableItems.keySet();
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println(lines + Engine.ANSI_RESET);
-        Scanner in = new Scanner(System.in);
 
-        //TODO: OPTIONS FOR INVENTORY OR ROOM
-        try {
-            answer = in.nextLine(); //grabs input
-            edible = Edibles.valueOf(answer.toUpperCase()); // input to upper then checks input against ENUMs - implicit
+        item1 = capitalizeAll(Input.getItem1());; // Chips
+        item2 = capitalizeAll(Input.getItem2()); // Oxygen Tank
 
-            int edibleItems = 0;
-            Set<String> items = availableItems.keySet();
+        Set<String> items = availableItems.keySet();
 
-            for(Edibles edible : Edibles.values()){
-                if(items.contains(edible.getName())){
-                    edibleItems++;
-                    System.out.println(Engine.ANSI_YELLOW + "\nYou ate " + answer + ".  HP ++" + Engine.ANSI_RESET);
-                    int healthPoints = ((Edibles)edible).getHealthPoints();
-                    //Increase health points
-                    Character.setHealth(healthPoints);
-                    //Remove from available items of room
-                    availableItems.remove(edible.getName());
+        if(items.contains(item2) || items.contains(item1) || Character.getInventory().containsKey(item1)){
+            try {
+                edible = Edibles.valueOf(item1.toUpperCase());
+                int edibleItems = 0;
 
+                for(Edibles edible : Edibles.values()){
+                    if(items.contains(edible.getName())){
+                        edibleItems++;
+                        System.out.println(Engine.ANSI_YELLOW + "\nYou ate " + item1 + ".  HP ++" + Engine.ANSI_RESET);
+                        int healthPoints = edible.getHealthPoints();
+                        //Increase health points
+                        Character.setHealth(healthPoints);
+                        //Remove from available items of room
+                        availableItems.remove(edible.getName());
+                    }else if(Character.getInventory().containsKey(item1)){
+                        edibleItems++;
+                        System.out.println(Engine.ANSI_YELLOW + "\nYou ate " + item1 + ".  HP ++" + Engine.ANSI_RESET);
+                        int healthPoints = edible.getHealthPoints();
+                        //Increase health points
+                        Character.setHealth(healthPoints);
+                        Map<String,String> newItems;
+                        newItems = Character.getInventory();
+                        newItems.remove(item1);
+                    }
                 }
+                if(edibleItems == 0){
+                    System.out.println(Engine.ANSI_RED + "There is nothing to eat!!" + Engine.ANSI_RESET);
+                }
+                updateItems(currentRoom, availableItems);
+            } catch (IllegalArgumentException e) {
+                System.out.println(Engine.ANSI_RED + "\nYou can't eat that." + Engine.ANSI_RESET);
             }
-            if(edibleItems == 0){
-                System.out.println(Engine.ANSI_RED + "There is nothing to eat!!" + Engine.ANSI_RESET);
-            }
-            updateItems(currentRoom, availableItems);
-        } catch (IllegalArgumentException e) {
-            System.out.println(Engine.ANSI_RED + "\nYou can't eat that." + Engine.ANSI_RESET);
+        }else if(Input.getItem1().equals("empty")){
+            System.out.println(Engine.ANSI_RED + "\n" + Menu.capitalizeAll(action.toString().toLowerCase()) +
+                    " what?" + Engine.ANSI_RESET);
+        }
+        else {
+            System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room or your inventory." + Engine.ANSI_RESET);
         }
         Menu.displayMenu();
     }
@@ -619,7 +675,7 @@ public class Menu {
     }
 
     // Move Room from one to another
-    public static void moveRoom(String direction, Rooms currentRoom){
+    public static void moveRoom(String direction, Rooms currentRoom) throws Exception {
         Rooms nextRoom = getRoom(direction, currentRoom);
 
         if(nextRoom != null){
@@ -657,7 +713,7 @@ public class Menu {
     }
 
     // Load the next room
-    public static void loadRoom(Rooms newRoom){
+    public static void loadRoom(Rooms newRoom) throws Exception {
         Character.setCurrentRoom(newRoom);
         switch (newRoom){
             case CapsuleRoom:
@@ -679,7 +735,7 @@ public class Menu {
     }
 
     // Get available items of a room
-    public static void CheckInventory(){
+    public static void CheckInventory() throws Exception {
         final String space = "\n";
         Map<String,String> inventory = new HashMap<>();
         inventory = Character.getInventory();
@@ -727,18 +783,6 @@ public class Menu {
         return Pattern.compile("\\b(.)(.*?)\\b")
                 .matcher(str)
                 .replaceAll(match -> match.group(1).toUpperCase() + match.group(2));
-    }
-
-    //Display You are dead when Character has 0 HP
-    public static void death(){
-        System.out.println("\n" + Engine.ANSI_RED +
-                "____    ____  ______    __    __          ___      .______       _______     _______   _______     ___       _______               \n" +
-                "\\   \\  /   / /  __  \\  |  |  |  |        /   \\     |   _  \\     |   ____|   |       \\ |   ____|   /   \\     |       \\              \n" +
-                " \\   \\/   / |  |  |  | |  |  |  |       /  ^  \\    |  |_)  |    |  |__      |  .--.  ||  |__     /  ^  \\    |  .--.  |             \n" +
-                "  \\_    _/  |  |  |  | |  |  |  |      /  /_\\  \\   |      /     |   __|     |  |  |  ||   __|   /  /_\\  \\   |  |  |  |             \n" +
-                "    |  |    |  `--'  | |  `--'  |     /  _____  \\  |  |\\  \\----.|  |____    |  '--'  ||  |____ /  _____  \\  |  '--'  | __ __ __ __ \n" +
-                "    |__|     \\______/   \\______/     /__/     \\__\\ | _| `._____||_______|   |_______/ |_______/__/     \\__\\ |_______/ (__|__|__|__)\n" +
-                "                                                                                                                                   ");
     }
 
     /* -- Save the Game -- START */
@@ -828,8 +872,8 @@ public class Menu {
         return inv;
     }
 
-    private static void clear() {
-        for (int i = 0; i < 50; ++i) System.out.println();
+    public static void clear() {
+        for (int i = 0; i < 25; ++i) System.out.println();
     }
 
     private static String getSaveGame(){
