@@ -1,12 +1,9 @@
 package com.alienation.game;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Recieves all user Input
+ * Receives all user Input
  */
 public class Input {
 

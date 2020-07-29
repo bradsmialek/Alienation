@@ -1,7 +1,5 @@
 package com.alienation.game;
 
-import java.util.Scanner;
-
 /**
  * Oxygen Class
  */
@@ -14,11 +12,18 @@ public class Oxygen {
         return oxygen;
     }
 
-    //Decreases oxygen levels  SETTERS
+    public static void setOxygen(int newOxygen) {
+        Oxygen.oxygen = newOxygen;
+    }
+
+    //Decreases oxygen levels
     public static void minOxygen(int minusOxy) {
-        Oxygen.oxygen = Oxygen.oxygen - minusOxy;
-        //TODO: wanna discuss with @Brad
-        System.out.println(Engine.ANSI_RED + "\n\n-10 " + oTwo + Engine.ANSI_RESET);
+        if(Oxygen.oxygen - minusOxy < 0){
+            Oxygen.oxygen = 0;
+        } else {
+            Oxygen.oxygen = Oxygen.oxygen - minusOxy;
+        }
+        System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
     }
 
     //Increases oxygen levels SETTERS
@@ -31,8 +36,7 @@ public class Oxygen {
     public static void checkOxy(){
         if(Oxygen.getOxygen() == 0){
             System.out.println(Engine.ANSI_RED + "\n\nOxygen depleted..." + Engine.ANSI_RESET); // Better Death
-            System.out.println(Death.death());
-            System.exit(0);
+            Death.death();
         }
     }
 }
