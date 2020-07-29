@@ -78,6 +78,5 @@ public class Alien {
         return t4Dmg;
     }
 
-    //TODO: build in weakness and immunity
 }
 

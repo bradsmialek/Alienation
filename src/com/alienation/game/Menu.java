@@ -39,7 +39,7 @@ public class Menu {
     private static String item1;
     private static String item2;
     private static final String oxygen = "O\u2082"; // O₂
-
+    public static int attackCount = 0;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to display Menu to user
@@ -212,7 +212,7 @@ public class Menu {
         for (String key : keysInRoom) {
             for(String alien : aliens){
                 if(key.equals(alien)){
-                    System.out.println(Engine.ANSI_RED + "\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\n\nYou ran away as fast as you can!" + Engine.ANSI_RESET);
                     loadRoom(Character.getPreviousRoom());
                 }else{
                     reply = true;
@@ -310,7 +310,6 @@ public class Menu {
             try {
                 Input.getInput();
                 String input = Input.getActionInput();
-                System.out.println(input);
                 action = Actions.valueOf(input.toUpperCase());
 
                 switch (action){
@@ -350,6 +349,7 @@ public class Menu {
     //Attacking the Alien and Alien will attack back to you
     public static void alienAttack(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints){
         System.out.println(Engine.ANSI_RED + "\nAttacking Alien..." + Engine.ANSI_RESET);
+        attackCount ++;
         try {
             if(Character.getHealth() != 0) {
                 int weaponDamagePoints = Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();

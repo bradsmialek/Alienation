@@ -23,6 +23,7 @@ public class Character {
     /*************** GETTER - SETTER METHODS  ******************/
     public static int getHealth() {
         return health;
+
     }
 
     public static void setHealth(int newHealth) {
@@ -35,11 +36,11 @@ public class Character {
         }
     }
 
-//    public static void alienDeath(){
-//        if (Alien.getT1Hp() >= 0){
-//
-//        }
-//    }
+    public static void checkHealth(){
+        if(health <= 20){
+            System.out.println(Engine.ANSI_RED + "\nHealth is LOW!" + Engine.ANSI_RESET);
+        }
+    }
 
     public static String getCurrentWeapon() {
         return currentWeapon;

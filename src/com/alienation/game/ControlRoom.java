@@ -28,12 +28,12 @@ public class ControlRoom {
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment() throws Exception {
-//        System.out.println(Banner.getBanner());
+        Character.checkHealth();
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
+        System.out.println(RoomsMap.controlRoom());
         Menu.displayMenu();
-
     }
 
 
