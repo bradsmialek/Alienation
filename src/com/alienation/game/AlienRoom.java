@@ -23,13 +23,13 @@ public class AlienRoom {
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
-    public static void loadEnvironment(){
+    public static void loadEnvironment() throws Exception {
         count++;
         System.out.println(Banner.getBanner());
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
-
+        Menu.displayMenu();
     }
 
     /*************** GETTER - SETTER METHODS  ******************/
@@ -38,11 +38,8 @@ public class AlienRoom {
         if (!getAvailableItems().containsKey("Humanoid")) {
             return lastStory;
         }else{
-
-                return initialStory;
-
+            return initialStory;
         }
-
     }
 
     // Get available items of a room

@@ -227,36 +227,26 @@ public class Menu {
 
     /* -- Attack the Alien in the room -- START */
     // Starting Attack the Alien process in the room
-    public static void attack(Rooms currentRoom) throws Exception {   //////  if alien in room
-        final String space = "\n";
+    public static void attack(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
-        final String lines = "************";
-        String a = action.toString();
-        System.out.println(space + Engine.ANSI_YELLOW + capitalizeAll(a) + " what?\n");
-        System.out.println(lines);
 
-        Set<String> keys = availableItems.keySet();
-        for (String key : keys) {
-            System.out.println(key);
-        }
-        System.out.println(lines + Engine.ANSI_RESET);
+        item1 = capitalizeAll(Input.getItem1());
+        item2 = capitalizeAll(Input.getItem2());
 
-        Scanner in = new Scanner(System.in);
-        String answer = in.nextLine();
-        String newAnswer = capitalizeAll(answer);
+        Set<String> items = availableItems.keySet();
+        Set<String> aliens = Alien.getAliens().keySet();
 
-        if(keys.contains(newAnswer)) {
+        if(items.contains(item2) || items.contains(item1)) {
             try {
-                Set<String> aliens = Alien.getAliens().keySet();
-                if(aliens.contains(newAnswer)){
+                if(aliens.contains(item1)){
                     if(Character.getHealth() == 0 || Oxygen.getOxygen() == 0) {
-                        death();
+                        System.out.println(Death.death());
                         System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
                     }
                     else {
                         int alienHealthPoints = 0;
                         int alienDamagePoints = 0;
-                        switch (newAnswer){
+                        switch (item1){
                             case "Vermin":
                                 alienHealthPoints = Alien.getT1Hp();
                                 alienDamagePoints = Alien.getT1Dmg();
@@ -285,8 +275,7 @@ public class Menu {
                         }
 
                         if(hasWeapon) {
-//                            int weaponDamagePoints =  Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
-                            alienAttack(currentRoom, newAnswer, alienHealthPoints, alienDamagePoints);
+                            alienAttack(currentRoom, item1, alienHealthPoints, alienDamagePoints);
                         }
                         else {
                             System.out.println(Engine.ANSI_RED + "You don't have a weapon equipped to fight with. " +
@@ -302,11 +291,14 @@ public class Menu {
             } catch (Exception e) {
                 System.out.println();
             }
+        }else if(Input.getItem1().equals("empty")){
+            System.out.println(Engine.ANSI_RED + "\n" + Menu.capitalizeAll(action.toString().toLowerCase()) +
+                    " what?" + Engine.ANSI_RESET);
         }
         else {
-            System.out.println(Engine.ANSI_RED + "\nYou can't attack that!" + Engine.ANSI_RESET);
-            Menu.displayMenu();
+        System.out.println(Engine.ANSI_RED + "\n" + "That's not in this room." + Engine.ANSI_RESET);
         }
+        Menu.displayMenu();
     }
 
     // Attack or Run from Alien in the room to previous room
@@ -343,7 +335,6 @@ public class Menu {
     //Attacking the Alien and Alien will attack back to you
     public static void alienAttack(Rooms currentRoom, String alienType, int alienHealthPoints, int alienDamagePoints){
         System.out.println(Engine.ANSI_RED + "\nAttacking Alien..." + Engine.ANSI_RESET);
-
         try {
             if(Character.getHealth() != 0) {
                 int weaponDamagePoints = Weapons.findWeaponsByName(Character.getCurrentWeapon()).getDamagePoints();
@@ -363,7 +354,8 @@ public class Menu {
                         break;
                 }
                 System.out.println(Engine.ANSI_RED + "\n-" + weaponDamagePoints + " dmg");
-                System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienNewHealthPoints + Engine.ANSI_RESET);
+                System.out.println(Engine.ANSI_BLUE + "\nAlien HP: " + Engine.ANSI_GREEN + alienNewHealthPoints +
+                        Engine.ANSI_RESET);
                 TimeUnit.SECONDS.sleep(2);
 
                 if(alienNewHealthPoints != 0){
@@ -372,11 +364,12 @@ public class Menu {
                     int characterFinalHealth = -alienDamagePoints;
                     Character.setHealth(characterFinalHealth);
                     System.out.println("\n-" + alienDamagePoints + " dmg" + Engine.ANSI_RESET);
-                    System.out.println(Engine.ANSI_BLUE + "\nYour HP: " + Engine.ANSI_GREEN +Character.getHealth() + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_BLUE + "\nYour HP: " + Engine.ANSI_GREEN +Character.getHealth() +
+                            Engine.ANSI_RESET);
 
                     if(Character.getHealth() == 0){
-                        death();
-                        System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
+                        System.out.println(Death.death());
+                        System.exit(0);
                     }
                     else {
                         alienAttackOrRun(currentRoom, alienType, alienNewHealthPoints, alienDamagePoints);
@@ -388,18 +381,17 @@ public class Menu {
                     availableItems.remove(alienType);
                     updateItems(currentRoom, availableItems);
                     Map<String,String> inventory = Character.getInventory();
-//                    inventory.put("Code", "reply");
                     Character.setInventory(inventory);
-
-                    System.out.println(Engine.ANSI_RED + "\nWoooohoooo!!! You killed the alien!" + Engine.ANSI_RESET);
+                    System.out.println(Engine.ANSI_RED + "\nThe alien is fatally wounded and falls to it's death " +
+                            "in a pool of blood." + Engine.ANSI_RESET);
                     System.out.println(Engine.ANSI_BLUE + "\nThe alien has dropped something." + Engine.ANSI_RESET);
                     availableItems.put("Code", true);
                     Menu.displayMenu();
                 }
             }
             else {
-                death();
-                System.exit(0); // TODO: make start screen to redirect to game start scene instead of exiting
+                System.out.println(Death.death());
+                System.exit(0);
             }
         } catch (InterruptedException e) {
             System.err.format("IOException: %s%n", e);
@@ -407,7 +399,6 @@ public class Menu {
             e.printStackTrace();
         }
     }
-    /* -- Attack the Alien in the room -- END */
 
     // Investigate the room
     public static void investigate(Rooms currentRoom) throws Exception {
@@ -493,8 +484,8 @@ public class Menu {
     public static void grab(Rooms currentRoom) throws Exception {
         Map<String,Boolean> availableItems = getAvailableItems(currentRoom);
 
-        item1 = capitalizeAll(Input.getItem1());; // Chips
-        item2 = capitalizeAll(Input.getItem2()); // Oxygen Tank
+        item1 = capitalizeAll(Input.getItem1());
+        item2 = capitalizeAll(Input.getItem2());
         Set<String> items = availableItems.keySet();
 
         if(items.contains(item2) || items.contains(item1)){
@@ -521,7 +512,7 @@ public class Menu {
             }
 
             System.out.println(Engine.ANSI_YELLOW + "\n" + item1 + " added to Inventory." + Engine.ANSI_RESET);
-            Map<String,String> newItems = new HashMap<>();
+            Map<String,String> newItems;
             newItems = Character.getInventory();
             newItems.put(item1, "reply");
 
@@ -710,18 +701,6 @@ public class Menu {
         return Pattern.compile("\\b(.)(.*?)\\b")
                 .matcher(str)
                 .replaceAll(match -> match.group(1).toUpperCase() + match.group(2));
-    }
-
-    //Display You are dead when Character has 0 HP
-    public static void death(){
-        System.out.println("\n" + Engine.ANSI_RED +
-                "____    ____  ______    __    __          ___      .______       _______     _______   _______     ___       _______               \n" +
-                "\\   \\  /   / /  __  \\  |  |  |  |        /   \\     |   _  \\     |   ____|   |       \\ |   ____|   /   \\     |       \\              \n" +
-                " \\   \\/   / |  |  |  | |  |  |  |       /  ^  \\    |  |_)  |    |  |__      |  .--.  ||  |__     /  ^  \\    |  .--.  |             \n" +
-                "  \\_    _/  |  |  |  | |  |  |  |      /  /_\\  \\   |      /     |   __|     |  |  |  ||   __|   /  /_\\  \\   |  |  |  |             \n" +
-                "    |  |    |  `--'  | |  `--'  |     /  _____  \\  |  |\\  \\----.|  |____    |  '--'  ||  |____ /  _____  \\  |  '--'  | __ __ __ __ \n" +
-                "    |__|     \\______/   \\______/     /__/     \\__\\ | _| `._____||_______|   |_______/ |_______/__/     \\__\\ |_______/ (__|__|__|__)\n" +
-                "                                                                                                                                   ");
     }
 
     /* -- Save the Game -- START */
