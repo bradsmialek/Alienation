@@ -19,13 +19,12 @@ public class AlienRoom {
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static final int minusOxy = 10;
-    private static int count = 0;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment() throws Exception {
-        count++;
-        System.out.println(Banner.getBanner());
+
+//        System.out.println(Banner.getBanner());
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());

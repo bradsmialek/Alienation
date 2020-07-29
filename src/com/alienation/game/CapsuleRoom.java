@@ -26,8 +26,8 @@ public class CapsuleRoom {
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
     public static void loadEnvironment() throws Exception {
-        System.out.print("\033[H\033[2J");
-        System.out.println(Banner.getBanner());
+//        System.out.print("\033[H\033[2J");
+//        System.out.println(Banner.getBanner());
         count++;
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
