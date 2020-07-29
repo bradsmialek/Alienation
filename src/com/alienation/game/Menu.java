@@ -146,12 +146,7 @@ public class Menu {
 
     }
 
-
-
-
-
-
-    public static void ImageViewer(Rooms currentRoom){
+    public static void ImageViewer(Rooms currentRoom) throws Exception{
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
