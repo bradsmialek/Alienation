@@ -1,5 +1,7 @@
 package com.alienation.game;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,16 +21,15 @@ public class AlienRoom {
     private static Map<String,Boolean> availableItems = new HashMap<String, Boolean>();
     private static final Map<String,Rooms> availableDirections = new HashMap<String, Rooms>();
     private static final int minusOxy = 10;
-    private static int count = 0;
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
-    public static void loadEnvironment(){
-        count++;
-        System.out.println(Banner.getBanner());
+    public static void loadEnvironment() throws Exception {
+        Character.checkHealth();
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
+        System.out.println(RoomsMap.alienRoom());
         Menu.displayMenu();
     }
 
@@ -37,15 +38,12 @@ public class AlienRoom {
     public static String getStory() {
         if (!getAvailableItems().containsKey("Humanoid")) {
             return lastStory;
-        }else{
-            if(count >1 && getAvailableItems().get("Humanoid")){
-                return updatedStory;
-            }else if(getAvailableItems().get("Humanoid")){
-                return initialStory;
-            }
+        }else if( Menu.attackCount > 0 && getAvailableItems().containsKey("Humanoid") ){
+            return updatedStory;
         }
-
-        return null;
+        else{
+            return initialStory;
+        }
     }
 
     // Get available items of a room

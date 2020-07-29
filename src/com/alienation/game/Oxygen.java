@@ -18,7 +18,7 @@ public class Oxygen {
     public static void minOxygen(int minusOxy) {
         Oxygen.oxygen = Oxygen.oxygen - minusOxy;
         //TODO: wanna discuss with @Brad
-        System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
+        System.out.println(Engine.ANSI_RED + "\n\n-10 " + oTwo + Engine.ANSI_RESET);
     }
 
     //Increases oxygen levels SETTERS
@@ -31,10 +31,8 @@ public class Oxygen {
     public static void checkOxy(){
         if(Oxygen.getOxygen() == 0){
             System.out.println(Engine.ANSI_RED + "\n\nOxygen depleted..." + Engine.ANSI_RESET); // Better Death
-            Menu.death();
+            System.out.println(Death.death());
             System.exit(0);
-            //TODO: make start screen to redirect to game start scene instead of exiting
         }
     }
-
 }

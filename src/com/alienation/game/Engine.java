@@ -27,12 +27,11 @@ public class Engine {
     public static final String ANSI_WHITE = "\u001B[37m";
 
     /*************** PUBLIC METHODS  ******************/
-    public static void start(){
-        System.out.println(Banner.getBanner());
+    public static void start() throws Exception {
         ResumeOrNewGame();
     }
 
-    private static void ResumeOrNewGame(){
+    private static void ResumeOrNewGame() throws Exception {
         File gameState = new File(System.getProperty("user.dir") + "\\SaveState.xml");
         if(gameState.exists()) {
             final String lines = "---------------------------------------------------------------------------------------------------------------------------------";

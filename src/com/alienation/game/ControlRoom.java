@@ -27,11 +27,12 @@ public class ControlRoom {
 
     /*************** PUBLIC METHODS  ******************/
     // This method used to load Environment to user
-    public static void loadEnvironment(){
-        System.out.println(Banner.getBanner());
+    public static void loadEnvironment() throws Exception {
+        Character.checkHealth();
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
+        System.out.println(RoomsMap.controlRoom());
         Menu.displayMenu();
     }
 
@@ -40,6 +41,7 @@ public class ControlRoom {
     // Get Story line while page loads
     // check inventory for part
     public static String getStory() {
+
         if (!Character.getInventory().containsKey("Ignition Switch")) { //if inventory does not contain ignition
             return initialStory;
         } else{
@@ -55,6 +57,7 @@ public class ControlRoom {
             availableItems.put("Control Panel", true);
             availableItems.put("Pilot Seats", true);
             availableItems.put("Laser", true);
+            availableItems.put("Chips", true);
         }
         return availableItems;
     }
