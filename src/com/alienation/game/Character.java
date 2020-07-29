@@ -1,6 +1,8 @@
 package com.alienation.game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +19,7 @@ public class Character {
     private static Rooms currentRoom = Rooms.CapsuleRoom; // as initial default
     private static Rooms previousRoom;
     private static Rooms tempRoom;
-    private static Map<String,String> inventory = new HashMap<String, String>();
+    private static List<String> inventory = new ArrayList<>();
 
 
     /*************** GETTER - SETTER METHODS  ******************/
@@ -58,12 +60,12 @@ public class Character {
     }
 
     // Get available items in inventory
-    public static Map<String,String> getInventory(){
+    public static List<String> getInventory(){
         return inventory;
     }
 
     // set available items updated items if item moved to Inventory or Eat an item
-    public static void setInventory(Map<String,String> newInventory) {
+    public static void setInventory(List<String> newInventory) {
         inventory = newInventory;
     }
 

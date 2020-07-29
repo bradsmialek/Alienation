@@ -1,7 +1,5 @@
 package com.alienation.game;
 
-import java.util.Scanner;
-
 /**
  * Oxygen Class
  */
@@ -14,10 +12,18 @@ public class Oxygen {
         return oxygen;
     }
 
+    //set Oxygen level
+    public static void setOxygen(int newOxygen) {
+        Oxygen.oxygen = newOxygen;
+    }
+
     //Decreases oxygen levels
     public static void minOxygen(int minusOxy) {
-        Oxygen.oxygen = Oxygen.oxygen - minusOxy;
-        //TODO: wanna discuss with @Brad
+        if(Oxygen.oxygen - minusOxy < 0){
+            Oxygen.oxygen = 0;
+        } else {
+            Oxygen.oxygen = Oxygen.oxygen - minusOxy;
+        }
         System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
     }
 
@@ -32,11 +38,6 @@ public class Oxygen {
         if(Oxygen.getOxygen() == 0){
             System.out.println(Engine.ANSI_RED + "\n\nOxygen depleted..." + Engine.ANSI_RESET); // Better Death
             Menu.death();
-            System.exit(0);
-            //TODO: make start screen to redirect to game start scene instead of exiting
         }
     }
-
-
-
 }

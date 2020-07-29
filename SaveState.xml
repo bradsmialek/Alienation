@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <GameState>
     <CurrentHealth>25</CurrentHealth>
-    <CurrentOxygen>20</CurrentOxygen>
-    <CurrentWeapon>Laser</CurrentWeapon>
-    <CurrentRoom>CapsuleRoom</CurrentRoom>
-    <TempRoom>ControlRoom</TempRoom>
-    <PreviousRoom>ControlRoom</PreviousRoom>
+    <CurrentOxygen>50</CurrentOxygen>
+    <CurrentWeapon>Bad breath</CurrentWeapon>
+    <CurrentRoom>SupplyRoom</CurrentRoom>
+    <TempRoom>Kitchen</TempRoom>
+    <PreviousRoom>Kitchen</PreviousRoom>
     <Inventory>
         <Item>Flamethrower</Item>
         <Item>Laser</Item>
     </Inventory>
     <CapsuleRoom>
-        <Item>Lockers</Item>
         <Item>Pods</Item>
         <Item>Racks</Item>
+        <Item>Lockers</Item>
     </CapsuleRoom>
     <AlienRoom>
-        <Item>Bed</Item>
         <Item>Humanoid</Item>
-        <Item>Old Box</Item>
+        <Item>Bed</Item>
         <Item>Mirror</Item>
+        <Item>Old Box</Item>
     </AlienRoom>
     <Kitchen>
-        <Item>Microwave</Item>
         <Item>Refrigerator</Item>
+        <Item>Microwave</Item>
         <Item>Cabinets</Item>
         <Item>Dustbin</Item>
     </Kitchen>
-    <ComputerRoom>
-        <Item>Sofa</Item>
-        <Item>Cage</Item>
+    <SupplyRoom>
         <Item>Computer</Item>
         <Item>Desk</Item>
-        <Item>Supplies</Item>
+        <Item>Sofa</Item>
         <Item>Racks</Item>
-    </ComputerRoom>
+        <Item>Supplies</Item>
+        <Item>Cage</Item>
+    </SupplyRoom>
     <ControlRoom>
-        <Item>Pilot Seats</Item>
         <Item>Monitor</Item>
         <Item>Control Panel</Item>
+        <Item>Pilot Seats</Item>
     </ControlRoom>
 </GameState>
