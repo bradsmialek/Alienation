@@ -33,6 +33,7 @@ public class SupplyRoom {
         Oxygen.checkOxy();
         System.out.println(getStory());
         Menu.displayMenu();
+
     }
 
     /*************** GETTER - SETTER METHODS  ******************/

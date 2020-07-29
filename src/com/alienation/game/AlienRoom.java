@@ -29,7 +29,7 @@ public class AlienRoom {
         Oxygen.minOxygen(minusOxy);
         Oxygen.checkOxy();
         System.out.println(getStory());
-        Menu.displayMenu();
+
     }
 
     /*************** GETTER - SETTER METHODS  ******************/
