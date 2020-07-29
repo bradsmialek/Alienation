@@ -34,13 +34,10 @@ public class Input {
         if (tokens.length == 2){ // eat snickers
             item1 = tokens[1];
             item2 = "empty";
-            System.out.println(item1);
 
         }if (tokens.length == 3){ // grab oxygen tank
             item1 = tokens[1];
             item2 = item1 + " " + tokens[2];
-            System.out.println(item1);
-            System.out.println(item2);
         }
 
     }
