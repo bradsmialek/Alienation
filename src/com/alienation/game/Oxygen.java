@@ -1,5 +1,6 @@
 package com.alienation.game;
 
+import static com.alienation.game.TextColors.*;
 /**
  * Oxygen Class
  */
@@ -23,7 +24,7 @@ public class Oxygen {
         } else {
             Oxygen.oxygen = Oxygen.oxygen - minusOxy;
         }
-        System.out.println(Engine.ANSI_RED + "-10 " + oTwo + Engine.ANSI_RESET);
+        System.out.println(ANSI_RED + "-10 " + oTwo + ANSI_RESET);
     }
 
     //Increases oxygen levels SETTERS
@@ -35,7 +36,7 @@ public class Oxygen {
     // checks oxygen levels
     public static void checkOxy(){
         if(Oxygen.getOxygen() == 0){
-            System.out.println(Engine.ANSI_RED + "\n\nOxygen depleted..." + Engine.ANSI_RESET); // Better Death
+            System.out.println(ANSI_RED + "\n\nOxygen depleted..." + ANSI_RESET); // Better Death
             Death.death();
         }
     }

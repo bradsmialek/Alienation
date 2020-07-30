@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.alienation.game.TextColors.*;
+
 /**
  * Character Class
  * This class used for maintaining characteristics for character like health points, current weapon.
@@ -40,7 +42,7 @@ public class Character {
 
     public static void checkHealth(){
         if(health <= 20){
-            System.out.println(Engine.ANSI_RED + "\nHealth is LOW!" + Engine.ANSI_RESET);
+            System.out.println(ANSI_RED + "\nHealth is LOW!" + ANSI_RESET);
         }
     }
 

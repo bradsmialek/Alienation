@@ -1,6 +1,7 @@
 package com.alienation.game;
 
 import java.util.concurrent.TimeUnit;
+import static com.alienation.game.TextColors.*;
 
 /**
  * Created by bradsmialek on Wed - 7/29/20 @ 8:03 AM
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Win {
     public static void win(){ //TODO: replace ASCII for "You Won"
-        System.out.println("\n" + Engine.ANSI_GREEN +
+        System.out.println("\n" + ANSI_GREEN +
                 "██╗░░░██╗░█████╗░██╗░░░██╗░░░░██╗░░░░░░░██╗░█████╗░███╗░░██╗░░░\n" +
                 "╚██╗░██╔╝██╔══██╗██║░░░██║░░░░██║░░██╗░░██║██╔══██╗████╗░██║░░░\n" +
                 "░╚████╔╝░██║░░██║██║░░░██║░░░░╚██╗████╗██╔╝██║░░██║██╔██╗██║░░░\n" +
@@ -21,7 +22,7 @@ public class Win {
                 "██║░░╚═╝██║░░██║██╔██╗██║██║░░██╗░██████╔╝███████║░░░██║░░░╚█████╗░██║██║\n" +
                 "██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░░╚═══██╗╚═╝╚═╝\n" +
                 "╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░██████╔╝██╗██╗\n" +
-                "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝╚═╝" + Engine.ANSI_RESET);
+                "░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝╚═╝" + ANSI_RESET);
 
         try {
             TimeUnit.SECONDS.sleep(1);
