@@ -1,8 +1,8 @@
 package com.alienation.coregamefiles;
 
-import com.alienation.gameart.Death;
+import com.alienation.coregamefiles.gameart.Death;
 
-import static com.alienation.gameart.TextColors.*;
+import static com.alienation.coregamefiles.gameart.TextColors.*;
 /**
  * Oxygen Class
  */

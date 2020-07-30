@@ -1,9 +1,11 @@
 package com.alienation.coregamefiles;
 
+import com.alienation.coregamefiles.enums.Rooms;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.alienation.gameart.TextColors.*;
+import static com.alienation.coregamefiles.gameart.TextColors.*;
 
 /**
  * Character Class

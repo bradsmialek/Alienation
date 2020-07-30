@@ -1,4 +1,4 @@
-package com.alienation.coregamefiles;
+package com.alienation.coregamefiles.enums;
 
 /**
  * Action Enums

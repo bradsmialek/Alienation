@@ -1,10 +1,9 @@
-package com.alienation.rooms;
+package com.alienation.coregamefiles.rooms;
 
 import com.alienation.coregamefiles.Menu;
-import com.alienation.coregamefiles.Room;
-import com.alienation.gameart.RoomsMap;
+import com.alienation.coregamefiles.gameart.RoomsMap;
 
-import static com.alienation.gameart.TextColors.*;
+import static com.alienation.coregamefiles.gameart.TextColors.*;
 
 /**
  * Capsule Room - This is the room where the character wakes up

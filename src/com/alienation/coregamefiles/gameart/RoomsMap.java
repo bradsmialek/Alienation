@@ -1,4 +1,4 @@
-package com.alienation.gameart;
+package com.alienation.coregamefiles.gameart;
 
 /**
  * grabs map depending on which room character is in

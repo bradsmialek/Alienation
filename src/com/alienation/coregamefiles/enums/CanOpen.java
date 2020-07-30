@@ -1,4 +1,4 @@
-package com.alienation.coregamefiles;
+package com.alienation.coregamefiles.enums;
 
 /**
  * Objects you can open

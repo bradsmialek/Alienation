@@ -1,7 +1,8 @@
 package com.alienation.enginefiles;
 import com.alienation.coregamefiles.*;
 import com.alienation.coregamefiles.Character;
-import com.alienation.rooms.CapsuleRoom;
+import com.alienation.coregamefiles.enums.Rooms;
+import com.alienation.coregamefiles.rooms.CapsuleRoom;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

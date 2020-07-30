@@ -1,9 +1,12 @@
-package com.alienation.coregamefiles;
+package com.alienation.coregamefiles.rooms;
 
+import com.alienation.coregamefiles.Menu;
 import com.alienation.enginefiles.Engine;
-import com.alienation.gameart.RoomsMap;
+import com.alienation.coregamefiles.enums.Rooms;
+import com.alienation.coregamefiles.gameart.RoomsMap;
 
-import static com.alienation.gameart.TextColors.*;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_BLUE;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_RESET;
 
 /**
  * Kitchen - This is the room where user can go and investigate

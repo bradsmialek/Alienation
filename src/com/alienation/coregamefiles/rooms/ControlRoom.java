@@ -1,15 +1,14 @@
-package com.alienation.rooms;
+package com.alienation.coregamefiles.rooms;
 
 import com.alienation.coregamefiles.Character;
 import com.alienation.coregamefiles.Menu;
-import com.alienation.coregamefiles.Room;
-import com.alienation.gameart.RoomsMap;
-import com.alienation.gameart.Win;
+import com.alienation.coregamefiles.gameart.RoomsMap;
+import com.alienation.coregamefiles.gameart.Win;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.alienation.gameart.TextColors.ANSI_BLUE;
-import static com.alienation.gameart.TextColors.ANSI_RESET;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_BLUE;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_RESET;
 
 /**
  * Capsule Room - This is the room where the character wakes up

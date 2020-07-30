@@ -1,4 +1,4 @@
-package com.alienation.gameart;
+package com.alienation.coregamefiles.gameart;
 
 public class TextColors {
     public static final String ANSI_RESET = "\u001B[0m";

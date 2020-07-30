@@ -1,5 +1,6 @@
 package com.alienation.coregamefiles;
 
+import com.alienation.coregamefiles.enums.Rooms;
 import org.junit.Before;
 import org.junit.Test;
 

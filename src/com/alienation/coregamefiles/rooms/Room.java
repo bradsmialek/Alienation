@@ -1,4 +1,7 @@
-package com.alienation.coregamefiles;
+package com.alienation.coregamefiles.rooms;
+
+import com.alienation.coregamefiles.Character;
+import com.alienation.coregamefiles.Oxygen;
 
 public abstract class Room {
     private int minusOxy = 10; // TODO: Make random number??

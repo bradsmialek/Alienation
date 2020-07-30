@@ -1,15 +1,14 @@
-package com.alienation.rooms;
+package com.alienation.coregamefiles.rooms;
 
 import com.alienation.coregamefiles.Menu;
-import com.alienation.coregamefiles.Room;
-import com.alienation.coregamefiles.Rooms;
-import com.alienation.gameart.RoomsMap;
+import com.alienation.coregamefiles.enums.Rooms;
+import com.alienation.coregamefiles.gameart.RoomsMap;
 import com.alienation.enginefiles.Engine;
 
 import java.util.List;
 
-import static com.alienation.gameart.TextColors.ANSI_BLUE;
-import static com.alienation.gameart.TextColors.ANSI_RESET;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_BLUE;
+import static com.alienation.coregamefiles.gameart.TextColors.ANSI_RESET;
 
 
 

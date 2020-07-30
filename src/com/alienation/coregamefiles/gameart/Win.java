@@ -1,9 +1,9 @@
-package com.alienation.gameart;
+package com.alienation.coregamefiles.gameart;
 
 import com.alienation.coregamefiles.Menu;
 
 import java.util.concurrent.TimeUnit;
-import static com.alienation.gameart.TextColors.*;
+import static com.alienation.coregamefiles.gameart.TextColors.*;
 
 /**
  * Created by bradsmialek on Wed - 7/29/20 @ 8:03 AM
