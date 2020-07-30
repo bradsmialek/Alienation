@@ -20,22 +20,9 @@
  *      https://github.com/Capstone-Mafia/Alienation
  */
 
-package com.alienation.client;
-
-import com.alienation.enginefiles.Engine;
-
-import static com.alienation.coregamefiles.gameart.Banner.*;
+package com.alienation.coregamefiles.enums;
 
 /**
- * Main Class
+ * Action Enums
  */
-public class Main {
-    public static void main(String[] args) {
-        try {
-            System.out.println(getBanner());
-            Engine.start();
-        } catch (Exception e) {
-            System.out.println("Something wrong with the Game!!!");
-        }
-    }
-}
+public enum Actions {GET, EQUIP, FLEE, SEE, LOOK, O, OPTIONS, I, INVENTORY, INVESTIGATE, OPEN, EAT, DRINK, GRAB, TAKE, FIGHT, ATTACK, READ, SWAP, HOLD, RUN, NORTH, N, EAST, E, SOUTH, S, WEST, W, SAVE, MAP};

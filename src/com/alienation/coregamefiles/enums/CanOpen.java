@@ -20,22 +20,9 @@
  *      https://github.com/Capstone-Mafia/Alienation
  */
 
-package com.alienation.client;
-
-import com.alienation.enginefiles.Engine;
-
-import static com.alienation.coregamefiles.gameart.Banner.*;
+package com.alienation.coregamefiles.enums;
 
 /**
- * Main Class
+ * Objects you can open
  */
-public class Main {
-    public static void main(String[] args) {
-        try {
-            System.out.println(getBanner());
-            Engine.start();
-        } catch (Exception e) {
-            System.out.println("Something wrong with the Game!!!");
-        }
-    }
-}
+public enum CanOpen {LOCKER, CAGE}

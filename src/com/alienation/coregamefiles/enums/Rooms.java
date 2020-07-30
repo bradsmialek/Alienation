@@ -20,22 +20,12 @@
  *      https://github.com/Capstone-Mafia/Alienation
  */
 
-package com.alienation.client;
+package com.alienation.coregamefiles.enums;
 
-import com.alienation.enginefiles.Engine;
-
-import static com.alienation.coregamefiles.gameart.Banner.*;
-
-/**
- * Main Class
- */
-public class Main {
-    public static void main(String[] args) {
-        try {
-            System.out.println(getBanner());
-            Engine.start();
-        } catch (Exception e) {
-            System.out.println("Something wrong with the Game!!!");
-        }
-    }
+public enum Rooms {
+    CapsuleRoom,
+    AlienRoom,
+    Kitchen,
+    SupplyRoom,
+    ControlRoom
 }

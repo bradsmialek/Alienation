@@ -20,22 +20,27 @@
  *      https://github.com/Capstone-Mafia/Alienation
  */
 
-package com.alienation.client;
-
-import com.alienation.enginefiles.Engine;
-
-import static com.alienation.coregamefiles.gameart.Banner.*;
+package com.alienation.coregamefiles.enums;
 
 /**
- * Main Class
+ * Edibles Enum
  */
-public class Main {
-    public static void main(String[] args) {
-        try {
-            System.out.println(getBanner());
-            Engine.start();
-        } catch (Exception e) {
-            System.out.println("Something wrong with the Game!!!");
-        }
+public enum Edibles{
+    SNICKERS("Snickers",20),
+    CHIPS("Chips",20);
+
+    private String name;
+    private int healthPoints;
+
+    Edibles(String name,int healthPoints) {
+        this.name = name;
+        this.healthPoints = healthPoints;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public int getHealthPoints() {
+        return healthPoints;
     }
 }

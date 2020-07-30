@@ -20,22 +20,24 @@
  *      https://github.com/Capstone-Mafia/Alienation
  */
 
-package com.alienation.client;
+package com.alienation.coregamefiles.rooms;
 
-import com.alienation.enginefiles.Engine;
+import com.alienation.coregamefiles.Character;
+import com.alienation.coregamefiles.Oxygen;
 
-import static com.alienation.coregamefiles.gameart.Banner.*;
+public abstract class Room {
+    private int minusOxy = 10; // TODO: Make random number??
 
-/**
- * Main Class
- */
-public class Main {
-    public static void main(String[] args) {
-        try {
-            System.out.println(getBanner());
-            Engine.start();
-        } catch (Exception e) {
-            System.out.println("Something wrong with the Game!!!");
-        }
+    public String getStory() {
+        return null;
+    }
+
+    public void loadEnvironment() throws Exception {
+        Character.checkHealth();
+        Oxygen.minOxygen(minusOxy);
+        Oxygen.checkOxy();
+        System.out.println(getStory());
     }
 }
+
+
