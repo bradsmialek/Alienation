@@ -1,6 +1,11 @@
 package com.alienation.coregamefiles;
 
 import com.alienation.enginefiles.Engine;
+import com.alienation.gameart.Death;
+import com.alienation.rooms.AlienRoom;
+import com.alienation.rooms.CapsuleRoom;
+import com.alienation.rooms.ControlRoom;
+import com.alienation.rooms.SupplyRoom;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,7 +29,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import static com.alienation.coregamefiles.TextColors.*;
+import static com.alienation.gameart.TextColors.*;
 
 /**
  * Menu For Console

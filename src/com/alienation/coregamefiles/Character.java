@@ -3,7 +3,7 @@ package com.alienation.coregamefiles;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.alienation.coregamefiles.TextColors.*;
+import static com.alienation.gameart.TextColors.*;
 
 /**
  * Character Class

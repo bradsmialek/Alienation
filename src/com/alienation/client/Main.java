@@ -1,7 +1,8 @@
 package com.alienation.client;
 
-import com.alienation.coregamefiles.Banner;
 import com.alienation.enginefiles.Engine;
+
+import static com.alienation.gameart.Banner.*;
 
 /**
  * Main Class
@@ -9,7 +10,7 @@ import com.alienation.enginefiles.Engine;
 public class Main {
     public static void main(String[] args) {
         try {
-            System.out.println(Banner.getBanner());
+            System.out.println(getBanner());
             Engine.start();
         } catch (Exception e) {
             System.out.println("Something wrong with the Game!!!");

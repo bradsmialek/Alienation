@@ -1,6 +1,11 @@
-package com.alienation.coregamefiles;
+package com.alienation.rooms;
 
-import static com.alienation.coregamefiles.TextColors.*;
+import com.alienation.coregamefiles.Character;
+import com.alienation.coregamefiles.Menu;
+import com.alienation.coregamefiles.Room;
+import com.alienation.gameart.RoomsMap;
+
+import static com.alienation.gameart.TextColors.*;
 
 /**
  * Supply room

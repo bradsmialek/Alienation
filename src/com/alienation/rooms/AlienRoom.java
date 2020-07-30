@@ -1,10 +1,17 @@
-package com.alienation.coregamefiles;
+package com.alienation.rooms;
 
+import com.alienation.coregamefiles.Menu;
+import com.alienation.coregamefiles.Room;
+import com.alienation.coregamefiles.Rooms;
+import com.alienation.gameart.RoomsMap;
 import com.alienation.enginefiles.Engine;
 
 import java.util.List;
 
-import static com.alienation.coregamefiles.TextColors.*;
+import static com.alienation.gameart.TextColors.ANSI_BLUE;
+import static com.alienation.gameart.TextColors.ANSI_RESET;
+
+
 
 /**
  * User will find out there is one Alien in this room

@@ -1,6 +1,8 @@
-package com.alienation.coregamefiles;
+package com.alienation.gameart;
 
-import static com.alienation.coregamefiles.TextColors.*;
+import com.alienation.coregamefiles.Menu;
+
+import static com.alienation.gameart.TextColors.*;
 
 /**
  * Created by bradsmialek on Wed - 7/29/20 @ 1:45 AM
