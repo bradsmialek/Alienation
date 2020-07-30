@@ -1,4 +1,4 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 public enum Rooms {
     CapsuleRoom,

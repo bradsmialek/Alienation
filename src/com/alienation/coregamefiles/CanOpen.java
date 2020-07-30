@@ -1,4 +1,4 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 /**
  * Objects you can open

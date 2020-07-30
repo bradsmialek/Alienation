@@ -1,7 +1,7 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 import java.util.concurrent.TimeUnit;
-import static com.alienation.game.TextColors.*;
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * Created by bradsmialek on Wed - 7/29/20 @ 8:03 AM

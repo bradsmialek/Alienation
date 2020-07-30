@@ -1,4 +1,4 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 /**
  * Edibles Enum

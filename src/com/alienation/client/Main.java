@@ -1,7 +1,7 @@
 package com.alienation.client;
 
-import com.alienation.game.Banner;
-import com.alienation.game.Engine;
+import com.alienation.coregamefiles.Banner;
+import com.alienation.enginefiles.Engine;
 
 /**
  * Main Class

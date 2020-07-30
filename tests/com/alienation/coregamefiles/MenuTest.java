@@ -1,4 +1,4 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,8 +6,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by bradsmialek on Fri - 7/24/20 @ 12:26 PM

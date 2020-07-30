@@ -1,11 +1,9 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.alienation.game.TextColors.*;
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * Character Class

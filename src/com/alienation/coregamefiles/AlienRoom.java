@@ -1,8 +1,10 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
+
+import com.alienation.enginefiles.Engine;
 
 import java.util.List;
 
-import static com.alienation.game.TextColors.*;
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * User will find out there is one Alien in this room

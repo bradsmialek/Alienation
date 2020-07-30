@@ -1,6 +1,8 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
-import static com.alienation.game.TextColors.*;
+import com.alienation.enginefiles.Engine;
+
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * Kitchen - This is the room where user can go and investigate

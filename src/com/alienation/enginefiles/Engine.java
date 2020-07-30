@@ -1,4 +1,6 @@
-package com.alienation.game;
+package com.alienation.enginefiles;
+import com.alienation.coregamefiles.*;
+import com.alienation.coregamefiles.Character;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

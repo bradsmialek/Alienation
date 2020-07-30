@@ -1,4 +1,4 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 public abstract class Room {
     private int minusOxy = 10; // TODO: Make random number??

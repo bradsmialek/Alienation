@@ -1,5 +1,6 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
+import com.alienation.enginefiles.Engine;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,7 +24,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import static com.alienation.game.TextColors.*;
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * Menu For Console

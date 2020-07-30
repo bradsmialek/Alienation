@@ -1,8 +1,8 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.alienation.game.TextColors.*;
+import static com.alienation.coregamefiles.TextColors.*;
 
 /**
  * Capsule Room - This is the room where the character wakes up

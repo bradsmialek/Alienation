@@ -1,14 +1,12 @@
-package com.alienation.game;
+package com.alienation.coregamefiles;
 
 import org.junit.After;
 import org.junit.Before;
 
-import static org.junit.Assert.*;
-
 /**
- * Created by bradsmialek on Thu - 7/16/20 @ 12:45 PM
+ * Created by bradsmialek on Thu - 7/16/20 @ 12:44 PM
  */
-public class InventoryTest {
+public class AliensTest {
 
     @Before
     public void setUp() throws Exception {
