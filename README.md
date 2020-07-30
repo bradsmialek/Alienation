@@ -21,4 +21,12 @@ Install JAva JDK 11 and JUnit 5 (links above). Recommend the intelliJ IDEA IDE f
 A JAR file will be uploaded in time. One option you may pursue if you seek to play our daringly adventurous game is to clone our repo, and either run it from inside your IDE, or create your own executable JAR file.
 
 ## Contribute
-Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
+Let people know how they can contribute into your project. A [contributing guideline](https://github.com/Capstone-Mafia/Alienation/blob/master/CONTRIBUTING.md) will be a big plus.
+
+## Credits
+<b>Many much credit to the original authors of Alienation, Dhruti Kosta, Terrell Douglas, Brad Smialek.</b> Credit to TLG Learning for pushing us through this project. Props to Rennie Araucto for your guidance. Much appreciation to AWS for keeping the lights on during the pandemic.
+
+ ## License
+ [MIT licensing](https://github.com/Capstone-Mafia/Alienation/blob/master/MIT.txt)
+ 
+ MIT © [Capstone Mafia](https://github.com/Capstone-Mafia)
